@@ -2,13 +2,15 @@ package com.azias.advancewarsbootleg.map;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 import com.azias.advancewarsbootleg.Assets;
+import com.azias.advancewarsbootleg.Datas;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Map  extends Object {
+public class Map extends Object {
 	protected int[] mapSize = new int[2];
 	protected Tile[][] mapTiles;
 	
@@ -19,6 +21,7 @@ public class Map  extends Object {
 	public boolean loadMap(String path, String mapName) {
 		try {
 			@SuppressWarnings("resource")
+			//This method doesn't work properly -> Bad final path.
 			//String mapFile = new Scanner(Gdx.files.internal("maps/"+path+"/"+mapName+".awm").file()).useDelimiter("\\Z").next();
 			String mapFile = new Scanner(new File("assets-desktop/maps/"+path+"/"+mapName+".awm")).useDelimiter("\\Z").next();
 			mapFile = mapFile.replace("\n", "").replace("\r", "");
@@ -38,6 +41,7 @@ public class Map  extends Object {
 			if(mapContent[3].equals("null")) {
 				for(int y = 0; y < this.mapSize[1]; y++) {
 					for(int x = 0; x < this.mapSize[0]; x++) {
+						//System.out.println(x+"/"+y);
 						this.setTileSubType(x,y);
 					}
 				}
@@ -52,9 +56,112 @@ public class Map  extends Object {
 		}
 	}
 	
-    private void setTileSubType(int x, int y) {
+    protected boolean setTileSubType(int x, int y) {
+    	this.mapTiles[x][y].animationPosition = new int[] {0,0};
+    	//Sea
+		if(this.mapTiles[x][y].getTerrainType()==TerrainType.Sea) {
+			return true;
+		}
     	
+		//Plains
+		if(this.mapTiles[x][y].getTerrainType()==TerrainType.Plain) {
+			if(x-1 >= 0) {
+				if(this.mapTiles[x-1][y].getTerrainType()==TerrainType.Mountain || this.mapTiles[x-1][y].getTerrainType()==TerrainType.Forest || this.mapTiles[x-1][y].getTerrainType()==TerrainType.Property || this.mapTiles[x-1][y].getTerrainType()==TerrainType.Port) {
+					this.mapTiles[x][y].setAnimationPosition(0, 1);
+				}
+			}
+			return true;
+		}
+		//Mountain - Need to be improved
+		if(this.mapTiles[x][y].getTerrainType()==TerrainType.Mountain) {
+			try {
+
+				if(y-1>=0) {
+					if(this.mapTiles[x][y-1].getTerrainType()==TerrainType.Mountain) {
+						if(this.mapTiles[x][y+1].getTerrainType()==TerrainType.Mountain) {
+							this.mapTiles[x][y].setAnimationPosition(0, 2);
+						} else {
+							this.mapTiles[x][y].setAnimationPosition(0, 3);
+						}
+					} else {
+						if(this.mapTiles[x][y+1].getTerrainType()==TerrainType.Mountain) {
+							this.mapTiles[x][y].setAnimationPosition(0, 1);
+						}
+					}
+				} else {
+					//The mountain is on the top edge
+				}
+			} catch(ArrayIndexOutOfBoundsException e) {
+				
+			}
+			return true;
+		}
+		//Forest
+		if(this.mapTiles[x][y].getTerrainType()==TerrainType.Forest) {
+			if(x-1 >= 0) {
+				if(this.mapTiles[x-1][y].getTerrainType()==TerrainType.Mountain || this.mapTiles[x-1][y].getTerrainType()==TerrainType.Forest || this.mapTiles[x-1][y].getTerrainType()==TerrainType.Property || this.mapTiles[x-1][y].getTerrainType()==TerrainType.Port) {
+					this.mapTiles[x][y].setAnimationPosition(0, 1);
+				}
+			}
+			return true;
+		}
 		
+		//Beach - Shoal
+		if(this.mapTiles[x][y].getTerrainType()==TerrainType.Shoal) {
+			String surrounding = "";
+			//Up
+			if(y-1>=0) {
+				if(this.mapTiles[x][y-1].terrainType==TerrainType.Sea) {
+					surrounding+="S";
+				} else if (this.mapTiles[x][y-1].terrainType==TerrainType.Shoal) {
+					surrounding+="B";
+				} else {
+					surrounding+="E";
+				}
+			} else {
+				surrounding+="S";
+			}
+			//Right
+			if(x+1<Datas.coMap.getMapSize()[0]) {
+				if(this.mapTiles[x+1][y].terrainType==TerrainType.Sea) {
+					surrounding+="S";
+				} else if (this.mapTiles[x+1][y].terrainType==TerrainType.Shoal) {
+					surrounding+="B";
+				} else {
+					surrounding+="E";
+				}
+			} else {
+				surrounding+="S";
+			}
+			//Bottom
+			if(y+1 < Datas.coMap.getMapSize()[1]) {
+				if(this.mapTiles[x][y+1].terrainType==TerrainType.Sea) {
+					surrounding+="S";
+				} else if (this.mapTiles[x][y+1].terrainType==TerrainType.Shoal) {
+					surrounding+="B";
+				} else {
+					surrounding+="E";
+				}
+			} else {
+				surrounding+="S";
+			}
+			//Left
+			if(x-1>=0) {
+				if(this.mapTiles[x-1][y].terrainType==TerrainType.Sea) {
+					surrounding+="S";
+				} else if (this.mapTiles[x-1][y].terrainType==TerrainType.Shoal) {
+					surrounding+="B";
+				} else {
+					surrounding+="E";
+				}
+			} else {
+				surrounding+="S";
+			}
+			this.mapTiles[x][y].animationPosition=TerrainType.getBeachSubType(surrounding);
+			return true;
+		}
+		
+		return false;
 	}
 
 	public void render(SpriteBatch batch) {
@@ -93,4 +200,42 @@ public class Map  extends Object {
 			return TerrainType.Plain;
 		}
     }
+
+	/**
+	 * @param String path - The output folder's name
+	 * @param String mapName - The map file's name
+	 * @param String name - The map's name
+	 * @param String author - The author's name
+	 * @return boolean Unused - Might be used to cast an error and end the function
+	 */
+	public boolean exportMap(String path, String mapName, String name, String author) {
+		//Setting up everything
+		String mapLetters = "";
+		for(int y = 0; y < this.mapSize[1]; y++) {
+			for(int x = 0; x < this.mapSize[0]; x++) {
+				mapLetters += this.mapTiles[x][y].getTerrainType().getTerrainLetter();
+			}
+			mapLetters += ";";
+		}
+		//System.out.println(mapLetters);
+		
+		//Saving file
+		String mapContent = name+"#_#"+author+"#_#"+mapLetters+"#_#";
+		try {
+			File f = new File("assets-desktop/maps/"+path+"/"+mapName+".awm");
+			if(f.exists() && !f.isDirectory()) {
+				//TODO: ask to replace the file
+				System.out.println("ERROR: A file named "+mapName+".awm already exist!");
+				return false;
+			} else {
+				PrintWriter out = new PrintWriter("assets-desktop/maps/"+path+"/"+mapName+".awm");
+				out.println(mapContent);
+				out.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 }

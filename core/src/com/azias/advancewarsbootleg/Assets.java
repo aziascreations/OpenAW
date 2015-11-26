@@ -11,14 +11,15 @@ public class Assets {
 	public static Texture font;
 	public static TextureRegion[][] fontTextures;
 	
+	public static Texture arrowOpen, arrowClose, arrowFiller, tileTabs;
+	public static Texture pointer;
+	public static TextureRegion[] editorSelectTileImages;
+	
 	public static Object[] tilesGraphics;
 	public static boolean[] tileGraphicsBooleans;
-	
 	public static int tileRenderSizeIndex = 1;
-	public static int[] tileRenderSize = new int[] {16,32,64};
-	
+	public static int[] tileRenderSize = new int[] {16,32,48,64,80,96};
 	public static int[] renderOffset = new int[] {0,0};
-	
 	
 	public static Texture loadTexture (String file) {
 		return new Texture(Gdx.files.internal(file));
@@ -37,6 +38,19 @@ public class Assets {
 		
 		font = loadTexture("gfx/fonts/fontPalette.png");
 		fontTextures = new TextureRegion[26][4];
+
+		arrowOpen = loadTexture("gfx/gui/editor/arrow_1.png");
+		arrowClose = loadTexture("gfx/gui/editor/arrow_2.png");
+		arrowFiller = loadTexture("gfx/gui/editor/tabsBack.png");
+		tileTabs = loadTexture("gfx/gui/editor/tabsPics.png");
+		
+		editorSelectTileImages = new TextureRegion[11];
+		Texture temp1 = loadTexture("gfx/gui/editor/tileImagesAlt.png");
+		for(int i=0; i<editorSelectTileImages.length; i++) {
+			editorSelectTileImages[i] = new TextureRegion(temp1, i*64, 0, 64, 64);
+		}
+		
+		pointer = loadTexture("gfx/gui/editor/mapCursor.png");
 		
 		/* Tiles */
 		TextureRegion[][] a = null;
@@ -73,23 +87,38 @@ public class Assets {
 		}
 		tilesGraphics[3] = a;
 		tileGraphicsBooleans[3] = false;
-
+		
 		//River
 		a = new TextureRegion[1][1];
 		a[0][0] = new TextureRegion(new Texture("gfx/terrain/plain_river.png"),0,0,16,16);
 		tilesGraphics[4] = a;
 		tileGraphicsBooleans[4] = false;
-
-		//Beach
-		a = new TextureRegion[1][1];
-		a[0][0] = new TextureRegion(new Texture("gfx/terrain/plain_beach.png"),0,0,16,16);
+		
+		//Beach18
+		a = new TextureRegion[18][2];
+		for(int i = 0; i<18; i++) {
+			a[i][0] = new TextureRegion(new Texture("gfx/terrain/plain_beach.png"),0+(i*16),0,16,16);
+			a[i][1] = new TextureRegion(new Texture("gfx/terrain/plain_beach.png"),0+(i*16),16,16,16);
+		}
 		tilesGraphics[5] = a;
 		tileGraphicsBooleans[5] = false;
-
+		
 		//Sea
 		a = new TextureRegion[1][1];
 		a[0][0] = new TextureRegion(new Texture("gfx/terrain/plain_sea.png"),0,0,16,16);
 		tilesGraphics[6] = a;
 		tileGraphicsBooleans[6] = false;
+		
+		//Property
+		a = new TextureRegion[1][1];
+		a[0][0] = new TextureRegion(new Texture("gfx/terrain/plain_building.png"),0,0,16,16);
+		tilesGraphics[8] = a;
+		tileGraphicsBooleans[8] = false;
+		
+		//Port
+		a = new TextureRegion[1][1];
+		a[0][0] = new TextureRegion(new Texture("gfx/terrain/plain_building.png"),0,0,16,16);
+		tilesGraphics[9] = a;
+		tileGraphicsBooleans[9] = false;
 	}
 }

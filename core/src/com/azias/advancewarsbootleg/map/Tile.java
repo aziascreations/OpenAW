@@ -8,6 +8,7 @@ public class Tile extends Object {
 	protected TerrainType terrainType;
 	protected int[] position;
 	protected int[] animationPosition;
+	protected boolean isAnimationCustom;
 	//protected int animationSubtype;
 	//protected int animationHasShadow;
 	
@@ -17,8 +18,13 @@ public class Tile extends Object {
 		//this.animationHasShadow = 0;
 		//this.animationSubtype = 0;
 		this.animationPosition = new int[] {0,0};
+		this.isAnimationCustom = false;
 	}
 
+	/**
+	 * @param par1 - <i>"animationPosition"</i> - Array Position (0-x / 1-y)
+	 * @param par2 - Value
+	 */
 	public void setAnimationPosition(int par1, int par2) {
 		this.animationPosition[par1] = par2;
 	}
@@ -29,6 +35,7 @@ public class Tile extends Object {
 			//Animation
 		} else {
 			//System.out.println("It's a sprite");
+			//System.out.println(this.position[0]+"/"+this.position[1]+" - "+this.animationPosition[0]+"/"+this.animationPosition[1]+" - "+this.terrainType.getTerrainLetter());
 			batch.draw(((TextureRegion[][])Assets.tilesGraphics[this.terrainType.getAnimationID()])[animationPosition[0]][animationPosition[1]], x, y,Assets.tileRenderSize[Assets.tileRenderSizeIndex],Assets.tileRenderSize[Assets.tileRenderSizeIndex]);
 		}
 	}
@@ -45,5 +52,10 @@ public class Tile extends Object {
 	
 	public TerrainType getTerrainType() {
 		return this.terrainType;
+	}
+
+	public void setTerrainType(TerrainType par1) {
+		this.terrainType = par1;
+		this.animationPosition = new int[] {0,0};
 	}
 }
