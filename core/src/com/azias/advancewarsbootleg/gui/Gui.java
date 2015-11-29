@@ -11,6 +11,7 @@ public class Gui extends Object {
 	protected int[] position = new int[2];
 	protected int[] size = new int[2];
 	protected ArrayList<GuiButton> buttonList = new ArrayList<GuiButton>();
+	protected boolean isLockingMouseClick = false;
 
 	/**
 	 * Create a GUI at given size and location.
@@ -44,19 +45,27 @@ public class Gui extends Object {
 		this(-1,-1,sizeX,sizeY);
 	}
 	
-	public boolean processMouseClick(int posX, int posY) {
+	/**
+	 * Check if any button can be pressed at the given coordinates
+	 * @param posX - Click's position on the X axis
+	 * @param posY - Click's position on the Y axis
+	 * @return *A <b>String</b> containing the pressed button's ID for further use.<br>*A <b>null String</b> to indicate that no further action needs to be done. 
+	 */
+	public String processMouseClick(int posX, int posY) {
 		for(int i=0; i<this.buttonList.size(); i++) {
 			if(this.buttonList.get(i).isClicked(posX, posY)) {
-				return this.executeButtonAction(this.buttonList.get(i).getId());
+				if(!this.executeButtonAction(this.buttonList.get(i).getId())) {
+					return this.buttonList.get(i).getId();
+				}
 			}
 		}
-		return false;
+		return null;
 	}
 	
 	/**
 	 * Execute registered action(s) based on the given parameter.
 	 * @param buttonId - Button's ID
-	 * @return <b>True</b> if an action was executed<br><b>False</b> if no action was executed<br>Note that even if an action was executed you can get a <b>False</b>.
+	 * @return <b>True</b> if an action was executed<br><b>False</b> if no action was executed<br>Note that even if an action was executed you can get a <b>False</b> so a second action can be done later.
 	 */
 	public boolean executeButtonAction(String buttonId) {
 		return false;
@@ -90,5 +99,9 @@ public class Gui extends Object {
 	
 	public void changeID(int id) {
 		this.id = id;
+	}
+	
+	public boolean getIsLockingMouseClick() {
+		return this.isLockingMouseClick;
 	}
 }

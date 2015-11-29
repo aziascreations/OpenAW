@@ -10,14 +10,21 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class GuiSelectTile extends Gui {
 	protected int selectedMenu;
 	
+	@Deprecated
 	public GuiSelectTile() {
-		this(0);
+		this(0,0);
 	}
 	
-	public GuiSelectTile(int par1) {
+	public GuiSelectTile(int id) {
+		this(id,0);
+	}
+	
+	public GuiSelectTile(int id, int par2) {
 		super(0,0,Gdx.graphics.getWidth(),102);
-		this.selectedMenu = par1;
+		this.selectedMenu = par2;
 		this.addButtons(this.selectedMenu);
+		this.isLockingMouseClick = true;
+		this.id = id;
 	}
 	
 	protected void addButtons(int par1) {

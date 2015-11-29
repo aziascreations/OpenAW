@@ -106,6 +106,52 @@ public class Map extends Object {
 			return true;
 		}
 		
+		if(this.mapTiles[x][y].getTerrainType()==TerrainType.Road) {
+			String surrounding = "";
+			//Up
+			if(y-1>=0) {
+				if(this.mapTiles[x][y-1].getTerrainType()==TerrainType.Road) {
+					surrounding+="R";
+				} else {
+					surrounding+="E";
+				}
+			} else {
+				surrounding+="E";
+			}
+			//Right
+			if(x+1<Datas.coMap.getMapSize()[0]) {
+				if(this.mapTiles[x+1][y].getTerrainType()==TerrainType.Road) {
+					surrounding+="R";
+				} else {
+					surrounding+="E";
+				}
+			} else {
+				surrounding+="E";
+			}
+			//Bottom
+			if(y+1 < Datas.coMap.getMapSize()[1]) {
+				if(this.mapTiles[x][y+1].getTerrainType()==TerrainType.Road) {
+					surrounding+="R";
+				} else {
+					surrounding+="E";
+				}
+			} else {
+				surrounding+="E";
+			}
+			//Left
+			if(x-1>=0) {
+				if(this.mapTiles[x-1][y].getTerrainType()==TerrainType.Road) {
+					surrounding+="R";
+				} else {
+					surrounding+="E";
+				}
+			} else {
+				surrounding+="E";
+			}
+			this.mapTiles[x][y].animationPosition=TerrainType.getRoadSubType(surrounding);
+			return true;
+		}
+		
 		//Beach - Shoal
 		if(this.mapTiles[x][y].getTerrainType()==TerrainType.Shoal) {
 			String surrounding = "";

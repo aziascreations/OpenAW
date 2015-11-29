@@ -12,14 +12,14 @@ public class AdvanceWarsBootleg extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		Assets.load();
-		//setScreen(new ScreenMainMenu(this));
+		setScreen(new ScreenMainMenu(this));
 		//setScreen(new ScreenMapSelect(this));
 		//setScreen(new ScreenOptions(this));
-		setScreen(new ScreenMapEditor(this));
+		//setScreen(new ScreenMapEditor(this));
 	}
 
 	@Override
-	public void render () {
+	public void render() {
 		super.render();
 	}
 }

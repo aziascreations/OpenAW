@@ -1,6 +1,5 @@
 package com.azias.advancewarsbootleg;
 
-import com.azias.advancewarsbootleg.gui.Gui;
 import com.azias.advancewarsbootleg.gui.GuiSelectTile;
 import com.azias.advancewarsbootleg.map.TerrainType;
 import com.badlogic.gdx.ApplicationListener;
@@ -17,19 +16,21 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 	private int[] pointerPosition;
 	private TerrainType terrain;
 	
-	private boolean isGuiOpen = false;
-	private Gui openedGui = null;
+	//private boolean isGuiOpen = false;
+	//private Gui openedGui = null;
 
 	public ScreenMapEditor(AdvanceWarsBootleg game) {
-		this.game = game;	
+		this(game, "custom", "0184");
+	}
+	
+	public ScreenMapEditor(AdvanceWarsBootleg game, String mapPath, String mapName) {
+		this.game = game;
 		this.font = new BitmapFont();
 		this.font.setColor(Color.RED);
 		this.pointerPosition = new int[] {0,0};
 		this.terrain = TerrainType.Plain;
 		
-		//TODO: Change the place where the loadMap function is casted.
-		//Datas.coMap.loadMap("custom", "develop01");
-		Datas.coMap.loadMap("custom", "develop03");
+		Datas.coMap.loadMap(mapPath, mapName);
 		Gdx.input.setInputProcessor(this);
 	}
 
@@ -67,9 +68,15 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 		
 		//Tests
 		//font.draw(game.batch, "Hello World", 200, 100);
-		if(this.isGuiOpen) {
-			this.openedGui.render(game.batch);
-		}
+		
+		Datas.coGui.render(game.batch);
+		//if(this.isGuiOpen) {
+		//	this.openedGui.render(game.batch);
+		//}
+		//Assets.font24.draw(game.batch, "Hello world.", 50, 150);
+		//Assets.font36.draw(game.batch, "Hello world.", 50, 100, widthOfTheLine, HAlignment.LEFT);
+		//Assets.font48.draw(game.batch, "Hello world.", 50, 50);
+		
 		game.batch.end();
 	}
 
@@ -113,13 +120,18 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
         	}
             break;
         case Keys.SPACE:
-        	if(!this.isGuiOpen) {
+        	if(Datas.coGui.doesGuiExists(2)) {
+        		Datas.coGui.killGui(2);
+        	} else {
+        		Datas.coGui.createGui(2, new GuiSelectTile(2));
+        	}
+        	/*if(!this.isGuiOpen) {
         		this.isGuiOpen = true;
         		this.openedGui = new GuiSelectTile();
         	} else if(this.openedGui instanceof GuiSelectTile) {
         		this.isGuiOpen = false;
         		this.openedGui = null;
-        	}
+        	}*/
             break;
         case Keys.C:
         	this.terrain = Datas.coMap.getTileTerrainType(this.pointerPosition[0], this.pointerPosition[1]);
@@ -172,7 +184,7 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 		
 		switch(button) {
 		case 0:
-			if(!this.isGuiOpen) {
+			if(!Datas.coGui.isMouseClickLocked()) {
 				if(diffX>=0 && diffY>=0) {
 					int x = (int)Math.floor(diffX/Assets.tileRenderSize[Assets.tileRenderSizeIndex]);
 					int y = (int)Math.floor(diffY/Assets.tileRenderSize[Assets.tileRenderSizeIndex]);
@@ -185,10 +197,13 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 						return true;
 					}
 				}
-				return false;
 			} else {
-				this.openedGui.processMouseClick(screenX, Gdx.graphics.getHeight()-screenY);
+				String actionID = Datas.coGui.processMouseClick(screenX, Gdx.graphics.getHeight()-screenY);
+				if(actionID != null) {
+					return this.actionPerformed(actionID);
+				}
 			}
+			return false;
 			//Old stuff
 			/*for(int y=0; y<Datas.coMap.getMapSize()[1]; y++) {
 				for(int x=0; x<Datas.coMap.getMapSize()[0]; x++) {
@@ -197,20 +212,18 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 			}
 			return true;*/
 		case 1:
-			if(diffX>=0 && diffY>=0) {
-				int x = (int)Math.floor(diffX/Assets.tileRenderSize[Assets.tileRenderSizeIndex]);
-				int y = (int)Math.floor(diffY/Assets.tileRenderSize[Assets.tileRenderSizeIndex]);
-				if(Datas.coMap.getMapSize()[0]-1>=x && Datas.coMap.getMapSize()[1]-1>=y) {
-					this.pointerPosition[0] = x;
-					this.pointerPosition[1] = y;
-					this.terrain = Datas.coMap.getTileTerrainType(this.pointerPosition[0], this.pointerPosition[1]);
-					return true;
+			if(!Datas.coGui.isMouseClickLocked()) {
+				if(diffX>=0 && diffY>=0) {
+					int x = (int)Math.floor(diffX/Assets.tileRenderSize[Assets.tileRenderSizeIndex]);
+					int y = (int)Math.floor(diffY/Assets.tileRenderSize[Assets.tileRenderSizeIndex]);
+					if(Datas.coMap.getMapSize()[0]-1>=x && Datas.coMap.getMapSize()[1]-1>=y) {
+						this.pointerPosition[0] = x;
+						this.pointerPosition[1] = y;
+						this.terrain = Datas.coMap.getTileTerrainType(this.pointerPosition[0], this.pointerPosition[1]);
+						return true;
+					}
 				}
 			}
-			return false;
-		case 3:
-			//TODO: Open Tab
-			return true;
 		}
 		return false;
 	}
@@ -232,6 +245,22 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 
 	@Override
 	public boolean scrolled(int amount) {
+		return false;
+	}
+	
+	private boolean actionPerformed(String actionID) {
+		if(actionID.equals("tile.0")) {
+			this.terrain = TerrainType.Plain;
+			return true;
+		}
+		if(actionID.equals("tile.1")) {
+			this.terrain = TerrainType.Forest;
+			return true;
+		}
+		if(actionID.equals("tile.2")) {
+			this.terrain = TerrainType.Mountain;
+			return true;
+		}
 		return false;
 	}
 }

@@ -1,16 +1,34 @@
 package com.azias.advancewarsbootleg;
 
+import com.azias.advancewarsbootleg.gui.GuiMainMenu;
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.Texture;
 
-public class ScreenMainMenu extends ScreenAdapter {
+public class ScreenMainMenu extends ScreenAdapter implements ApplicationListener, InputProcessor {
 	AdvanceWarsBootleg game;
+	private Texture logo;
 
 	public ScreenMainMenu(AdvanceWarsBootleg game) {
 		this.game = game;
+		this.logo = Assets.loadTexture("gfx/gui/mainmenu/tempLogo.png");
+		Datas.coGui.createGui(2, new GuiMainMenu(2));
+		Gdx.input.setInputProcessor(this);
 	}
 
 	public void update () {
+		
+	}
+
+	@Override
+	public void create() {
+		
+	}
+
+	@Override
+	public void render() {
 		
 	}
 
@@ -34,8 +52,10 @@ public class ScreenMainMenu extends ScreenAdapter {
 		game.batcher.end();	*/
 		game.batch.begin();
 		game.batch.draw(Assets.background,Gdx.graphics.getWidth()/2-Assets.background.getWidth()/2,Gdx.graphics.getHeight()/2-Assets.background.getHeight()/2);
-		//game.batch.
-		//game.batch.
+		
+		game.batch.draw(this.logo,Gdx.graphics.getWidth()/2-this.logo.getWidth()/2,(float)(Gdx.graphics.getHeight()-this.logo.getHeight()*1.25));
+		
+		Datas.coGui.render(game.batch);
 		
 		game.batch.end();
 	}
@@ -49,5 +69,64 @@ public class ScreenMainMenu extends ScreenAdapter {
 	@Override
 	public void pause() {
 		
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		//System.out.println("keyDown");
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		//System.out.println("keyUp");
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		//System.out.println("keyTyped");
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		//System.out.println("touchDown");
+		String actionID = Datas.coGui.processMouseClick(screenX, Gdx.graphics.getHeight()-screenY);
+		if(actionID != null) {
+			return this.actionPerformed(actionID);
+		}
+		return false;
+	}
+
+	private boolean actionPerformed(String actionID) {
+		if(actionID.equals("editor")) {
+			
+			Datas.coGui.killAll();
+			this.game.setScreen(new ScreenMapEditor(this.game));
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		//System.out.println("touchUp");
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		return false;
 	}
 }

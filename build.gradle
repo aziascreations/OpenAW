@@ -13,12 +13,12 @@ allprojects {
 
     version = '1.0'
     ext {
-        appName = "Advance Wars Bootleg Edition"
-        gdxVersion = '1.6.5'
-        roboVMVersion = '1.6.0'
+        appName = "AdvanceWarsBootleg"
+        gdxVersion = '1.7.1'
+        roboVMVersion = '1.9.0'
         box2DLightsVersion = '1.4'
-        ashleyVersion = '1.6.0'
-        aiVersion = '1.5.0'
+        ashleyVersion = '1.7.0'
+        aiVersion = '1.6.0'
     }
 
     repositories {
@@ -36,9 +36,9 @@ project(":desktop") {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-controllers-desktop:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers-platform:$gdxVersion:natives-desktop"
-        compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
     }
 }
 
@@ -48,6 +48,7 @@ project(":core") {
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
     }
 }

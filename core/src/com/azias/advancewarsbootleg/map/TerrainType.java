@@ -106,81 +106,116 @@ public enum TerrainType {
     }
 
 	protected static int[] getBeachSubType(String par1) {
-		//23-11-15 Leave this like that if you want a 1.6 support as switches are shit in 1.6.
-		if(par1.equals("SEBS")) {
+		//Leave this like that if you want a Java 6 support because switches are shit in this version.
+		//I switched to Java 7, It came out in 2011... I won't use an older version from 2007.
+		switch(par1) {
+		case "SEBS":
 			return new int[] {0,0};
-		} else if(par1.equals("BESS")) {
+		case "BESS":
 			return new int[] {0,1};
-		} else if(par1.equals("SSBE")) {
+		case "SSBE":
 			return new int[] {1,0};
-		} else if(par1.equals("BSSE")) {
+		case "BSSE":
 			return new int[] {1,1};
-		} else if(par1.equals("SBES")) {
+		case "SBES":
 			return new int[] {2,0};
-		} else if(par1.equals("EBSS")) {
+		case "EBSS":
 			return new int[] {2,1};
-		} else if(par1.equals("SSEB")) {
+		case "SSEB":
 			return new int[] {3,0};
-		} else if(par1.equals("ESSB")) {
+		case "ESSB":
 			return new int[] {3,1};
-		} else if(par1.equals("SESS")) {
+		case "SESS":
 			return new int[] {4,0};
-		} else if(par1.equals("SSES")) {
+		case "SSES":
 			return new int[] {4,1};
-		} else if(par1.equals("SSSE")) {
+		case "SSSE":
 			return new int[] {5,0};
-		} else if(par1.equals("ESSS")) {
+		case "ESSS":
 			return new int[] {5,1};
-		} else if(par1.equals("SBEB")) {
+		case "SBEB":
 			return new int[] {6,0};
-		} else if(par1.equals("EBSB")) {
+		case "EBSB":
 			return new int[] {6,1};
-		} else if(par1.equals("BSBE")) {
+		case "BSBE":
 			return new int[] {7,0};
-		} else if(par1.equals("BEBS")) {
+		case "BEBS":
 			return new int[] {7,1};
-		} else if(par1.equals("BEEB")) {
+		case "BEEB":
 			return new int[] {8,0};
-		} else if(par1.equals("EEBB")) {
+		case "EEBB":
 			return new int[] {8,1};
-		} else if(par1.equals("BBEE")) {
+		case "BBEE":
 			return new int[] {9,0};
-		} else if(par1.equals("EBBE")) {
+		case "EBBE":
 			return new int[] {9,1};
-		} else if(par1.equals("SEES")) {
+		case "SEES":
 			return new int[] {10,0};
-		} else if(par1.equals("EESS")) {
+		case "EESS":
 			return new int[] {10,1};
-		} else if(par1.equals("SSEE")) {
+		case "SSEE":
 			return new int[] {11,0};
-		} else if(par1.equals("ESSE")) {
+		case "ESSE":
 			return new int[] {11,1};
-		} else if(par1.equals("EEES")) {
+		case "EEES":
 			return new int[] {12,0};
-		} else if(par1.equals("ESEE")) {
+		case "ESEE":
 			return new int[] {12,1};
-		} else if(par1.equals("SEEE")) {
+		case "SEEE":
 			return new int[] {13,0};
-		} else if(par1.equals("EESE")) {
+		case "EESE":
 			return new int[] {13,1};
-		} else if(par1.equals("SBEE")) {
+		case "SBEE":
 			return new int[] {14,0};
-		} else if(par1.equals("EBSE")) {
+		case "EBSE":
 			return new int[] {14,1};
-		} else if(par1.equals("SEEB")) {
+		case "SEEB":
 			return new int[] {15,0};
-		} else if(par1.equals("EESB")) {
+		case "EESB":
 			return new int[] {15,1};
-		} else if(par1.equals("EEBS")) {
+		case "EEBS":
 			return new int[] {16,0};
-		} else if(par1.equals("BEES")) {
+		case "BEES":
 			return new int[] {16,1};
-		} else if(par1.equals("ESBE")) {
+		case "ESBE":
 			return new int[] {17,0};
-		} else if(par1.equals("BSEE")) {
+		case "BSEE":
 			return new int[] {17,1};
-		} else {
+		default:
 			return new int[] {0,0};
+		}
+	}
+
+	public static int[] getRoadSubType(String par1) {
+		switch(par1) {
+		case "RERE":
+		case "REEE":
+		case "EERE":
+			return new int[] {5,0};
+		case "ERER":
+		case "EEER":
+		case "EREE":
+			return new int[] {4,0};
+		case "ERRE":
+			return new int[] {0,0};
+		case "RREE":
+			return new int[] {1,0};
+		case "REER":
+			return new int[] {2,0};
+		case "EERR":
+			return new int[] {3,0};
+		case "RRRE":
+			return new int[] {6,0};
+		case "ERRR":
+			return new int[] {7,0};
+		case "RRER":
+			return new int[] {8,0};
+		case "RERR":
+			return new int[] {9,0};
+		case "RRRR":
+			return new int[] {10,0};
+		default:
+			return new int[] {4,0};
 		}
 	}
 }

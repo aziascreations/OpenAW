@@ -1,6 +1,8 @@
 package com.azias.advancewarsbootleg.gui;
 
+import com.azias.advancewarsbootleg.Assets;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -8,6 +10,8 @@ import com.badlogic.gdx.math.Rectangle;
 public class GuiButton extends Gui {
 	protected String actionId;
 	protected TextureRegion texture = null;
+	protected String text;
+	protected GlyphLayout glyphLayout;
 	
 	/**
 	 * @param id - Button's actionId
@@ -16,9 +20,10 @@ public class GuiButton extends Gui {
 	 * @param sizeX - Button's width
 	 * @param sizeY - Button's height
 	 */
-	public GuiButton(String id, int posX, int posY, int sizeX, int sizeY) {
+	protected GuiButton(int id, String actionId, int posX, int posY, int sizeX, int sizeY) {
 		super(posX, posY, sizeX, sizeY);
-		this.actionId = id;
+		this.id = id;
+		this.actionId = actionId;
 		if(posX==-1) {
 			this.position[0] = Gdx.graphics.getWidth()/2-this.size[0]/2;
 		} else {
@@ -31,17 +36,42 @@ public class GuiButton extends Gui {
 		}
 	}
 	
+	protected GuiButton(String actionId, int posX, int posY, int sizeX, int sizeY, TextureRegion tr) {
+		this(-1, actionId, posX, posY, sizeX, sizeY, tr);
+	}
+	
+	protected GuiButton(String actionId, int posX, int posY, int sizeX, int sizeY, String text) {
+		this(-1, actionId, posX, posY, sizeX, sizeY, text);
+	}
+	
 	/**
-	 * @param id - Button's actionId
+	 * @param id - Button's id
+	 * @param actionId - Button's actionId
 	 * @param posX - Button's horizontal position<br>&nbsp;* If you enter -1, the button will be centered on this axis.
 	 * @param posY - Button's vertical position<br>&nbsp;* If you enter -1, the button will be centered on this axis.
 	 * @param sizeX - Button's width
 	 * @param sizeY - Button's height
 	 * @param tr - Button's texture
 	 */
-	public GuiButton(String id, int posX, int posY, int sizeX, int sizeY, TextureRegion tr) {
-		this(id, posX, posY, sizeX, sizeY);
+	public GuiButton(int id, String actionId, int posX, int posY, int sizeX, int sizeY, TextureRegion tr) {
+		this(id, actionId, posX, posY, sizeX, sizeY);
 		this.texture = tr;
+	}
+	
+	/**
+	 * @param id - Button's id
+	 * @param actionId - Button's actionId
+	 * @param posX - Button's horizontal position<br>&nbsp;* If you enter -1, the button will be centered on this axis.
+	 * @param posY - Button's vertical position<br>&nbsp;* If you enter -1, the button will be centered on this axis.
+	 * @param sizeX - Button's width
+	 * @param sizeY - Button's height
+	 * @param text - Button's text
+	 */
+	public GuiButton(int id, String actionId, int posX, int posY, int sizeX, int sizeY, String text) {
+		this(id, actionId, posX, posY, sizeX, sizeY);
+		this.text = text;
+		this.glyphLayout = new GlyphLayout();
+		this.glyphLayout.setText(Assets.font48,text);
 	}
 	
 	@Override
@@ -49,12 +79,22 @@ public class GuiButton extends Gui {
 		if(this.texture!=null) {
 			batch.draw(this.texture, this.position[0], this.position[1], this.size[0], this.size[1]);
 		} else {
+			batch.draw(Assets.arrowFiller, this.position[0], this.position[1], this.size[0], this.size[1]);
 			
+			int borderWidth = 3;
+			batch.draw(Assets.arrowFiller, this.position[0], this.position[1], borderWidth, this.size[1]);
+			batch.draw(Assets.arrowFiller, this.position[0]+this.size[0]-borderWidth, this.position[1], borderWidth, this.size[1]);
+			batch.draw(Assets.arrowFiller, this.position[0]+borderWidth, this.position[1], this.size[0]-borderWidth*2, borderWidth);
+			batch.draw(Assets.arrowFiller, this.position[0]+borderWidth, this.position[1]+this.size[1]-borderWidth, this.size[0]-borderWidth*2, borderWidth);
+			
+			Assets.font48.draw(batch, this.glyphLayout, this.position[0]+this.size[0]/2-this.glyphLayout.width/2, this.position[1]+this.size[1]-this.glyphLayout.height);
 		}
 	}
 	
 	public boolean isClicked(int posX, int posY) {
 		if(new Rectangle(this.position[0], this.position[1], this.size[0], this.size[1]).contains(posX, posY)) {
+			Assets.buttonClick.play(1.0F);
+			//System.out.println("Button "+this.id+"/"+this.actionId+" pressed");
 			return true;
 		} else {
 			return false;

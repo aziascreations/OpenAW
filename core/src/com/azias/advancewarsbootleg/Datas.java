@@ -6,4 +6,6 @@ import com.azias.advancewarsbootleg.map.MapController;
 public class Datas {
 	public static MapController coMap = new MapController();
 	public static GuiController coGui = new GuiController();
+	
+	//public static TextRenderer txtRenderer;
 }

@@ -1,14 +1,19 @@
 package com.azias.advancewarsbootleg;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
 public class Assets {
+	public static BitmapFont font24, font36, font48;
+	
 	public static Texture background;
 	public static Texture[] mapSelectParts;
 	public static Texture[] guiTitles;
-	public static Texture font;
 	public static TextureRegion[][] fontTextures;
 	
 	public static Texture arrowOpen, arrowClose, arrowFiller, tileTabs;
@@ -21,11 +26,34 @@ public class Assets {
 	public static int[] tileRenderSize = new int[] {16,32,48,64,80,96};
 	public static int[] renderOffset = new int[] {0,0};
 	
-	public static Texture loadTexture (String file) {
+	public static Sound buttonClick;
+	
+	public static Texture loadTexture(String file) {
 		return new Texture(Gdx.files.internal(file));
 	}
 	
+	public static Sound loadSound(String file) {
+		return Gdx.audio.newSound(Gdx.files.internal(file));
+	}
+	
+	//Todo: Add dispose() when needed to avoid memory leaks
+	//I thinks it's done, but I'm not sure...
 	public static void load() {
+		//Fonts
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("gfx/fonts/adw2GBA.ttf"));
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = 24;
+		font24 = generator.generateFont(parameter);
+		parameter.size = 36;
+		font36 = generator.generateFont(parameter);
+		parameter.size = 48;
+		font48 = generator.generateFont(parameter);
+		generator.dispose();
+		
+		//Sounds
+		buttonClick = loadSound("sfx/sounds/menu/soundMenuMoving.ogg");
+		
+		//Textures
 		background = loadTexture("gfx/gui/background/background_06.png");
 		
 		mapSelectParts = new Texture[3];
@@ -35,9 +63,6 @@ public class Assets {
 		
 		guiTitles = new Texture[1];
 		guiTitles[0] = loadTexture("gfx/gui/titles/chooseMap.png");
-		
-		font = loadTexture("gfx/fonts/fontPalette.png");
-		fontTextures = new TextureRegion[26][4];
 
 		arrowOpen = loadTexture("gfx/gui/editor/arrow_1.png");
 		arrowClose = loadTexture("gfx/gui/editor/arrow_2.png");
@@ -49,6 +74,8 @@ public class Assets {
 		for(int i=0; i<editorSelectTileImages.length; i++) {
 			editorSelectTileImages[i] = new TextureRegion(temp1, i*64, 0, 64, 64);
 		}
+		//Don't use that, the icons are just black when using it.
+		//temp1.dispose();
 		
 		pointer = loadTexture("gfx/gui/editor/mapCursor.png");
 		
@@ -73,7 +100,7 @@ public class Assets {
 		
 		//Roads
 		a = new TextureRegion[11][2];
-		for(int i = 0; i<10; i++) {
+		for(int i = 0; i<11; i++) {
 			a[i][0] = new TextureRegion(new Texture("gfx/terrain/plain_road.png"),0+(i*16),0,16,16);
 			a[i][1] = new TextureRegion(new Texture("gfx/terrain/plain_road.png"),0+(i*16),16,16,16);
 		}
@@ -94,7 +121,7 @@ public class Assets {
 		tilesGraphics[4] = a;
 		tileGraphicsBooleans[4] = false;
 		
-		//Beach18
+		//Beach - 18
 		a = new TextureRegion[18][2];
 		for(int i = 0; i<18; i++) {
 			a[i][0] = new TextureRegion(new Texture("gfx/terrain/plain_beach.png"),0+(i*16),0,16,16);
@@ -120,5 +147,7 @@ public class Assets {
 		a[0][0] = new TextureRegion(new Texture("gfx/terrain/plain_building.png"),0,0,16,16);
 		tilesGraphics[9] = a;
 		tileGraphicsBooleans[9] = false;
+		
+		//Datas.txtRenderer = new TextRenderer();
 	}
 }

@@ -18,10 +18,13 @@ Indev 1
 
 ==Credits
   *JakeSamiRulz - COs and Gui parts
-    https://github.com/ctomni231
+    -[Github Profile](https://github.com/ctomni231)
   
   *AzRaezel - Units Textures
-    *http://www.spriters-resource.com/submitter/AzRaezel/
+    -[SpritersRessource Profile](http://www.spriters-resource.com/submitter/AzRaezel/)
+  
+  *Patrick Lauke - Font Creator
+    -[Fontstruct Profile](http://fontstruct.com/fontstructors/145/redux)
   
   If I forgot anyone, please send me a message.
 
