@@ -4,27 +4,57 @@
    / ___ \ (_| |\ V / (_| | | | | (_|  __/   \ V  V / (_| | |  \__ \
   /_/   \_\__,_| \_/ \__,_|_| |_|\___\___|    \_/\_/ \__,_|_|  |___/
   Bootleg Edition
-  Indev 1
+  Indev 3
 
-Advance Wars Bootleg Edition is a game based on the Advance wars serie adn Custom Wars by JakeSamiRulz.
+Advance Wars Bootleg Edition is a game based on the Advance wars serie and Custom Wars by JakeSamiRulz.
 The project's main goals are: having a working game with a map editor, multiplayer and staying as close as possible to the original game.
 
-== Changelog
+== Changelogs
+Indev 3
+  *Added a custom logo on the main menu.
+  *Added the bases of the option menu.
+  *Added more sea tiles.
+  *Added parts of the desert tileset.
+  *Improved the main menu, kinda.
+  *Changed "assets-desktop" to "datas"
+  *Cleaned up some useless code in "GuiButton".
+  *Removed the links in the readme's credits section. - They were not working, will be fixed later.
+  *Check the commit details for more information.
+
+Indev 2
+  *Switched to Java 7
+  *Added a "working" GUI system.
+  *Added a font and libgdx's freetype library.
+  *Added links in the readme's credits section.
+  *Check the commit details for more information.
 
 Indev 1
   *Added basic GUIs.
-  *And more things, I can't remember.
+  *And more things, check the commit details for more informations.
+
+
+==Requirements
+  These values aren't totally accurate.
+  
+  *OS:
+    -Windows: XP or newer.
+    -Linux & Mac: See Java 7 requirements. 
+  *RAM: ~256 Mo
+  *Disk space:
+    -Sources: ~40 Mo
+    -Exported: ~20 Mo
+  *Java: JDK 7 or newer.
 
 
 ==Credits
-  *JakeSamiRulz - COs and Gui parts
-    -[Github Profile](https://github.com/ctomni231)
+  *JakeSamiRulz - COs and GUI parts
+    -Github Profile - "https://github.com/ctomni231"
   
   *AzRaezel - Units Textures
-    -[SpritersRessource Profile](http://www.spriters-resource.com/submitter/AzRaezel/)
+    -SpritersRessource Profile - "http://www.spriters-resource.com/submitter/AzRaezel/"
   
   *Patrick Lauke - Font Creator
-    -[Fontstruct Profile](http://fontstruct.com/fontstructors/145/redux)
+    -Fontstruct Profile - "http://fontstruct.com/fontstructors/145/redux"
   
   If I forgot anyone, please send me a message.
 

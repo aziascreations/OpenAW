@@ -1,20 +1,17 @@
-package com.azias.advancewarsbootleg;
+package com.azias.advancewarsbootleg.screens;
 
+import com.azias.advancewarsbootleg.AdvanceWarsBootleg;
+import com.azias.advancewarsbootleg.Assets;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
-public class ScreenOptions extends ScreenAdapter implements ApplicationListener, InputProcessor {
+public class ScreenMapSelect extends ScreenAdapter implements ApplicationListener, InputProcessor {
 	AdvanceWarsBootleg game;
-	private BitmapFont font;
 
-	public ScreenOptions(AdvanceWarsBootleg game) {
-		this.game = game;    
-        font = new BitmapFont();
-        font.setColor(Color.RED);
+	public ScreenMapSelect(AdvanceWarsBootleg game) {
+		this.game = game;
 	}
 
 	@Override
@@ -30,8 +27,14 @@ public class ScreenOptions extends ScreenAdapter implements ApplicationListener,
 		game.batch.begin();
 		//Background
 		game.batch.draw(Assets.background,Gdx.graphics.getWidth()/2-Assets.background.getWidth()/2,Gdx.graphics.getHeight()/2-Assets.background.getHeight()/2);
-
-        font.draw(game.batch, "Hello World", 200, 100);
+		//Title Parts
+		game.batch.draw(Assets.mapSelectParts[0],0,Gdx.graphics.getHeight()-Assets.mapSelectParts[0].getHeight(),Gdx.graphics.getWidth()-Assets.mapSelectParts[2].getWidth(),Assets.mapSelectParts[0].getHeight());
+		game.batch.draw(Assets.mapSelectParts[2],Gdx.graphics.getWidth()-Assets.mapSelectParts[2].getWidth(),Gdx.graphics.getHeight()-Assets.mapSelectParts[2].getHeight());
+		game.batch.draw(Assets.guiTitles[0], 7, Gdx.graphics.getHeight()-7-Assets.guiTitles[0].getHeight()*2, Assets.guiTitles[0].getWidth()*2, Assets.guiTitles[0].getHeight()*2);
+		//Map List Parts
+		game.batch.draw(Assets.mapSelectParts[1],0,0,Assets.mapSelectParts[1].getWidth(),Gdx.graphics.getHeight()-Assets.mapSelectParts[0].getHeight());
+		
+		//Map Infos Parts
 		game.batch.end();
 	}
 

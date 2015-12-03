@@ -1,20 +1,26 @@
-package com.azias.advancewarsbootleg;
+package com.azias.advancewarsbootleg.screens;
 
+import com.azias.advancewarsbootleg.AdvanceWarsBootleg;
+import com.azias.advancewarsbootleg.Assets;
+import com.azias.advancewarsbootleg.Datas;
+import com.azias.advancewarsbootleg.gui.GuiOptionsMenu;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 
-public class ScreenMapSelect extends ScreenAdapter implements ApplicationListener, InputProcessor {
+public class ScreenOptions extends ScreenAdapter implements ApplicationListener, InputProcessor {
 	AdvanceWarsBootleg game;
 
-	public ScreenMapSelect(AdvanceWarsBootleg game) {
+	public ScreenOptions(AdvanceWarsBootleg game) {
 		this.game = game;
+        Gdx.input.setInputProcessor(this);
+        Datas.coGui.createGui(1, new GuiOptionsMenu(1));
 	}
 
 	@Override
 	public void create() {
-        Gdx.input.setInputProcessor(this);
+		
 	}
 
 	public void update () {
@@ -25,14 +31,8 @@ public class ScreenMapSelect extends ScreenAdapter implements ApplicationListene
 		game.batch.begin();
 		//Background
 		game.batch.draw(Assets.background,Gdx.graphics.getWidth()/2-Assets.background.getWidth()/2,Gdx.graphics.getHeight()/2-Assets.background.getHeight()/2);
-		//Title Parts
-		game.batch.draw(Assets.mapSelectParts[0],0,Gdx.graphics.getHeight()-Assets.mapSelectParts[0].getHeight(),Gdx.graphics.getWidth()-Assets.mapSelectParts[2].getWidth(),Assets.mapSelectParts[0].getHeight());
-		game.batch.draw(Assets.mapSelectParts[2],Gdx.graphics.getWidth()-Assets.mapSelectParts[2].getWidth(),Gdx.graphics.getHeight()-Assets.mapSelectParts[2].getHeight());
-		game.batch.draw(Assets.guiTitles[0], 7, Gdx.graphics.getHeight()-7-Assets.guiTitles[0].getHeight()*2, Assets.guiTitles[0].getWidth()*2, Assets.guiTitles[0].getHeight()*2);
-		//Map List Parts
-		game.batch.draw(Assets.mapSelectParts[1],0,0,Assets.mapSelectParts[1].getWidth(),Gdx.graphics.getHeight()-Assets.mapSelectParts[0].getHeight());
 		
-		//Map Infos Parts
+		Datas.coGui.render(game.batch);
 		game.batch.end();
 	}
 
@@ -52,6 +52,19 @@ public class ScreenMapSelect extends ScreenAdapter implements ApplicationListene
 		
 	}
 
+	private boolean actionPerformed(String actionID) {
+		if(actionID.equals("save")) {
+			
+			return true;
+		}
+		if(actionID.equals("exit")) {
+			Datas.coGui.killAll();
+			this.game.setScreen(new ScreenMainMenu(this.game));
+			return true;
+		}
+		return false;
+	}
+
 	@Override
 	public boolean keyDown(int keycode) {
 		return false;
@@ -69,6 +82,10 @@ public class ScreenMapSelect extends ScreenAdapter implements ApplicationListene
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		String actionID = Datas.coGui.processMouseClick(screenX, Gdx.graphics.getHeight()-screenY);
+		if(actionID != null) {
+			return this.actionPerformed(actionID);
+		}
 		return false;
 	}
 

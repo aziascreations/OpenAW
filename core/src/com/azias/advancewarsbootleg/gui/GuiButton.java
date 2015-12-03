@@ -1,7 +1,7 @@
 package com.azias.advancewarsbootleg.gui;
 
 import com.azias.advancewarsbootleg.Assets;
-import com.badlogic.gdx.Gdx;
+import com.azias.advancewarsbootleg.Datas;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,28 +20,10 @@ public class GuiButton extends Gui {
 	 * @param sizeX - Button's width
 	 * @param sizeY - Button's height
 	 */
-	protected GuiButton(int id, String actionId, int posX, int posY, int sizeX, int sizeY) {
+	private GuiButton(int id, String actionId, int posX, int posY, int sizeX, int sizeY) {
 		super(posX, posY, sizeX, sizeY);
 		this.id = id;
 		this.actionId = actionId;
-		if(posX==-1) {
-			this.position[0] = Gdx.graphics.getWidth()/2-this.size[0]/2;
-		} else {
-			this.position[0] = posX;
-		}
-		if(posX==-1) {
-			this.position[1] = Gdx.graphics.getHeight()/2-this.size[1]/2;
-		} else {
-			this.position[1] = posY;
-		}
-	}
-	
-	protected GuiButton(String actionId, int posX, int posY, int sizeX, int sizeY, TextureRegion tr) {
-		this(-1, actionId, posX, posY, sizeX, sizeY, tr);
-	}
-	
-	protected GuiButton(String actionId, int posX, int posY, int sizeX, int sizeY, String text) {
-		this(-1, actionId, posX, posY, sizeX, sizeY, text);
 	}
 	
 	/**
@@ -87,13 +69,18 @@ public class GuiButton extends Gui {
 			batch.draw(Assets.arrowFiller, this.position[0]+borderWidth, this.position[1], this.size[0]-borderWidth*2, borderWidth);
 			batch.draw(Assets.arrowFiller, this.position[0]+borderWidth, this.position[1]+this.size[1]-borderWidth, this.size[0]-borderWidth*2, borderWidth);
 			
-			Assets.font48.draw(batch, this.glyphLayout, this.position[0]+this.size[0]/2-this.glyphLayout.width/2, this.position[1]+this.size[1]-this.glyphLayout.height);
+			//Not working properly, will fix this one day, maybe.
+			//Turns out I just can't do math correctly
+			Assets.font48.draw(batch, this.glyphLayout, this.position[0]+this.size[0]/2-this.glyphLayout.width/2, this.position[1]+this.size[1]/2+this.glyphLayout.height/2);
 		}
 	}
 	
 	public boolean isClicked(int posX, int posY) {
 		if(new Rectangle(this.position[0], this.position[1], this.size[0], this.size[1]).contains(posX, posY)) {
-			Assets.buttonClick.play(1.0F);
+			//Workaround the 0.0F bug.
+			if(Datas.volumeEffects>0.0F) {
+				Assets.buttonClick.play(Datas.volumeEffects);
+			}
 			//System.out.println("Button "+this.id+"/"+this.actionId+" pressed");
 			return true;
 		} else {
@@ -101,7 +88,12 @@ public class GuiButton extends Gui {
 		}
 	}
 	
-	public String getId() {
+	public String getActionId() {
 		return this.actionId;
 	}
+	
+	//Doesn't work when using it in addButton()
+	/*public void setOffset(int offsetX, int offsetY) {
+		
+	}*/
 }

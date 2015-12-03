@@ -12,6 +12,8 @@ public class Gui extends Object {
 	protected int[] size = new int[2];
 	protected ArrayList<GuiButton> buttonList = new ArrayList<GuiButton>();
 	protected boolean isLockingMouseClick = false;
+	protected boolean isNeedingKeyboardInput = false;
+	protected boolean isEnabled = true;
 
 	/**
 	 * Create a GUI at given size and location.
@@ -21,18 +23,19 @@ public class Gui extends Object {
 	 * @param sizeY - Height
 	 */
 	public Gui(int posX, int posY, int sizeX, int sizeY) {
+		this.size[0] = sizeX;
+		this.size[1] = sizeY;
+		
 		if(posX==-1) {
 			this.position[0] = Gdx.graphics.getWidth()/2-this.size[0]/2;
 		} else {
 			this.position[0] = posX;
 		}
-		if(posX==-1) {
+		if(posY==-1) {
 			this.position[1] = Gdx.graphics.getHeight()/2-this.size[1]/2;
 		} else {
 			this.position[1] = posY;
 		}
-		this.size[0] = sizeX;
-		this.size[1] = sizeY;
 	}
 	
 	/**
@@ -54,8 +57,8 @@ public class Gui extends Object {
 	public String processMouseClick(int posX, int posY) {
 		for(int i=0; i<this.buttonList.size(); i++) {
 			if(this.buttonList.get(i).isClicked(posX, posY)) {
-				if(!this.executeButtonAction(this.buttonList.get(i).getId())) {
-					return this.buttonList.get(i).getId();
+				if(!this.executeButtonAction(this.buttonList.get(i).getActionId())) {
+					return this.buttonList.get(i).getActionId();
 				}
 			}
 		}

@@ -1,21 +1,19 @@
 package com.azias.advancewarsbootleg;
 
+import com.azias.advancewarsbootleg.screens.ScreenMainMenu;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class AdvanceWarsBootleg extends Game {
-	SpriteBatch batch;
-	Texture img;
+	public SpriteBatch batch;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		Assets.load();
+		//Datas.loadConfigFile();
 		setScreen(new ScreenMainMenu(this));
 		//setScreen(new ScreenMapSelect(this));
-		//setScreen(new ScreenOptions(this));
-		//setScreen(new ScreenMapEditor(this));
 	}
 
 	@Override

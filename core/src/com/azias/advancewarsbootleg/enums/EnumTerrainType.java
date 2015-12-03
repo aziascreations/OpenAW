@@ -1,8 +1,8 @@
-package com.azias.advancewarsbootleg.map;
+package com.azias.advancewarsbootleg.enums;
 
 //Based on: http://strategywiki.org/wiki/Advance_Wars_2:_Black_Hole_Rising/Units#Charts
 
-public enum TerrainType {
+public enum EnumTerrainType {
 	Plain(
 		new int[]{1,1,2},//Infantry
 		new int[]{1,1,1},//Mech
@@ -62,7 +62,7 @@ public enum TerrainType {
     private final int terrainAnimationID;
     private final String letter;
     
-    TerrainType(final int[] moveInfantry, final int[] moveMech, final int[] moveThreads, final int[] moveWheels, final int[] moveLander, final int[] moveShip, final int[] moveAir, final int terrainAnimationID, final String letter) {
+    EnumTerrainType(final int[] moveInfantry, final int[] moveMech, final int[] moveThreads, final int[] moveWheels, final int[] moveLander, final int[] moveShip, final int[] moveAir, final int terrainAnimationID, final String letter) {
         this.moveInfantry = moveInfantry;
         this.moveMech = moveMech;
         this.moveThreads = moveThreads;
@@ -105,7 +105,8 @@ public enum TerrainType {
     	return this.letter;
     }
 
-	protected static int[] getBeachSubType(String par1) {
+    //i am so so sorry for what you are about to witness, but I had no choice...
+	public static int[] getBeachSubType(String par1) {
 		//Leave this like that if you want a Java 6 support because switches are shit in this version.
 		//I switched to Java 7, It came out in 2011... I won't use an older version from 2007.
 		switch(par1) {
@@ -216,6 +217,159 @@ public enum TerrainType {
 			return new int[] {10,0};
 		default:
 			return new int[] {4,0};
+		}
+	}
+
+	public static int[] getMountainSubType(String par1) {
+		switch(par1) {
+		case "MM":
+			return new int[] {2,0};
+		case "EM":
+			return new int[] {1,0};
+		case "ME":
+			return new int[] {3,0};
+		default:
+			return new int[] {0,0};
+		}
+	}
+	
+	//par1 - Up, Right, Bottom, Left
+	//par2 - UpLeft, UpRight, BottomLeft, BottomRight
+	public static int[] getSeaSubType(String par1, String par2) {
+		/*if(!(par1.length()==4 && par2.length()==4)) {
+			System.out.println("Error: Tried to define SeaSubType - par1:"+par1+" - par2:"+par2);
+			return new int[] {15,2};
+		}*/
+		switch(par1) {
+		case "SSSS":
+			if(par2.equals("SSSS")) {
+				return new int[] {7,2};
+			} else if(par2.equals("EEEE")) {
+				return new int[] {14,2};
+			} else if(par2.equals("SSSE")) {
+				return new int[] {13,1};
+			} else if(par2.equals("SSES")) {
+				return new int[] {12,1};
+			} else if(par2.equals("SESS")) {
+				return new int[] {13,0};
+			} else if(par2.equals("ESSS")) {
+				return new int[] {12,0};
+			} else if(par2.equals("SEES")) {
+				return new int[] {8,2};
+			} else if(par2.equals("ESSE")) {
+				return new int[] {11,2};
+			} else if(par2.equals("EESS")) {
+				return new int[] {14,0};
+			} else if(par2.equals("SESE")) {
+				return new int[] {15,0};
+			} else if(par2.equals("SSEE")) {
+				return new int[] {15,1};
+			} else if(par2.equals("ESES")) {
+				return new int[] {14,1};
+			} else if(par2.equals("SEEE")) {
+				return new int[] {8,2};
+			} else if(par2.equals("ESEE")) {
+				return new int[] {9,2};
+			} else if(par2.equals("EEES")) {
+				return new int[] {12,2};
+			} else if(par2.equals("EESE")) {
+				return new int[] {13,2};
+			} else {
+				return new int[] {15,2};
+			}
+		case "EEEE":
+			return new int[] {5,1};
+		case "ESEE":
+			return new int[] {10,0};
+		case "EESE":
+			return new int[] {11,0};
+		case "EEES":
+			return new int[] {11,1};
+		case "SEEE":
+			return new int[] {10,1};
+		case "SESE":
+			return new int[] {9,0};
+		case "ESES":
+			return new int[] {9,1};
+		case "ESSS":
+			if(par2.charAt(2)=='S' && par2.charAt(3)=='S') {
+				return new int[] {5,0};
+			} else if(par2.charAt(2)=='E' && par2.charAt(3)=='S') {
+				return new int[] {3,0};
+			} else if(par2.charAt(2)=='S' && par2.charAt(3)=='E') {
+				return new int[] {3,1};
+			} else if(par2.charAt(2)=='E' && par2.charAt(3)=='E') {
+				return new int[] {3,2};
+			} else {
+				return new int[] {15,2};
+			}
+		case "SESS":
+			if(par2.charAt(0)=='S' && par2.charAt(2)=='S') {
+				return new int[] {6,1};
+			} else if(par2.charAt(0)=='E' && par2.charAt(2)=='S') {
+				return new int[] {2,0};
+			} else if(par2.charAt(0)=='S' && par2.charAt(2)=='E') {
+				return new int[] {2,1};
+			} else if(par2.charAt(0)=='E' && par2.charAt(2)=='E') {
+				return new int[] {2,2};
+			} else {
+				return new int[] {15,2};
+			}
+		case "SSES":
+			if(par2.charAt(0)=='S' && par2.charAt(1)=='S') {
+				return new int[] {5,2};
+			} else if(par2.charAt(0)=='E' && par2.charAt(1)=='S') {
+				return new int[] {1,0};
+			} else if(par2.charAt(0)=='S' && par2.charAt(1)=='E') {
+				return new int[] {1,1};
+			} else if(par2.charAt(0)=='E' && par2.charAt(1)=='E') {
+				return new int[] {1,2};
+			} else {
+				return new int[] {15,2};
+			}
+		case "SSSE":
+			if(par2.charAt(1)=='S' && par2.charAt(3)=='S') {
+				return new int[] {4,1};
+			} else if(par2.charAt(1)=='E' && par2.charAt(3)=='S') {
+				return new int[] {0,0};
+			} else if(par2.charAt(1)=='S' && par2.charAt(3)=='E') {
+				return new int[] {0,1};
+			} else if(par2.charAt(1)=='E' && par2.charAt(3)=='E') {
+				return new int[] {0,2};
+			} else {
+				return new int[] {15,2};
+			}
+
+		case "ESSE":
+			if(par2.charAt(3)=='E') {
+				return new int[] {7,0};
+			} else {
+				return new int[] {4,0};
+			}
+		case "EESS":
+			if(par2.charAt(2)=='E') {
+				return new int[] {8,0};
+			} else {
+				return new int[] {6,0};
+			}
+		case "SEES":
+			if(par2.charAt(0)=='E') {
+				return new int[] {8,1};
+			} else {
+				return new int[] {6,2};
+			}
+		case "SSEE":
+			if(par2.charAt(1)=='E') {
+				return new int[] {7,1};
+			} else {
+				return new int[] {4,2};
+			}
+			
+			
+		//case "":
+			//return new int[] {0,0};
+		default:
+			return new int[] {15,2};
 		}
 	}
 }

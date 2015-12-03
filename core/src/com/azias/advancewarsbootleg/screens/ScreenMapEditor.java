@@ -1,7 +1,11 @@
-package com.azias.advancewarsbootleg;
+package com.azias.advancewarsbootleg.screens;
 
+import com.azias.advancewarsbootleg.AdvanceWarsBootleg;
+import com.azias.advancewarsbootleg.Assets;
+import com.azias.advancewarsbootleg.Datas;
+import com.azias.advancewarsbootleg.enums.EnumTerrainType;
+import com.azias.advancewarsbootleg.gui.GuiEditorMenu;
 import com.azias.advancewarsbootleg.gui.GuiSelectTile;
-import com.azias.advancewarsbootleg.map.TerrainType;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -14,13 +18,10 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 	AdvanceWarsBootleg game;
 	private BitmapFont font;
 	private int[] pointerPosition;
-	private TerrainType terrain;
-	
-	//private boolean isGuiOpen = false;
-	//private Gui openedGui = null;
+	private EnumTerrainType terrain;
 
 	public ScreenMapEditor(AdvanceWarsBootleg game) {
-		this(game, "custom", "0184");
+		this(game, "custom", "iskander");
 	}
 	
 	public ScreenMapEditor(AdvanceWarsBootleg game, String mapPath, String mapName) {
@@ -28,7 +29,7 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 		this.font = new BitmapFont();
 		this.font.setColor(Color.RED);
 		this.pointerPosition = new int[] {0,0};
-		this.terrain = TerrainType.Plain;
+		this.terrain = EnumTerrainType.Plain;
 		
 		Datas.coMap.loadMap(mapPath, mapName);
 		Gdx.input.setInputProcessor(this);
@@ -47,11 +48,10 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 	public void draw() {
 		//Gdx.gl.glClearColor(back.r, back.g, back.b, back.a);
 		//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-		
 		game.batch.begin();
+		
 		//Background
 		game.batch.draw(Assets.background,Gdx.graphics.getWidth()/2-Assets.background.getWidth()/2,Gdx.graphics.getHeight()/2-Assets.background.getHeight()/2);
-		
 		//Map
 		Datas.coMap.render(game.batch);
 		//Pointer
@@ -63,20 +63,7 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 				Assets.tileRenderSize[Assets.tileRenderSizeIndex],
 				Assets.tileRenderSize[Assets.tileRenderSizeIndex]);
 		
-		//Side Menu
-		//game.batch.draw(Assets.arrowOpen,Gdx.graphics.getWidth()-Assets.arrowOpen.getWidth()*2,Gdx.graphics.getHeight()/2-Assets.arrowOpen.getHeight(),Assets.arrowOpen.getWidth()*2,Assets.arrowOpen.getHeight()*2);
-		
-		//Tests
-		//font.draw(game.batch, "Hello World", 200, 100);
-		
 		Datas.coGui.render(game.batch);
-		//if(this.isGuiOpen) {
-		//	this.openedGui.render(game.batch);
-		//}
-		//Assets.font24.draw(game.batch, "Hello world.", 50, 150);
-		//Assets.font36.draw(game.batch, "Hello world.", 50, 100, widthOfTheLine, HAlignment.LEFT);
-		//Assets.font48.draw(game.batch, "Hello world.", 50, 50);
-		
 		game.batch.end();
 	}
 
@@ -103,61 +90,67 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
         	if(pointerPosition[1]-1 >= 0) {
         		pointerPosition[1]--;
         	}
-            break;
+            return true;
         case Keys.DOWN:
         	if(pointerPosition[1]+1 < Datas.coMap.getMapSize()[1]) {
         		pointerPosition[1]++;
         	}
-            break;
+            return true;
         case Keys.LEFT:
         	if(pointerPosition[0]-1 >= 0) {
         		pointerPosition[0]--;
         	}
-            break;
+            return true;
         case Keys.RIGHT:
         	if(pointerPosition[0]+1 < Datas.coMap.getMapSize()[0]) {
         		pointerPosition[0]++;
         	}
-            break;
-        case Keys.SPACE:
-        	if(Datas.coGui.doesGuiExists(2)) {
-        		Datas.coGui.killGui(2);
-        	} else {
-        		Datas.coGui.createGui(2, new GuiSelectTile(2));
-        	}
-        	/*if(!this.isGuiOpen) {
-        		this.isGuiOpen = true;
-        		this.openedGui = new GuiSelectTile();
-        	} else if(this.openedGui instanceof GuiSelectTile) {
-        		this.isGuiOpen = false;
-        		this.openedGui = null;
-        	}*/
-            break;
+            return true;
+            
         case Keys.C:
         	this.terrain = Datas.coMap.getTileTerrainType(this.pointerPosition[0], this.pointerPosition[1]);
-            break;
+            return true;
         case Keys.V:
         	Datas.coMap.setTileTerrainType(this.pointerPosition[0], this.pointerPosition[1], this.terrain);
-            break;
+            return true;
             
         case Keys.E:
         	Datas.coMap.exportMap("export", "test01", "Test 1", "Azias");
-            break;
-            
+            return true;
+        
+        case Keys.ESCAPE:
+        	if(Datas.coGui.doesGuiExists(3)) {
+        		Datas.coGui.killGui(3);
+        		Assets.menuOut.play(Datas.volumeEffects);
+        	} else {
+        		Datas.coGui.createGui(3, new GuiEditorMenu(3));
+        		Assets.menuIn.play(Datas.volumeEffects);
+        	}
+            return true;
+        case Keys.SPACE:
+        	if(Datas.coGui.doesGuiExists(2)) {
+        		Datas.coGui.killGui(2);
+        		Assets.menuOut.play(Datas.volumeEffects);
+        	} else {
+        		Datas.coGui.createGui(2, new GuiSelectTile(2));
+        		Assets.menuIn.play(Datas.volumeEffects);
+        	}
+            return true;
+        
         case Keys.PLUS:
         	if(Assets.tileRenderSizeIndex!=Assets.tileRenderSize.length-1) {
         		Assets.tileRenderSizeIndex++;
         		Assets.renderOffset = new int[] {0,0};
         	}
-            break;
+            return true;
         case Keys.MINUS:
         	if(Assets.tileRenderSizeIndex!=0) {
         		Assets.tileRenderSizeIndex--;
         		Assets.renderOffset = new int[] {0,0};
         	}
-            break;
+            return true;
         }
-        return true;
+        return false;
 	}
 
 	@Override
@@ -204,13 +197,6 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 				}
 			}
 			return false;
-			//Old stuff
-			/*for(int y=0; y<Datas.coMap.getMapSize()[1]; y++) {
-				for(int x=0; x<Datas.coMap.getMapSize()[0]; x++) {
-					Rectangle rectTile = new Rectangle(0,0,Assets.tileRenderSize[Assets.tileRenderSizeIndex],Assets.tileRenderSize[Assets.tileRenderSizeIndex]);
-				}
-			}
-			return true;*/
 		case 1:
 			if(!Datas.coGui.isMouseClickLocked()) {
 				if(diffX>=0 && diffY>=0) {
@@ -224,6 +210,49 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 					}
 				}
 			}
+		}
+		return false;
+	}
+	
+	private boolean actionPerformed(String actionID) {
+		if(actionID.equals("tile.0")) {
+			this.terrain = EnumTerrainType.Plain;
+			return true;
+		}
+		if(actionID.equals("tile.1")) {
+			this.terrain = EnumTerrainType.Forest;
+			return true;
+		}
+		if(actionID.equals("tile.2")) {
+			this.terrain = EnumTerrainType.Mountain;
+			return true;
+		}
+		
+		if(actionID.equals("tile.4")) {
+			this.terrain = EnumTerrainType.Shoal;
+			return true;
+		}
+		if(actionID.equals("tile.5")) {
+			this.terrain = EnumTerrainType.Sea;
+			return true;
+		}
+		
+		if(actionID.equals("tile.7")) {
+			this.terrain = EnumTerrainType.Road;
+			return true;
+		}
+		if(actionID.equals("tile.8")) {
+			this.terrain = EnumTerrainType.Property;
+			return true;
+		}
+		if(actionID.equals("menu.save")) {
+        	Datas.coMap.exportMap("export", "test01", "Test 1", "Azias");
+			return true;
+		}
+		if(actionID.equals("menu.exit")) {
+			Datas.coGui.killAll();
+			this.game.setScreen(new ScreenMainMenu(this.game));
+			return true;
 		}
 		return false;
 	}
@@ -245,22 +274,6 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 
 	@Override
 	public boolean scrolled(int amount) {
-		return false;
-	}
-	
-	private boolean actionPerformed(String actionID) {
-		if(actionID.equals("tile.0")) {
-			this.terrain = TerrainType.Plain;
-			return true;
-		}
-		if(actionID.equals("tile.1")) {
-			this.terrain = TerrainType.Forest;
-			return true;
-		}
-		if(actionID.equals("tile.2")) {
-			this.terrain = TerrainType.Mountain;
-			return true;
-		}
 		return false;
 	}
 }

@@ -17,13 +17,14 @@ public class DesktopLauncher {
 		String[] a = new String[] {"Black","Blue","Green","Red","Yellow"};
 		Random rand = new Random();
 		int b = rand.nextInt(a.length);
-        config.addIcon("assets-desktop/icons/icon"+a[b]+".png", FileType.Internal);
+        config.addIcon("datas/icons/icon"+a[b]+".png", FileType.Internal);
 		try {
-			Scanner sc = new Scanner(new File("assets-desktop/titleMessages.txt")).useDelimiter("\\Z");
+			//Why can't I close this...
+			Scanner sc = new Scanner(new File("datas/titleMessages.txt")).useDelimiter("\\Z");
 			String messages[] = sc.next().replace("\n", "").replace("\r", "").split(";");
 			sc.close();
 			int c = rand.nextInt(messages.length);
-			config.title = "Advance Wars Bootleg Edition - "+messages[c];
+			config.title = "Advance Wars Bootleg Edition - Indev 3 - "+messages[c];
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			config.title = "Advance Wars Bootleg Edition";

@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import com.azias.advancewarsbootleg.Assets;
 import com.azias.advancewarsbootleg.Datas;
+import com.azias.advancewarsbootleg.enums.EnumTerrainType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -20,10 +21,7 @@ public class Map extends Object {
 	
 	public boolean loadMap(String path, String mapName) {
 		try {
-			@SuppressWarnings("resource")
-			//This method doesn't work properly -> Bad final path.
-			//String mapFile = new Scanner(Gdx.files.internal("maps/"+path+"/"+mapName+".awm").file()).useDelimiter("\\Z").next();
-			String mapFile = new Scanner(new File("assets-desktop/maps/"+path+"/"+mapName+".awm")).useDelimiter("\\Z").next();
+			String mapFile = new Scanner(new File("datas/maps/"+path+"/"+mapName+".awm")).useDelimiter("\\Z").next();
 			mapFile = mapFile.replace("\n", "").replace("\r", "");
 			String mapContent[] = mapFile.split("#_#");
 			
@@ -59,58 +57,154 @@ public class Map extends Object {
     protected boolean setTileSubType(int x, int y) {
     	this.mapTiles[x][y].animationPosition = new int[] {0,0};
     	//Sea
-		if(this.mapTiles[x][y].getTerrainType()==TerrainType.Sea) {
+		if(this.mapTiles[x][y].getTerrainType()==EnumTerrainType.Sea) {
+			String surroundingClose = "";
+			String surroundingDistant = "";
+			//Up
+			if(y-1>=0) {
+				if(this.mapTiles[x][y-1].getTerrainType()==EnumTerrainType.Sea||this.mapTiles[x][y-1].getTerrainType()==EnumTerrainType.Shoal||this.mapTiles[x][y-1].getTerrainType()==EnumTerrainType.Reef) {
+					surroundingClose+="S";
+				} else {
+					surroundingClose+="E";
+				}
+				//Distant
+				if(x-1>=0) {
+					if(this.mapTiles[x-1][y-1].getTerrainType()==EnumTerrainType.Sea||this.mapTiles[x-1][y-1].getTerrainType()==EnumTerrainType.Shoal||this.mapTiles[x-1][y-1].getTerrainType()==EnumTerrainType.Reef) {
+						surroundingDistant+="S";
+					} else {
+						surroundingDistant+="E";
+					}
+				} else {
+					surroundingDistant+="S";
+				}
+				if(x+1<Datas.coMap.getMapSize()[0]) {
+					if(this.mapTiles[x+1][y-1].getTerrainType()==EnumTerrainType.Sea||this.mapTiles[x+1][y-1].getTerrainType()==EnumTerrainType.Shoal||this.mapTiles[x+1][y-1].getTerrainType()==EnumTerrainType.Reef) {
+						surroundingDistant+="S";
+					} else {
+						surroundingDistant+="E";
+					}
+				} else {
+					surroundingDistant+="S";
+				}
+			} else {
+				surroundingClose+="S";
+				surroundingDistant+="SS";
+			}
+			//Right
+			if(x+1<Datas.coMap.getMapSize()[0]) {
+				if(this.mapTiles[x+1][y].getTerrainType()==EnumTerrainType.Sea||this.mapTiles[x+1][y].getTerrainType()==EnumTerrainType.Shoal||this.mapTiles[x+1][y].getTerrainType()==EnumTerrainType.Reef) {
+					surroundingClose+="S";
+				} else {
+					surroundingClose+="E";
+				}
+			} else {
+				surroundingClose+="S";
+			}
+			//Bottom
+			if(y+1 < Datas.coMap.getMapSize()[1]) {
+				if(this.mapTiles[x][y+1].getTerrainType()==EnumTerrainType.Sea||this.mapTiles[x][y+1].getTerrainType()==EnumTerrainType.Shoal||this.mapTiles[x][y+1].getTerrainType()==EnumTerrainType.Reef) {
+					surroundingClose+="S";
+				} else {
+					surroundingClose+="E";
+				}
+				//Distant
+				if(x-1>=0) {
+					if(this.mapTiles[x-1][y+1].getTerrainType()==EnumTerrainType.Sea||this.mapTiles[x-1][y+1].getTerrainType()==EnumTerrainType.Shoal||this.mapTiles[x-1][y+1].getTerrainType()==EnumTerrainType.Reef) {
+						surroundingDistant+="S";
+					} else {
+						surroundingDistant+="E";
+					}
+				} else {
+					surroundingDistant+="S";
+				}
+				if(x+1<Datas.coMap.getMapSize()[0]) {
+					if(this.mapTiles[x+1][y+1].getTerrainType()==EnumTerrainType.Sea||this.mapTiles[x+1][y+1].getTerrainType()==EnumTerrainType.Shoal||this.mapTiles[x+1][y+1].getTerrainType()==EnumTerrainType.Reef) {
+						surroundingDistant+="S";
+					} else {
+						surroundingDistant+="E";
+					}
+				} else {
+					surroundingDistant+="S";
+				}
+			} else {
+				surroundingClose+="S";
+				surroundingDistant+="SS";
+			}
+			//Left
+			if(x-1>=0) {
+				if(this.mapTiles[x-1][y].getTerrainType()==EnumTerrainType.Sea||this.mapTiles[x-1][y].getTerrainType()==EnumTerrainType.Shoal||this.mapTiles[x-1][y].getTerrainType()==EnumTerrainType.Reef) {
+					surroundingClose+="S";
+				} else {
+					surroundingClose+="E";
+				}
+			} else {
+				surroundingClose+="S";
+			}
+			this.mapTiles[x][y].animationPosition=EnumTerrainType.getSeaSubType(surroundingClose, surroundingDistant);
 			return true;
 		}
     	
 		//Plains
-		if(this.mapTiles[x][y].getTerrainType()==TerrainType.Plain) {
+		if(this.mapTiles[x][y].getTerrainType()==EnumTerrainType.Plain) {
 			if(x-1 >= 0) {
-				if(this.mapTiles[x-1][y].getTerrainType()==TerrainType.Mountain || this.mapTiles[x-1][y].getTerrainType()==TerrainType.Forest || this.mapTiles[x-1][y].getTerrainType()==TerrainType.Property || this.mapTiles[x-1][y].getTerrainType()==TerrainType.Port) {
-					this.mapTiles[x][y].setAnimationPosition(0, 1);
-				}
-			}
-			return true;
-		}
-		//Mountain - Need to be improved
-		if(this.mapTiles[x][y].getTerrainType()==TerrainType.Mountain) {
-			try {
-
-				if(y-1>=0) {
-					if(this.mapTiles[x][y-1].getTerrainType()==TerrainType.Mountain) {
-						if(this.mapTiles[x][y+1].getTerrainType()==TerrainType.Mountain) {
-							this.mapTiles[x][y].setAnimationPosition(0, 2);
-						} else {
-							this.mapTiles[x][y].setAnimationPosition(0, 3);
-						}
-					} else {
-						if(this.mapTiles[x][y+1].getTerrainType()==TerrainType.Mountain) {
-							this.mapTiles[x][y].setAnimationPosition(0, 1);
-						}
-					}
-				} else {
-					//The mountain is on the top edge
-				}
-			} catch(ArrayIndexOutOfBoundsException e) {
-				
-			}
-			return true;
-		}
-		//Forest
-		if(this.mapTiles[x][y].getTerrainType()==TerrainType.Forest) {
-			if(x-1 >= 0) {
-				if(this.mapTiles[x-1][y].getTerrainType()==TerrainType.Mountain || this.mapTiles[x-1][y].getTerrainType()==TerrainType.Forest || this.mapTiles[x-1][y].getTerrainType()==TerrainType.Property || this.mapTiles[x-1][y].getTerrainType()==TerrainType.Port) {
+				if(this.mapTiles[x-1][y].getTerrainType()==EnumTerrainType.Mountain || this.mapTiles[x-1][y].getTerrainType()==EnumTerrainType.Forest || this.mapTiles[x-1][y].getTerrainType()==EnumTerrainType.Property || this.mapTiles[x-1][y].getTerrainType()==EnumTerrainType.Port) {
 					this.mapTiles[x][y].setAnimationPosition(0, 1);
 				}
 			}
 			return true;
 		}
 		
-		if(this.mapTiles[x][y].getTerrainType()==TerrainType.Road) {
+		//Mountain
+		if(this.mapTiles[x][y].getTerrainType()==EnumTerrainType.Mountain) {
+			String surrounding = "";
+			
+			if(y-1>=0) {
+				if(this.mapTiles[x][y-1].getTerrainType()==EnumTerrainType.Mountain) {
+					surrounding+="M";
+				} else {
+					surrounding+="E";
+				}
+				if(y+1 < Datas.coMap.getMapSize()[1]) {
+					if(this.mapTiles[x][y+1].getTerrainType()==EnumTerrainType.Mountain) {
+						surrounding+="M";
+					} else {
+						surrounding+="E";
+					}
+				} else {
+					surrounding+="E";
+				}
+			} else {
+				surrounding+="E";
+				if(y+1 < Datas.coMap.getMapSize()[1]) {
+					if(this.mapTiles[x][y+1].getTerrainType()==EnumTerrainType.Mountain) {
+						surrounding+="M";
+					} else {
+						surrounding+="E";
+					}
+				} else {
+					surrounding+="E";
+				}
+			}
+			this.mapTiles[x][y].animationPosition=EnumTerrainType.getMountainSubType(surrounding);
+			return true;
+		}
+		
+		//Forest
+		if(this.mapTiles[x][y].getTerrainType()==EnumTerrainType.Forest) {
+			if(x-1 >= 0) {
+				if(this.mapTiles[x-1][y].getTerrainType()==EnumTerrainType.Mountain || this.mapTiles[x-1][y].getTerrainType()==EnumTerrainType.Forest || this.mapTiles[x-1][y].getTerrainType()==EnumTerrainType.Property || this.mapTiles[x-1][y].getTerrainType()==EnumTerrainType.Port) {
+					this.mapTiles[x][y].setAnimationPosition(0, 1);
+				}
+			}
+			return true;
+		}
+		
+		//Road
+		if(this.mapTiles[x][y].getTerrainType()==EnumTerrainType.Road) {
 			String surrounding = "";
 			//Up
 			if(y-1>=0) {
-				if(this.mapTiles[x][y-1].getTerrainType()==TerrainType.Road) {
+				if(this.mapTiles[x][y-1].getTerrainType()==EnumTerrainType.Road) {
 					surrounding+="R";
 				} else {
 					surrounding+="E";
@@ -120,7 +214,7 @@ public class Map extends Object {
 			}
 			//Right
 			if(x+1<Datas.coMap.getMapSize()[0]) {
-				if(this.mapTiles[x+1][y].getTerrainType()==TerrainType.Road) {
+				if(this.mapTiles[x+1][y].getTerrainType()==EnumTerrainType.Road) {
 					surrounding+="R";
 				} else {
 					surrounding+="E";
@@ -130,7 +224,7 @@ public class Map extends Object {
 			}
 			//Bottom
 			if(y+1 < Datas.coMap.getMapSize()[1]) {
-				if(this.mapTiles[x][y+1].getTerrainType()==TerrainType.Road) {
+				if(this.mapTiles[x][y+1].getTerrainType()==EnumTerrainType.Road) {
 					surrounding+="R";
 				} else {
 					surrounding+="E";
@@ -140,7 +234,7 @@ public class Map extends Object {
 			}
 			//Left
 			if(x-1>=0) {
-				if(this.mapTiles[x-1][y].getTerrainType()==TerrainType.Road) {
+				if(this.mapTiles[x-1][y].getTerrainType()==EnumTerrainType.Road) {
 					surrounding+="R";
 				} else {
 					surrounding+="E";
@@ -148,18 +242,23 @@ public class Map extends Object {
 			} else {
 				surrounding+="E";
 			}
-			this.mapTiles[x][y].animationPosition=TerrainType.getRoadSubType(surrounding);
+			this.mapTiles[x][y].animationPosition=EnumTerrainType.getRoadSubType(surrounding);
+			if(x-1 >= 0) {
+				if(this.mapTiles[x-1][y].getTerrainType()==EnumTerrainType.Mountain || this.mapTiles[x-1][y].getTerrainType()==EnumTerrainType.Forest || this.mapTiles[x-1][y].getTerrainType()==EnumTerrainType.Property || this.mapTiles[x-1][y].getTerrainType()==EnumTerrainType.Port) {
+					this.mapTiles[x][y].animationPosition[1] = 1;
+				}
+			}
 			return true;
 		}
 		
 		//Beach - Shoal
-		if(this.mapTiles[x][y].getTerrainType()==TerrainType.Shoal) {
+		if(this.mapTiles[x][y].getTerrainType()==EnumTerrainType.Shoal) {
 			String surrounding = "";
 			//Up
 			if(y-1>=0) {
-				if(this.mapTiles[x][y-1].terrainType==TerrainType.Sea) {
+				if(this.mapTiles[x][y-1].terrainType==EnumTerrainType.Sea) {
 					surrounding+="S";
-				} else if (this.mapTiles[x][y-1].terrainType==TerrainType.Shoal) {
+				} else if (this.mapTiles[x][y-1].terrainType==EnumTerrainType.Shoal) {
 					surrounding+="B";
 				} else {
 					surrounding+="E";
@@ -169,9 +268,9 @@ public class Map extends Object {
 			}
 			//Right
 			if(x+1<Datas.coMap.getMapSize()[0]) {
-				if(this.mapTiles[x+1][y].terrainType==TerrainType.Sea) {
+				if(this.mapTiles[x+1][y].terrainType==EnumTerrainType.Sea) {
 					surrounding+="S";
-				} else if (this.mapTiles[x+1][y].terrainType==TerrainType.Shoal) {
+				} else if (this.mapTiles[x+1][y].terrainType==EnumTerrainType.Shoal) {
 					surrounding+="B";
 				} else {
 					surrounding+="E";
@@ -181,9 +280,9 @@ public class Map extends Object {
 			}
 			//Bottom
 			if(y+1 < Datas.coMap.getMapSize()[1]) {
-				if(this.mapTiles[x][y+1].terrainType==TerrainType.Sea) {
+				if(this.mapTiles[x][y+1].terrainType==EnumTerrainType.Sea) {
 					surrounding+="S";
-				} else if (this.mapTiles[x][y+1].terrainType==TerrainType.Shoal) {
+				} else if (this.mapTiles[x][y+1].terrainType==EnumTerrainType.Shoal) {
 					surrounding+="B";
 				} else {
 					surrounding+="E";
@@ -193,9 +292,9 @@ public class Map extends Object {
 			}
 			//Left
 			if(x-1>=0) {
-				if(this.mapTiles[x-1][y].terrainType==TerrainType.Sea) {
+				if(this.mapTiles[x-1][y].terrainType==EnumTerrainType.Sea) {
 					surrounding+="S";
-				} else if (this.mapTiles[x-1][y].terrainType==TerrainType.Shoal) {
+				} else if (this.mapTiles[x-1][y].terrainType==EnumTerrainType.Shoal) {
 					surrounding+="B";
 				} else {
 					surrounding+="E";
@@ -203,7 +302,7 @@ public class Map extends Object {
 			} else {
 				surrounding+="S";
 			}
-			this.mapTiles[x][y].animationPosition=TerrainType.getBeachSubType(surrounding);
+			this.mapTiles[x][y].animationPosition=EnumTerrainType.getBeachSubType(surrounding);
 			return true;
 		}
 		
@@ -219,31 +318,34 @@ public class Map extends Object {
 		}
 	}
 
-	private TerrainType getTerrainType(char terrainLetter) {
+	private EnumTerrainType getTerrainType(char terrainLetter) {
 		switch(terrainLetter) {
 		case '_':
-			return TerrainType.Plain;
+			return EnumTerrainType.Plain;
 		case 'S':
-			return TerrainType.Sea;
+			return EnumTerrainType.Sea;
 		case 'F':
-			return TerrainType.Forest;
+			return EnumTerrainType.Forest;
 		case 'M':
-			return TerrainType.Mountain;
+			return EnumTerrainType.Mountain;
 		case 'B':
-			return TerrainType.Shoal;
+			return EnumTerrainType.Shoal;
 		case 'R':
-			return TerrainType.Road;
+			return EnumTerrainType.Road;
+		case 'b':
+			//TODO Add a bridge terrain
+			return EnumTerrainType.Plain;
 		case 'r':
-			return TerrainType.River;
+			return EnumTerrainType.River;
 		case 'C':
-			return TerrainType.Property;
+			return EnumTerrainType.Property;
 		case 'c':
-			return TerrainType.Port;
+			return EnumTerrainType.Port;
 		case 'P':
 			//TODO Add a pipe terrain
-			return TerrainType.Plain;
+			return EnumTerrainType.Plain;
 		default:
-			return TerrainType.Plain;
+			return EnumTerrainType.Plain;
 		}
     }
 
@@ -268,13 +370,13 @@ public class Map extends Object {
 		//Saving file
 		String mapContent = name+"#_#"+author+"#_#"+mapLetters+"#_#";
 		try {
-			File f = new File("assets-desktop/maps/"+path+"/"+mapName+".awm");
+			File f = new File("datas/maps/"+path+"/"+mapName+".awm");
 			if(f.exists() && !f.isDirectory()) {
 				//TODO: ask to replace the file
 				System.out.println("ERROR: A file named "+mapName+".awm already exist!");
 				return false;
 			} else {
-				PrintWriter out = new PrintWriter("assets-desktop/maps/"+path+"/"+mapName+".awm");
+				PrintWriter out = new PrintWriter("datas/maps/"+path+"/"+mapName+".awm");
 				out.println(mapContent);
 				out.close();
 			}

@@ -18,6 +18,7 @@ public class GuiController extends Object {
 		return this.createGui(-1, gui);
 	}
 	
+	//TODO: Remove the id parameter and check if a GUI with this exist
 	public boolean createGui(int id, Gui gui) {
 		if(gui.id==id) {
 			this.openedGUIs.add(gui);
@@ -41,7 +42,7 @@ public class GuiController extends Object {
 	}
 	
 	/**
-	 * [Insert a desc. here]
+	 * Remove/kill a specific GUI based on the given <b>id</b>.
 	 * @param id - GUI's ID
 	 * @return<b>True</b> if the specified GUI has been killed.<br><b>False</b> if no GUI with this id has been found.
 	 */
@@ -55,6 +56,10 @@ public class GuiController extends Object {
 		return false;
 	}
 	
+	/**
+	 * Remove/kill all GUIs in the openedGUIs ArrayList.
+	 * It works as a sort of reset.
+	 */
 	public void killAll() {
 		this.openedGUIs.clear();
 	}
@@ -86,11 +91,29 @@ public class GuiController extends Object {
 	
 	public String processMouseClick(int posX, int posY) {
 		for(int i=0; i<this.openedGUIs.size(); i++) {
-			String returnedID = this.openedGUIs.get(i).processMouseClick(posX, posY);
-			if(returnedID != null) {
-				return returnedID;
+			if(this.openedGUIs.get(i).isEnabled) {
+				String returnedID = this.openedGUIs.get(i).processMouseClick(posX, posY);
+				if(returnedID != null) {
+					return returnedID;
+				}
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Enable or disable a GUI based on the given <b>id</b> and <b>boolean</b>.
+	 * @param id - GUI's ID
+	 * @param state - Specified GUI's isEnabled boolean.
+	 * @return<b>True</b> if the GUI was found and set to the desired parameter.<br><b>False</b> if the desired GUI wasn't found.
+	 */
+	public boolean setEnableGuiState(int id, boolean state) {
+		for(int i=0; i<this.openedGUIs.size(); i++) {
+			if(this.openedGUIs.get(i).id == id) {
+				this.openedGUIs.get(i).isEnabled = state;
+				return true;
+			}
+		}
+		return false;
 	}
 }

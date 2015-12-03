@@ -29,14 +29,14 @@ public class GuiSelectTile extends Gui {
 	
 	protected void addButtons(int par1) {
 		this.buttonList = new ArrayList<GuiButton>();
-		this.buttonList.add(new GuiButton("tabs.terrain", 16, this.size[1], 32*2, 32*2, new TextureRegion(Assets.tileTabs,0,0,32,32)));
-		this.buttonList.add(new GuiButton("tabs.buildings", 16*2+32*2, this.size[1], 32*2, 32*2, new TextureRegion(Assets.tileTabs,0,32,32,32)));
-		this.buttonList.add(new GuiButton("tabs.units", 16*3+32*4, this.size[1], 32*2, 32*2, new TextureRegion(Assets.tileTabs,0,64,32,32)));
+		this.buttonList.add(new GuiButton(-1, "tabs.terrain", 16, this.size[1], 32*2, 32*2, new TextureRegion(Assets.tileTabs,0,0,32,32)));
+		this.buttonList.add(new GuiButton(-1, "tabs.buildings", 16*2+32*2, this.size[1], 32*2, 32*2, new TextureRegion(Assets.tileTabs,0,32,32,32)));
+		this.buttonList.add(new GuiButton(-1, "tabs.units", 16*3+32*4, this.size[1], 32*2, 32*2, new TextureRegion(Assets.tileTabs,0,64,32,32)));
 		if(par1==0) {
 			int b = 64;
 			int a = (this.size[0]-11*b)/12;
 			for(int i=0; i<Assets.editorSelectTileImages.length; i++) {
-				this.buttonList.add(new GuiButton("tile."+i, a+i*b+i*a, this.size[1]/2-b/2, b, b, Assets.editorSelectTileImages[i]));
+				this.buttonList.add(new GuiButton(-1, "tile."+i, a+i*b+i*a, this.size[1]/2-b/2, b, b, Assets.editorSelectTileImages[i]));
 			}
 		} else if(par1==1) {
 			//Buildings
