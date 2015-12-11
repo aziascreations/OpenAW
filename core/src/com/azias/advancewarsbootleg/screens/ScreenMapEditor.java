@@ -5,31 +5,31 @@ import com.azias.advancewarsbootleg.Assets;
 import com.azias.advancewarsbootleg.Datas;
 import com.azias.advancewarsbootleg.enums.EnumTerrainType;
 import com.azias.advancewarsbootleg.gui.GuiEditorMenu;
-import com.azias.advancewarsbootleg.gui.GuiSelectTile;
+import com.azias.advancewarsbootleg.gui.GuiEditorSelector;
+import com.azias.advancewarsbootleg.map.Building;
+import com.azias.advancewarsbootleg.map.BuildingGeneric;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class ScreenMapEditor extends ScreenAdapter implements ApplicationListener, InputProcessor {
 	AdvanceWarsBootleg game;
-	private BitmapFont font;
 	private int[] pointerPosition;
 	private EnumTerrainType terrain;
+	private Building building;
 
 	public ScreenMapEditor(AdvanceWarsBootleg game) {
 		this(game, "custom", "iskander");
+		//this(game, "custom", "develop03");
 	}
 	
 	public ScreenMapEditor(AdvanceWarsBootleg game, String mapPath, String mapName) {
 		this.game = game;
-		this.font = new BitmapFont();
-		this.font.setColor(Color.RED);
 		this.pointerPosition = new int[] {0,0};
 		this.terrain = EnumTerrainType.Plain;
+		this.building = null;
 		
 		Datas.coMap.loadMap(mapPath, mapName);
 		Gdx.input.setInputProcessor(this);
@@ -45,9 +45,8 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 		//Use System.CurrentMillis instead.
 	}
 
-	public void draw() {
-		//Gdx.gl.glClearColor(back.r, back.g, back.b, back.a);
-		//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+	@Override
+	public void render() {
 		game.batch.begin();
 		
 		//Background
@@ -65,11 +64,6 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 		
 		Datas.coGui.render(game.batch);
 		game.batch.end();
-	}
-
-	@Override
-	public void render() {
-		draw();
 	}
 
 	@Override
@@ -109,9 +103,14 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
             
         case Keys.C:
         	this.terrain = Datas.coMap.getTileTerrainType(this.pointerPosition[0], this.pointerPosition[1]);
+        	if(this.terrain == EnumTerrainType.Property || this.terrain == EnumTerrainType.Port) {
+        		this.building = Datas.coMap.getBuidingType(this.pointerPosition[0], this.pointerPosition[1]);
+        	} else {
+        		this.building = null;
+        	}
             return true;
         case Keys.V:
-        	Datas.coMap.setTileTerrainType(this.pointerPosition[0], this.pointerPosition[1], this.terrain);
+        	Datas.coMap.setTileTerrainType(this.pointerPosition[0], this.pointerPosition[1], this.terrain, this.building);
             return true;
             
         case Keys.E:
@@ -121,19 +120,24 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
         case Keys.ESCAPE:
         	if(Datas.coGui.doesGuiExists(3)) {
         		Datas.coGui.killGui(3);
-        		Assets.menuOut.play(Datas.volumeEffects);
+        		Assets.soundMenuOut.play(Datas.volumeEffects);
         	} else {
         		Datas.coGui.createGui(3, new GuiEditorMenu(3));
-        		Assets.menuIn.play(Datas.volumeEffects);
+        		Assets.soundMenuIn.play(Datas.volumeEffects);
         	}
             return true;
         case Keys.SPACE:
         	if(Datas.coGui.doesGuiExists(2)) {
         		Datas.coGui.killGui(2);
-        		Assets.menuOut.play(Datas.volumeEffects);
+        		Assets.soundMenuOut.play(Datas.volumeEffects);
         	} else {
-        		Datas.coGui.createGui(2, new GuiSelectTile(2));
-        		Assets.menuIn.play(Datas.volumeEffects);
+        		int a = 0, b = 0;
+        		if(this.building!=null) {
+        			a = this.building.getFaction().getId();
+        			b = 1;
+        		}
+        		Datas.coGui.createGui(2, new GuiEditorSelector(2, b, a));
+        		Assets.soundMenuIn.play(Datas.volumeEffects);
         	}
             return true;
         
@@ -186,7 +190,7 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 						//System.out.println("Your action has been accepted");
 						this.pointerPosition[0] = x;
 						this.pointerPosition[1] = y;
-						Datas.coMap.setTileTerrainType(this.pointerPosition[0], this.pointerPosition[1], this.terrain);
+						Datas.coMap.setTileTerrainType(this.pointerPosition[0], this.pointerPosition[1], this.terrain, this.building);
 						return true;
 					}
 				}
@@ -206,6 +210,11 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 						this.pointerPosition[0] = x;
 						this.pointerPosition[1] = y;
 						this.terrain = Datas.coMap.getTileTerrainType(this.pointerPosition[0], this.pointerPosition[1]);
+			        	if(this.terrain == EnumTerrainType.Property || this.terrain == EnumTerrainType.Port) {
+			        		this.building = Datas.coMap.getBuidingType(this.pointerPosition[0], this.pointerPosition[1]);
+			        	} else {
+			        		this.building = null;
+			        	}
 						return true;
 					}
 				}
@@ -215,36 +224,65 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 	}
 	
 	private boolean actionPerformed(String actionID) {
-		if(actionID.equals("tile.0")) {
-			this.terrain = EnumTerrainType.Plain;
-			return true;
-		}
-		if(actionID.equals("tile.1")) {
-			this.terrain = EnumTerrainType.Forest;
-			return true;
-		}
-		if(actionID.equals("tile.2")) {
-			this.terrain = EnumTerrainType.Mountain;
+		if(actionID.contains("tile")) {
+			int chosenTile = Integer.valueOf(actionID.split("\\.")[1]);
+			switch(chosenTile) {
+			case 0:
+				this.terrain = EnumTerrainType.Plain;
+				break;
+			case 1:
+				this.terrain = EnumTerrainType.Forest;
+				break;
+			case 2:
+				this.terrain = EnumTerrainType.Mountain;
+				break;
+			case 4:
+				this.terrain = EnumTerrainType.Shoal;
+				break;
+			case 5:
+				this.terrain = EnumTerrainType.Sea;
+				break;
+			case 7:
+				this.terrain = EnumTerrainType.Road;
+				break;
+			}
+	    	this.building = null;
 			return true;
 		}
 		
-		if(actionID.equals("tile.4")) {
-			this.terrain = EnumTerrainType.Shoal;
-			return true;
-		}
-		if(actionID.equals("tile.5")) {
-			this.terrain = EnumTerrainType.Sea;
-			return true;
+		if(actionID.contains("building")) {
+			int actionSubID = Character.getNumericValue(actionID.charAt(actionID.length()-3));
+			int teamID = Character.getNumericValue(actionID.charAt(actionID.length()-1));
+			//System.out.println("Selected a building: "+actionID);
+			//System.out.println("actionSubID: "+actionSubID);
+			//System.out.println("teamID: "+teamID);
+			
+			if(actionSubID==0) {
+				//HQ
+				return true;
+			} else if(actionSubID==1) {
+				//Town
+				this.terrain = EnumTerrainType.Property;
+	    		this.building = new BuildingGeneric(0, -1, -1, teamID);
+				return true;
+			} else if(actionSubID==2) {
+				//Factory
+				this.terrain = EnumTerrainType.Property;
+	    		this.building = new BuildingGeneric(1, -1, -1, teamID);
+				return true;
+			} else if(actionSubID==3) {
+				//Airport
+				this.terrain = EnumTerrainType.Property;
+	    		this.building = new BuildingGeneric(2, -1, -1, teamID);
+				return true;
+			} else if(actionSubID==5) {
+				//Antenna
+				this.terrain = EnumTerrainType.Property;
+	    		this.building = new BuildingGeneric(3, -1, -1, teamID);
+				return true;
+			}
 		}
 		
-		if(actionID.equals("tile.7")) {
-			this.terrain = EnumTerrainType.Road;
-			return true;
-		}
-		if(actionID.equals("tile.8")) {
-			this.terrain = EnumTerrainType.Property;
-			return true;
-		}
 		if(actionID.equals("menu.save")) {
         	Datas.coMap.exportMap("export", "test01", "Test 1", "Azias");
 			return true;

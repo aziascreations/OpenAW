@@ -1,5 +1,11 @@
 package com.azias.advancewarsbootleg;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import com.azias.advancewarsbootleg.enums.EnumBuildingType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,34 +15,48 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
 public class Assets {
+	//Fonts
 	public static BitmapFont font24, font36, font48, font72;
 	
+	//Gui
+	public static Texture guiDefaultBack, guiEditorSelectTileTabs;
+	public static TextureRegion[] guiEditorSelectTileImages;
+	public static TextureRegion[][] guiEditorSelectBuildingImages;
+	
+	public static TextureRegion[][] guiIcons;
+	
+	//Buildings
+	public static Object[] buildingsGraphics;
+	//public static boolean[] buildingsGraphicsBooleans;
+	
+	//Others Textures
 	public static Texture background;
-	public static Texture[] mapSelectParts;
-	public static Texture[] guiTitles;
-	public static TextureRegion[][] fontTextures;
-	
-	public static Texture arrowOpen, arrowClose, arrowFiller, tileTabs;
-	public static Texture pointer;
-	public static TextureRegion[] editorSelectTileImages;
-	
 	public static Object[] tilesGraphics;
 	public static boolean[] tileGraphicsBooleans;
+	
+	//Sounds
+	public static Sound soundButtonClick, soundMenuIn, soundMenuOut;
+	
+	//Misc
 	public static int tileRenderSizeIndex = 1;
 	public static int[] tileRenderSize = new int[] {16,32,48,64,80,96};
 	public static int[] renderOffset = new int[] {0,0};
+	public static Texture pointer;
 	
-	public static Sound buttonClick, menuIn, menuOut;
-	
-	public static Texture loadTexture(String file) {
-		return new Texture(Gdx.files.internal(file));
+	public static Texture loadTexture(String filePath) {
+		return new Texture(Gdx.files.internal(filePath));
 	}
 	
-	public static Sound loadSound(String file) {
-		return Gdx.audio.newSound(Gdx.files.internal(file));
+	public static Sound loadSound(String filePath) {
+		return Gdx.audio.newSound(Gdx.files.internal(filePath));
 	}
 	
-	//Todo: Add dispose() when needed to avoid memory leaks
+	public static String readFile(String path, Charset encoding) throws IOException  {
+		byte[] encoded = Files.readAllBytes(Paths.get(path));
+		return new String(encoded, encoding);
+	}
+	
+	//TODO: Add dispose() when needed to avoid memory leaks
 	//I thinks it's done, but I'm not sure...
 	public static void load() {
 		//Fonts - Find a better way to handle them
@@ -53,25 +73,14 @@ public class Assets {
 		generator.dispose();
 		
 		//Sounds
-		buttonClick = loadSound("sfx/sounds/menu/soundMenuMoving.ogg");
-		menuIn = loadSound("sfx/sounds/menu/soundMenuIn.ogg");
-		menuOut = loadSound("sfx/sounds/menu/soundMenuOut.ogg");
+		soundButtonClick = loadSound("sfx/sounds/menu/soundMenuMoving.ogg");
+		soundMenuIn = loadSound("sfx/sounds/menu/soundMenuIn.ogg");
+		soundMenuOut = loadSound("sfx/sounds/menu/soundMenuOut.ogg");
 		
 		//Textures
 		background = loadTexture("gfx/gui/background/background_06.png");
-		
-		mapSelectParts = new Texture[3];
-		mapSelectParts[0] = loadTexture("gfx/gui/mapselect/mapselectPart_01.png");
-		mapSelectParts[1] = loadTexture("gfx/gui/mapselect/mapselectPart_02.png");
-		mapSelectParts[2] = loadTexture("gfx/gui/mapselect/mapselectPart_03.png");
-		
-		guiTitles = new Texture[1];
-		guiTitles[0] = loadTexture("gfx/gui/titles/chooseMap.png");
-
-		arrowOpen = loadTexture("gfx/gui/editor/arrow_1.png");
-		arrowClose = loadTexture("gfx/gui/editor/arrow_2.png");
-		arrowFiller = loadTexture("gfx/gui/editor/tabsBack.png");
-		tileTabs = loadTexture("gfx/gui/editor/tabsPics.png");
+		guiDefaultBack = loadTexture("gfx/gui/editor/tabsBack.png");
+		guiEditorSelectTileTabs = loadTexture("gfx/gui/editor/tabsPics.png");
 		
 		pointer = loadTexture("gfx/gui/editor/mapCursor.png");
 		
@@ -80,15 +89,24 @@ public class Assets {
 	}
 	
 	public static void loadTexturePackBasedAssets(String par1) {
-		editorSelectTileImages = new TextureRegion[11];
+		//Gui
+		guiEditorSelectTileImages = new TextureRegion[11];
 		Texture temp1 = loadTexture("gfx/gui/editor/tileImages_"+par1+".png");
-		for(int i=0; i<editorSelectTileImages.length; i++) {
-			editorSelectTileImages[i] = new TextureRegion(temp1, i*64, 0, 64, 64);
+		for(int i=0; i<guiEditorSelectTileImages.length; i++) {
+			guiEditorSelectTileImages[i] = new TextureRegion(temp1, i*64, 0, 64, 64);
+		}
+		guiEditorSelectBuildingImages = new TextureRegion[6][6];
+		temp1 = loadTexture("gfx/gui/editor/buildingImages_"+par1+".png");
+		for(int i=0; i<6; i++) {
+			for(int j=0; j<6; j++) {
+				guiEditorSelectBuildingImages[j][i] = new TextureRegion(temp1, j*64, i*64, 64, 64);
+			}
+			
 		}
 		//Don't use that, the icons are just black squares when using it.
 		//temp1.dispose();
 		
-		/* Tiles */
+		//Tiles
 		TextureRegion[][] a = null;
 		tilesGraphics = new Object[10];
 		tileGraphicsBooleans = new boolean[10];
@@ -165,5 +183,65 @@ public class Assets {
 		a[0][0] = new TextureRegion(new Texture("gfx/terrain/"+par1+"_building.png"),0,0,16,16);
 		tilesGraphics[9] = a;
 		tileGraphicsBooleans[9] = false;
+		
+		//Icons - Will be moved somewhere else
+		temp1 = loadTexture("gfx/gui/icons16.png");
+		guiIcons = new TextureRegion[temp1.getWidth()/16][temp1.getHeight()/16];
+		for(int i=0; i<temp1.getHeight()/16; i++) {
+			for(int j=0; j<temp1.getWidth()/16; j++) {
+				guiIcons[j][i] = new TextureRegion(temp1, j*16, i*16, 16, 16);
+			}
+		}
+		
+		//Buildings - Needs to be improved...
+		//The HQ should have a special "format"
+		TextureRegion[] b = new TextureRegion[6];
+		buildingsGraphics = new Object[6];
+		
+		//Town
+		for(int i = 0;i < 6; i++) {
+			temp1 = loadTexture("gfx/buildings/"+EnumBuildingType.Town.getFileName()+"_"+i+".png");
+			b[i] = new TextureRegion(temp1,0,0,16,32);
+		}
+		buildingsGraphics[0] = b;
+		
+		b = new TextureRegion[6];
+		for(int i = 0;i < 6; i++) {
+			temp1 = loadTexture("gfx/buildings/"+EnumBuildingType.Factory.getFileName()+"_"+i+".png");
+			b[i] = new TextureRegion(temp1,0,0,16,32);
+		}
+		buildingsGraphics[1] = b;
+		
+		b = new TextureRegion[6];
+		for(int i = 0;i < 6; i++) {
+			temp1 = loadTexture("gfx/buildings/"+EnumBuildingType.Airport.getFileName()+"_"+i+".png");
+			b[i] = new TextureRegion(temp1,0,0,16,32);
+		}
+		buildingsGraphics[2] = b;
+		
+		b = new TextureRegion[6];
+		for(int i = 0;i < 6; i++) {
+			temp1 = loadTexture("gfx/buildings/"+EnumBuildingType.Antena.getFileName()+"_"+i+".png");
+			b[i] = new TextureRegion(temp1,0,0,16,32);
+		}
+		buildingsGraphics[3] = b;
+		
+		//b = new TextureRegion[6];
+		//buildingsGraphicsBooleans = new boolean[2];
+
+		/*for(int i = 0;i < 6; i++) {
+			temp1 = loadTexture("gfx/buildings/"+EnumBuildingType.Town.getFileName()+"_"+i+".png");
+			b[i] = new TextureRegion(temp1,0,0,16,32);
+		}
+		buildingsGraphics[0] = b;
+		//buildingsGraphicsBooleans[0] = false;
+		
+		b = new TextureRegion[6];
+		for(int i = 0;i < 6; i++) {
+			temp1 = loadTexture("gfx/buildings/"+EnumBuildingType.Factory.getFileName()+"_"+i+".png");
+			b[i] = new TextureRegion(temp1,0,0,16,32);
+		}
+		buildingsGraphics[1] = b;
+		//buildingsGraphicsBooleans[1] = false;*/
 	}
 }

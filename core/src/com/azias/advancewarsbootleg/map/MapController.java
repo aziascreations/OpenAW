@@ -31,17 +31,33 @@ public class MapController extends Object {
 		return this.map.mapTiles[x][y].terrainType;
 	}
 	
-	public boolean setTileTerrainType(int x, int y, EnumTerrainType par3) {
+	public boolean setTileTerrainType(int x, int y, EnumTerrainType par3, Building par4) {
+		if(this.map.mapTiles[x][y].getTerrainType() == EnumTerrainType.Property || this.map.mapTiles[x][y].getTerrainType() == EnumTerrainType.Port) {
+			this.map.removeBuiding(x, y);
+		}
+		
 		this.map.mapTiles[x][y].setTerrainType(par3);
 		
-		if(true/*par3==EnumTerrainType.Sea*/) {
-			//Slow as hell
-			for(int i=0; i<this.map.mapSize[1]; i++) {
+		if(par4 != null) {
+			this.map.setBuilding(x, y, par4);
+		}
+		
+		//I had to move it again as it sometimes does nothing when in the if(true).
+		for(int i=0; i<this.map.mapSize[1]; i++) {
+			for(int j=0; j<this.map.mapSize[0]; j++) {
+				this.map.setTileSubType(j, i);
+			}
+		}
+		
+		//My eyes, they bleed...
+		/*if(true/*par3==EnumTerrainType.Sea) {
+			//Slow as hell, but at least it's working
+			/*for(int i=0; i<this.map.mapSize[1]; i++) {
 				for(int j=0; j<this.map.mapSize[0]; j++) {
 					this.map.setTileSubType(j, i);
 				}
 			}
-		}/*else {
+		}*//*else {
 			//This part doesn't seems to work with water...
 			//Not only with water, I'll check that later.
 			if(y-1>=0) {
@@ -72,6 +88,15 @@ public class MapController extends Object {
 			}
 		}*/
 		this.map.setTileSubType(x, y);
-		return true; 
+		return true;
+	}
+
+	public Building getBuidingType(int x, int y) {
+		for(int i = 0; i<this.map.buildings.size(); i++) {
+			if(this.map.buildings.get(i).position[0] == x && this.map.buildings.get(i).position[1] == y) {
+				return this.map.buildings.get(i);
+			}
+		}
+		return null;
 	}
 }

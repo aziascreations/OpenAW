@@ -4,12 +4,17 @@
    / ___ \ (_| |\ V / (_| | | | | (_|  __/   \ V  V / (_| | |  \__ \
   /_/   \_\__,_| \_/ \__,_|_| |_|\___\___|    \_/\_/ \__,_|_|  |___/
   Bootleg Edition
-  Indev 3
+  Indev 4
 
 Advance Wars Bootleg Edition is a game based on the Advance wars serie and Custom Wars by JakeSamiRulz.
 The project's main goals are: having a working game with a map editor, multiplayer and staying as close as possible to the original game.
 
 == Changelogs
+Indev 4
+  *Added buildings.
+  *Started sorting out and improving the way their are handled.
+  *Added, renamed and changed some assets.
+
 Indev 3
   *Added a custom logo on the main menu.
   *Added the bases of the option menu.

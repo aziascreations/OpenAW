@@ -57,7 +57,7 @@ public class ScreenMainMenu extends ScreenAdapter implements ApplicationListener
 		game.batch.draw(Assets.background,Gdx.graphics.getWidth()/2-Assets.background.getWidth()/2,Gdx.graphics.getHeight()/2-Assets.background.getHeight()/2);
 		
 		game.batch.draw(this.logo,Gdx.graphics.getWidth()/2-this.logo.getWidth()*3/2,(float)(Gdx.graphics.getHeight()-this.logo.getHeight()*3),this.logo.getWidth()*3,this.logo.getHeight()*3);
-		Assets.font48.draw(game.batch, "Indev 3", 10, 40);
+		Assets.font48.draw(game.batch, "Indev 4", 10, 40);
 		
 		Datas.coGui.render(game.batch);
 		game.batch.end();

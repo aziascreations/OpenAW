@@ -24,7 +24,7 @@ public class DesktopLauncher {
 			String messages[] = sc.next().replace("\n", "").replace("\r", "").split(";");
 			sc.close();
 			int c = rand.nextInt(messages.length);
-			config.title = "Advance Wars Bootleg Edition - Indev 3 - "+messages[c];
+			config.title = "Advance Wars Bootleg Edition - Indev 4 - "+messages[c];
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			config.title = "Advance Wars Bootleg Edition";

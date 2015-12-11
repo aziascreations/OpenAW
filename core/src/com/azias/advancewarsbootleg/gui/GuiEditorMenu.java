@@ -22,13 +22,13 @@ public class GuiEditorMenu extends Gui {
 
 	@Override
 	public void render(SpriteBatch batch) {
-		batch.draw(Assets.arrowFiller, this.position[0], this.position[1], this.size[0], this.size[1]);
+		batch.draw(Assets.guiDefaultBack, this.position[0], this.position[1], this.size[0], this.size[1]);
 		
 		int borderWidth = 3;
-		batch.draw(Assets.arrowFiller, this.position[0], this.position[1], borderWidth, this.size[1]);
-		batch.draw(Assets.arrowFiller, this.position[0]+this.size[0]-borderWidth, this.position[1], borderWidth, this.size[1]);
-		batch.draw(Assets.arrowFiller, this.position[0]+borderWidth, this.position[1], this.size[0]-borderWidth*2, borderWidth);
-		batch.draw(Assets.arrowFiller, this.position[0]+borderWidth, this.position[1]+this.size[1]-borderWidth, this.size[0]-borderWidth*2, borderWidth);
+		batch.draw(Assets.guiDefaultBack, this.position[0], this.position[1], borderWidth, this.size[1]);
+		batch.draw(Assets.guiDefaultBack, this.position[0]+this.size[0]-borderWidth, this.position[1], borderWidth, this.size[1]);
+		batch.draw(Assets.guiDefaultBack, this.position[0]+borderWidth, this.position[1], this.size[0]-borderWidth*2, borderWidth);
+		batch.draw(Assets.guiDefaultBack, this.position[0]+borderWidth, this.position[1]+this.size[1]-borderWidth, this.size[0]-borderWidth*2, borderWidth);
 		
 		this.renderButtons(batch);
 	}

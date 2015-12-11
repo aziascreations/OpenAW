@@ -28,11 +28,11 @@ public class ScreenMapSelect extends ScreenAdapter implements ApplicationListene
 		//Background
 		game.batch.draw(Assets.background,Gdx.graphics.getWidth()/2-Assets.background.getWidth()/2,Gdx.graphics.getHeight()/2-Assets.background.getHeight()/2);
 		//Title Parts
-		game.batch.draw(Assets.mapSelectParts[0],0,Gdx.graphics.getHeight()-Assets.mapSelectParts[0].getHeight(),Gdx.graphics.getWidth()-Assets.mapSelectParts[2].getWidth(),Assets.mapSelectParts[0].getHeight());
-		game.batch.draw(Assets.mapSelectParts[2],Gdx.graphics.getWidth()-Assets.mapSelectParts[2].getWidth(),Gdx.graphics.getHeight()-Assets.mapSelectParts[2].getHeight());
-		game.batch.draw(Assets.guiTitles[0], 7, Gdx.graphics.getHeight()-7-Assets.guiTitles[0].getHeight()*2, Assets.guiTitles[0].getWidth()*2, Assets.guiTitles[0].getHeight()*2);
+		//game.batch.draw(Assets.mapSelectParts[0],0,Gdx.graphics.getHeight()-Assets.mapSelectParts[0].getHeight(),Gdx.graphics.getWidth()-Assets.mapSelectParts[2].getWidth(),Assets.mapSelectParts[0].getHeight());
+		//game.batch.draw(Assets.mapSelectParts[2],Gdx.graphics.getWidth()-Assets.mapSelectParts[2].getWidth(),Gdx.graphics.getHeight()-Assets.mapSelectParts[2].getHeight());
+		//game.batch.draw(Assets.guiTitles[0], 7, Gdx.graphics.getHeight()-7-Assets.guiTitles[0].getHeight()*2, Assets.guiTitles[0].getWidth()*2, Assets.guiTitles[0].getHeight()*2);
 		//Map List Parts
-		game.batch.draw(Assets.mapSelectParts[1],0,0,Assets.mapSelectParts[1].getWidth(),Gdx.graphics.getHeight()-Assets.mapSelectParts[0].getHeight());
+		//game.batch.draw(Assets.mapSelectParts[1],0,0,Assets.mapSelectParts[1].getWidth(),Gdx.graphics.getHeight()-Assets.mapSelectParts[0].getHeight());
 		
 		//Map Infos Parts
 		game.batch.end();

@@ -104,7 +104,7 @@ public enum EnumTerrainType {
     public String getTerrainLetter() {
     	return this.letter;
     }
-
+    
     //i am so so sorry for what you are about to witness, but I had no choice...
 	public static int[] getBeachSubType(String par1) {
 		//Leave this like that if you want a Java 6 support because switches are shit in this version.

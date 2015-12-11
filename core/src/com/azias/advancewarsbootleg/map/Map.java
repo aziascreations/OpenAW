@@ -1,9 +1,12 @@
 package com.azias.advancewarsbootleg.map;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+//import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Scanner;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+//import java.util.Scanner;
 
 import com.azias.advancewarsbootleg.Assets;
 import com.azias.advancewarsbootleg.Datas;
@@ -14,6 +17,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Map extends Object {
 	protected int[] mapSize = new int[2];
 	protected Tile[][] mapTiles;
+	protected ArrayList<Building> buildings;
 	
 	public Map() {
 		
@@ -21,7 +25,9 @@ public class Map extends Object {
 	
 	public boolean loadMap(String path, String mapName) {
 		try {
-			String mapFile = new Scanner(new File("datas/maps/"+path+"/"+mapName+".awm")).useDelimiter("\\Z").next();
+			//String mapFile = new Scanner(new File("datas/maps/"+path+"/"+mapName+".awm")).useDelimiter("\\Z").next();
+			//I changed switched to this method so I do not longer have any memory leak problems.
+			String mapFile = Assets.readFile("datas/maps/"+path+"/"+mapName+".awm", StandardCharsets.UTF_8);
 			mapFile = mapFile.replace("\n", "").replace("\r", "");
 			String mapContent[] = mapFile.split("#_#");
 			
@@ -47,8 +53,28 @@ public class Map extends Object {
 				
 			}
 			
+			buildings = new ArrayList<Building>();
+			if(!mapContent[4].equals("null")) {
+				String[] buildingsInfos = mapContent[4].split(";");
+				for(int i = 0; i<buildingsInfos.length; i++) {
+					if(!(buildingsInfos[i].indexOf('#')==0)) {
+						//buildingType, x, y, teamId
+						String[] a = buildingsInfos[i].split("§");
+						if(a[0].equals("0") || a[0].equals("1")) {
+							this.buildings.add(new BuildingGeneric(
+									Integer.parseInt(a[0]),
+									Integer.parseInt(a[1]),
+									Integer.parseInt(a[2]),
+									Integer.parseInt(a[3])));
+						} else {
+							
+						}
+					}
+				}
+			}
+			
 			return true;
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -310,11 +336,14 @@ public class Map extends Object {
 	}
 
 	public void render(SpriteBatch batch) {
-		int startingPoint = Gdx.graphics.getHeight()+Assets.renderOffset[0]-Assets.tileRenderSize[Assets.tileRenderSizeIndex]; //Used for Y axis
+		int startingPointY = Gdx.graphics.getHeight()+Assets.renderOffset[1]-Assets.tileRenderSize[Assets.tileRenderSizeIndex]; //Used for Y axis
 		for(int y=0; y<this.mapSize[1]; y++) {
 			for(int x=0; x<this.mapSize[0] ;x++) {
-				this.mapTiles[x][y].render(batch, 0+(x*Assets.tileRenderSize[Assets.tileRenderSizeIndex]), startingPoint-(y*Assets.tileRenderSize[Assets.tileRenderSizeIndex]));
+				this.mapTiles[x][y].render(batch, 0+(x*Assets.tileRenderSize[Assets.tileRenderSizeIndex]), startingPointY-(y*Assets.tileRenderSize[Assets.tileRenderSizeIndex]));
 			}
+		}
+		for(int i=0; i<this.buildings.size(); i++) {
+			this.buildings.get(i).render(batch, 0+(buildings.get(i).position[0]*Assets.tileRenderSize[Assets.tileRenderSizeIndex]), startingPointY-(buildings.get(i).position[1]*Assets.tileRenderSize[Assets.tileRenderSizeIndex]));
 		}
 	}
 
@@ -356,6 +385,7 @@ public class Map extends Object {
 	 * @param String author - The author's name
 	 * @return boolean Unused - Might be used to cast an error and end the function
 	 */
+	//Buildings aren't exported for the moment.
 	public boolean exportMap(String path, String mapName, String name, String author) {
 		//Setting up everything
 		String mapLetters = "";
@@ -385,5 +415,19 @@ public class Map extends Object {
 			return false;
 		}
 		return true;
+	}
+
+	public boolean removeBuiding(int x, int y) {
+		for(int i = 0; i<this.buildings.size(); i++) {
+			if(this.buildings.get(i).position[0] == x && this.buildings.get(i).position[1] == y) {
+				this.buildings.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void setBuilding(int x, int y, Building par4) {
+		this.buildings.add(new Building(par4.buildingType.getId(), x, y, par4.faction.getId()));
 	}
 }

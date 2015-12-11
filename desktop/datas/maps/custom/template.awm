@@ -1,3 +1,5 @@
+Encoding: UTF-8
+
 [Map's Name]
 #_#
 [Author's Name]
@@ -6,4 +8,7 @@
 #_#
 [Tiles' Subtype - Not Working Yet]
 #_#
-[Unused]
+[Buildings]
+Building Type§X§Y§TeamId;
+#_#
+[Nothing Yet]

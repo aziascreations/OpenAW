@@ -61,13 +61,13 @@ public class GuiButton extends Gui {
 		if(this.texture!=null) {
 			batch.draw(this.texture, this.position[0], this.position[1], this.size[0], this.size[1]);
 		} else {
-			batch.draw(Assets.arrowFiller, this.position[0], this.position[1], this.size[0], this.size[1]);
+			batch.draw(Assets.guiDefaultBack, this.position[0], this.position[1], this.size[0], this.size[1]);
 			
 			int borderWidth = 3;
-			batch.draw(Assets.arrowFiller, this.position[0], this.position[1], borderWidth, this.size[1]);
-			batch.draw(Assets.arrowFiller, this.position[0]+this.size[0]-borderWidth, this.position[1], borderWidth, this.size[1]);
-			batch.draw(Assets.arrowFiller, this.position[0]+borderWidth, this.position[1], this.size[0]-borderWidth*2, borderWidth);
-			batch.draw(Assets.arrowFiller, this.position[0]+borderWidth, this.position[1]+this.size[1]-borderWidth, this.size[0]-borderWidth*2, borderWidth);
+			batch.draw(Assets.guiDefaultBack, this.position[0], this.position[1], borderWidth, this.size[1]);
+			batch.draw(Assets.guiDefaultBack, this.position[0]+this.size[0]-borderWidth, this.position[1], borderWidth, this.size[1]);
+			batch.draw(Assets.guiDefaultBack, this.position[0]+borderWidth, this.position[1], this.size[0]-borderWidth*2, borderWidth);
+			batch.draw(Assets.guiDefaultBack, this.position[0]+borderWidth, this.position[1]+this.size[1]-borderWidth, this.size[0]-borderWidth*2, borderWidth);
 			
 			//Not working properly, will fix this one day, maybe.
 			//Turns out I just can't do math correctly
@@ -79,7 +79,7 @@ public class GuiButton extends Gui {
 		if(new Rectangle(this.position[0], this.position[1], this.size[0], this.size[1]).contains(posX, posY)) {
 			//Workaround the 0.0F bug.
 			if(Datas.volumeEffects>0.0F) {
-				Assets.buttonClick.play(Datas.volumeEffects);
+				Assets.soundButtonClick.play(Datas.volumeEffects);
 			}
 			//System.out.println("Button "+this.id+"/"+this.actionId+" pressed");
 			return true;
