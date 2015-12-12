@@ -54,58 +54,58 @@ public enum EnumTerrainType {
 	//The Arrays are based on the weather(clear, rain, snow)
 	private final int[] moveInfantry;
 	private final int[] moveMech;
-    private final int[] moveThreads;
-    private final int[] moveWheels;
-    private final int[] moveLander;
-    private final int[] moveShip;
-    private final int[] moveAir;
-    private final int terrainAnimationID;
-    private final String letter;
-    
-    EnumTerrainType(final int[] moveInfantry, final int[] moveMech, final int[] moveThreads, final int[] moveWheels, final int[] moveLander, final int[] moveShip, final int[] moveAir, final int terrainAnimationID, final String letter) {
-        this.moveInfantry = moveInfantry;
-        this.moveMech = moveMech;
-        this.moveThreads = moveThreads;
-        this.moveWheels = moveWheels;
-        this.moveLander = moveLander;
-        this.moveShip = moveShip;
-        this.moveAir = moveAir;
-        this.terrainAnimationID = terrainAnimationID;
-        this.letter = letter;
-    }
-    
-    public int[] getMovementStats(int unitType) {
-    	//TODO: Use UnitType Enum
-    	//How can you get the weather in this ? - Use the MapController
-    	//Use another parameter ? - like: int foo = TT.getMovementStats(???, Map.getWeatherID) ?
-    	//Nope. Use the WeatherID in the Unit class/function after getting the int[] from here.
-    	switch(unitType) {
-    	case 0:
-    		return this.moveInfantry;
-    	case 1:
-    		return this.moveMech;
-    	case 2:
-    		return this.moveThreads;
-    	case 3:
-    		return this.moveWheels;
-    	case 4:
-    		return this.moveLander;
-    	case 5:
-    		return this.moveShip;
-    	default:
-    		return this.moveAir;
-    	}
-    }
-    
-    public int getAnimationID() {
-    	return this.terrainAnimationID;
-    }
-    
-    public String getTerrainLetter() {
-    	return this.letter;
-    }
-    
-    //i am so so sorry for what you are about to witness, but I had no choice...
+	private final int[] moveThreads;
+	private final int[] moveWheels;
+	private final int[] moveLander;
+	private final int[] moveShip;
+	private final int[] moveAir;
+	private final int terrainAnimationID;
+	private final String letter;
+	
+	EnumTerrainType(final int[] moveInfantry, final int[] moveMech, final int[] moveThreads, final int[] moveWheels, final int[] moveLander, final int[] moveShip, final int[] moveAir, final int terrainAnimationID, final String letter) {
+		this.moveInfantry = moveInfantry;
+		this.moveMech = moveMech;
+		this.moveThreads = moveThreads;
+		this.moveWheels = moveWheels;
+		this.moveLander = moveLander;
+		this.moveShip = moveShip;
+		this.moveAir = moveAir;
+		this.terrainAnimationID = terrainAnimationID;
+		this.letter = letter;
+	}
+	
+	public int[] getMovementStats(int unitType) {
+		//TODO: Use UnitType Enum
+		//How can you get the weather in this ? - Use the MapController
+		//Use another parameter ? - like: int foo = TT.getMovementStats(???, Map.getWeatherID) ?
+		//Nope. Use the WeatherID in the Unit class/function after getting the int[] from here.
+		switch(unitType) {
+		case 0:
+			return this.moveInfantry;
+		case 1:
+			return this.moveMech;
+		case 2:
+			return this.moveThreads;
+		case 3:
+			return this.moveWheels;
+		case 4:
+			return this.moveLander;
+		case 5:
+			return this.moveShip;
+		default:
+			return this.moveAir;
+		}
+	}
+	
+	public int getAnimationID() {
+		return this.terrainAnimationID;
+	}
+	
+	public String getTerrainLetter() {
+		return this.letter;
+	}
+	
+	//i am so so sorry for what you are about to witness, but I had no choice...
 	public static int[] getBeachSubType(String par1) {
 		//Leave this like that if you want a Java 6 support because switches are shit in this version.
 		//I switched to Java 7, It came out in 2011... I won't use an older version from 2007.
@@ -233,13 +233,7 @@ public enum EnumTerrainType {
 		}
 	}
 	
-	//par1 - Up, Right, Bottom, Left
-	//par2 - UpLeft, UpRight, BottomLeft, BottomRight
 	public static int[] getSeaSubType(String par1, String par2) {
-		/*if(!(par1.length()==4 && par2.length()==4)) {
-			System.out.println("Error: Tried to define SeaSubType - par1:"+par1+" - par2:"+par2);
-			return new int[] {15,2};
-		}*/
 		switch(par1) {
 		case "SSSS":
 			if(par2.equals("SSSS")) {
@@ -364,10 +358,6 @@ public enum EnumTerrainType {
 			} else {
 				return new int[] {4,2};
 			}
-			
-			
-		//case "":
-			//return new int[] {0,0};
 		default:
 			return new int[] {15,2};
 		}

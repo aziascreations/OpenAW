@@ -23,6 +23,7 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 	public ScreenMapEditor(AdvanceWarsBootleg game) {
 		this(game, "custom", "iskander");
 		//this(game, "custom", "develop03");
+		//this(game, "error", "fy");
 	}
 	
 	public ScreenMapEditor(AdvanceWarsBootleg game, String mapPath, String mapName) {
@@ -79,82 +80,82 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 
 	@Override
 	public boolean keyDown(int keycode) {
-        switch (keycode) {
-        case Keys.UP:
-        	if(pointerPosition[1]-1 >= 0) {
-        		pointerPosition[1]--;
-        	}
-            return true;
-        case Keys.DOWN:
-        	if(pointerPosition[1]+1 < Datas.coMap.getMapSize()[1]) {
-        		pointerPosition[1]++;
-        	}
-            return true;
-        case Keys.LEFT:
-        	if(pointerPosition[0]-1 >= 0) {
-        		pointerPosition[0]--;
-        	}
-            return true;
-        case Keys.RIGHT:
-        	if(pointerPosition[0]+1 < Datas.coMap.getMapSize()[0]) {
-        		pointerPosition[0]++;
-        	}
-            return true;
-            
-        case Keys.C:
-        	this.terrain = Datas.coMap.getTileTerrainType(this.pointerPosition[0], this.pointerPosition[1]);
-        	if(this.terrain == EnumTerrainType.Property || this.terrain == EnumTerrainType.Port) {
-        		this.building = Datas.coMap.getBuidingType(this.pointerPosition[0], this.pointerPosition[1]);
-        	} else {
-        		this.building = null;
-        	}
-            return true;
-        case Keys.V:
-        	Datas.coMap.setTileTerrainType(this.pointerPosition[0], this.pointerPosition[1], this.terrain, this.building);
-            return true;
-            
-        case Keys.E:
-        	Datas.coMap.exportMap("export", "test01", "Test 1", "Azias");
-            return true;
-        
-        case Keys.ESCAPE:
-        	if(Datas.coGui.doesGuiExists(3)) {
-        		Datas.coGui.killGui(3);
-        		Assets.soundMenuOut.play(Datas.volumeEffects);
-        	} else {
-        		Datas.coGui.createGui(3, new GuiEditorMenu(3));
-        		Assets.soundMenuIn.play(Datas.volumeEffects);
-        	}
-            return true;
-        case Keys.SPACE:
-        	if(Datas.coGui.doesGuiExists(2)) {
-        		Datas.coGui.killGui(2);
-        		Assets.soundMenuOut.play(Datas.volumeEffects);
-        	} else {
-        		int a = 0, b = 0;
-        		if(this.building!=null) {
-        			a = this.building.getFaction().getId();
-        			b = 1;
-        		}
-        		Datas.coGui.createGui(2, new GuiEditorSelector(2, b, a));
-        		Assets.soundMenuIn.play(Datas.volumeEffects);
-        	}
-            return true;
-        
-        case Keys.PLUS:
-        	if(Assets.tileRenderSizeIndex!=Assets.tileRenderSize.length-1) {
-        		Assets.tileRenderSizeIndex++;
-        		Assets.renderOffset = new int[] {0,0};
-        	}
-            return true;
-        case Keys.MINUS:
-        	if(Assets.tileRenderSizeIndex!=0) {
-        		Assets.tileRenderSizeIndex--;
-        		Assets.renderOffset = new int[] {0,0};
-        	}
-            return true;
-        }
-        return false;
+		switch (keycode) {
+		case Keys.UP:
+			if(pointerPosition[1]-1 >= 0) {
+				pointerPosition[1]--;
+			}
+			return true;
+		case Keys.DOWN:
+			if(pointerPosition[1]+1 < Datas.coMap.getMapSize()[1]) {
+				pointerPosition[1]++;
+			}
+			return true;
+		case Keys.LEFT:
+			if(pointerPosition[0]-1 >= 0) {
+				pointerPosition[0]--;
+			}
+			return true;
+		case Keys.RIGHT:
+			if(pointerPosition[0]+1 < Datas.coMap.getMapSize()[0]) {
+				pointerPosition[0]++;
+			}
+			return true;
+			
+		case Keys.C:
+			this.terrain = Datas.coMap.getTileTerrainType(this.pointerPosition[0], this.pointerPosition[1]);
+			if(this.terrain == EnumTerrainType.Property || this.terrain == EnumTerrainType.Port) {
+				this.building = Datas.coMap.getBuidingType(this.pointerPosition[0], this.pointerPosition[1]);
+			} else {
+				this.building = null;
+			}
+			return true;
+		case Keys.V:
+			Datas.coMap.setTileTerrainType(this.pointerPosition[0], this.pointerPosition[1], this.terrain, this.building);
+			return true;
+			
+		case Keys.E:
+			Datas.coMap.exportMap("export", "test01", "Test 1", "Azias");
+			return true;
+		
+		case Keys.ESCAPE:
+			if(Datas.coGui.doesGuiExists(3)) {
+				Datas.coGui.killGui(3);
+				Assets.soundMenuOut.play(Datas.volumeEffects);
+			} else {
+				Datas.coGui.createGui(3, new GuiEditorMenu(3));
+				Assets.soundMenuIn.play(Datas.volumeEffects);
+			}
+			return true;
+		case Keys.SPACE:
+			if(Datas.coGui.doesGuiExists(2)) {
+				Datas.coGui.killGui(2);
+				Assets.soundMenuOut.play(Datas.volumeEffects);
+			} else {
+				int a = 0, b = 0;
+				if(this.building!=null) {
+					a = this.building.getFaction().getId();
+					b = 1;
+				}
+				Datas.coGui.createGui(2, new GuiEditorSelector(2, b, a));
+				Assets.soundMenuIn.play(Datas.volumeEffects);
+			}
+			return true;
+		
+		case Keys.PLUS:
+			if(Assets.tileRenderSizeIndex!=Assets.tileRenderSize.length-1) {
+				Assets.tileRenderSizeIndex++;
+				Assets.renderOffset = new int[] {0,0};
+			}
+			return true;
+		case Keys.MINUS:
+			if(Assets.tileRenderSizeIndex!=0) {
+				Assets.tileRenderSizeIndex--;
+				Assets.renderOffset = new int[] {0,0};
+			}
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -210,11 +211,11 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 						this.pointerPosition[0] = x;
 						this.pointerPosition[1] = y;
 						this.terrain = Datas.coMap.getTileTerrainType(this.pointerPosition[0], this.pointerPosition[1]);
-			        	if(this.terrain == EnumTerrainType.Property || this.terrain == EnumTerrainType.Port) {
-			        		this.building = Datas.coMap.getBuidingType(this.pointerPosition[0], this.pointerPosition[1]);
-			        	} else {
-			        		this.building = null;
-			        	}
+						if(this.terrain == EnumTerrainType.Property || this.terrain == EnumTerrainType.Port) {
+							this.building = Datas.coMap.getBuidingType(this.pointerPosition[0], this.pointerPosition[1]);
+						} else {
+							this.building = null;
+						}
 						return true;
 					}
 				}
@@ -225,7 +226,7 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 	
 	private boolean actionPerformed(String actionID) {
 		if(actionID.contains("tile")) {
-			int chosenTile = Integer.valueOf(actionID.split("\\.")[1]);
+			int chosenTile = Integer.parseInt(actionID.split("\\.")[1]);
 			switch(chosenTile) {
 			case 0:
 				this.terrain = EnumTerrainType.Plain;
@@ -245,8 +246,11 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 			case 7:
 				this.terrain = EnumTerrainType.Road;
 				break;
+			default:
+				this.terrain = EnumTerrainType.Plain;
+				break;
 			}
-	    	this.building = null;
+			this.building = null;
 			return true;
 		}
 		
@@ -263,28 +267,28 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 			} else if(actionSubID==1) {
 				//Town
 				this.terrain = EnumTerrainType.Property;
-	    		this.building = new BuildingGeneric(0, -1, -1, teamID);
+				this.building = new BuildingGeneric(0, -1, -1, teamID);
 				return true;
 			} else if(actionSubID==2) {
 				//Factory
 				this.terrain = EnumTerrainType.Property;
-	    		this.building = new BuildingGeneric(1, -1, -1, teamID);
+				this.building = new BuildingGeneric(1, -1, -1, teamID);
 				return true;
 			} else if(actionSubID==3) {
 				//Airport
 				this.terrain = EnumTerrainType.Property;
-	    		this.building = new BuildingGeneric(2, -1, -1, teamID);
+				this.building = new BuildingGeneric(2, -1, -1, teamID);
 				return true;
 			} else if(actionSubID==5) {
 				//Antenna
 				this.terrain = EnumTerrainType.Property;
-	    		this.building = new BuildingGeneric(3, -1, -1, teamID);
+				this.building = new BuildingGeneric(3, -1, -1, teamID);
 				return true;
 			}
 		}
 		
 		if(actionID.equals("menu.save")) {
-        	Datas.coMap.exportMap("export", "test01", "Test 1", "Azias");
+			Datas.coMap.exportMap("export", "test01", "Test 1", "Azias");
 			return true;
 		}
 		if(actionID.equals("menu.exit")) {

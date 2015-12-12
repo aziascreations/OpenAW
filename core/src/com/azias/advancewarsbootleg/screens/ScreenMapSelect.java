@@ -16,7 +16,7 @@ public class ScreenMapSelect extends ScreenAdapter implements ApplicationListene
 
 	@Override
 	public void create() {
-        Gdx.input.setInputProcessor(this);
+		Gdx.input.setInputProcessor(this);
 	}
 
 	public void update () {

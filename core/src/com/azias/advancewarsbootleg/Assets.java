@@ -1,10 +1,5 @@
 package com.azias.advancewarsbootleg;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import com.azias.advancewarsbootleg.enums.EnumBuildingType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -49,11 +44,6 @@ public class Assets {
 	
 	public static Sound loadSound(String filePath) {
 		return Gdx.audio.newSound(Gdx.files.internal(filePath));
-	}
-	
-	public static String readFile(String path, Charset encoding) throws IOException  {
-		byte[] encoded = Files.readAllBytes(Paths.get(path));
-		return new String(encoded, encoding);
 	}
 	
 	//TODO: Add dispose() when needed to avoid memory leaks

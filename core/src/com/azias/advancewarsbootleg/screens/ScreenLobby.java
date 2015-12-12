@@ -18,8 +18,8 @@ public class ScreenLobby extends ScreenAdapter implements ApplicationListener, I
 
 	@Override
 	public void create() {
-        Gdx.input.setInputProcessor(this);
-        Datas.coGui.createGui(1, new GuiLobbyMain(1));
+		Gdx.input.setInputProcessor(this);
+		Datas.coGui.createGui(1, new GuiLobbyMain(1));
 	}
 
 	public void update () {

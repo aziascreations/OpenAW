@@ -5,6 +5,8 @@ import com.azias.advancewarsbootleg.map.MapController;
 import com.badlogic.gdx.Gdx;
 
 public class Datas {
+	public final static String sessionKey = Utils.nextSessionId();
+	
 	public static MapController coMap = new MapController();
 	public static GuiController coGui = new GuiController();
 

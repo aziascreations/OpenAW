@@ -14,8 +14,8 @@ public class ScreenOptions extends ScreenAdapter implements ApplicationListener,
 
 	public ScreenOptions(AdvanceWarsBootleg game) {
 		this.game = game;
-        Gdx.input.setInputProcessor(this);
-        Datas.coGui.createGui(1, new GuiOptionsMenu(1));
+		Gdx.input.setInputProcessor(this);
+		Datas.coGui.createGui(1, new GuiOptionsMenu(1));
 	}
 
 	@Override

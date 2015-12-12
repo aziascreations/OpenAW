@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import com.azias.advancewarsbootleg.Assets;
 import com.azias.advancewarsbootleg.Datas;
+import com.azias.advancewarsbootleg.Utils;
 import com.azias.advancewarsbootleg.enums.EnumTerrainType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,17 +25,18 @@ public class Map extends Object {
 	}
 	
 	public boolean loadMap(String path, String mapName) {
+		Gdx.app.log(Utils.getFormatedTime(), "Loading "+path+"/"+mapName+".awm ...");
 		try {
 			//String mapFile = new Scanner(new File("datas/maps/"+path+"/"+mapName+".awm")).useDelimiter("\\Z").next();
 			//I changed switched to this method so I do not longer have any memory leak problems.
-			String mapFile = Assets.readFile("datas/maps/"+path+"/"+mapName+".awm", StandardCharsets.UTF_8);
+			String mapFile = Utils.readFile("datas/maps/"+path+"/"+mapName+".awm", StandardCharsets.UTF_8);
 			mapFile = mapFile.replace("\n", "").replace("\r", "");
 			String mapContent[] = mapFile.split("#_#");
 			
 			String mapTiles[] = mapContent[2].split(";");
 			this.mapSize[0] = mapTiles[0].length();
 			this.mapSize[1] = mapTiles.length;
-
+			
 			this.mapTiles = new Tile[this.mapSize[0]][this.mapSize[1]];
 			for(int y = 0; y < this.mapSize[1]; y++) {
 				for(int x = 0; x < this.mapSize[0]; x++) {
@@ -60,15 +62,11 @@ public class Map extends Object {
 					if(!(buildingsInfos[i].indexOf('#')==0)) {
 						//buildingType, x, y, teamId
 						String[] a = buildingsInfos[i].split("§");
-						if(a[0].equals("0") || a[0].equals("1")) {
-							this.buildings.add(new BuildingGeneric(
+						this.buildings.add(new BuildingGeneric(
 									Integer.parseInt(a[0]),
 									Integer.parseInt(a[1]),
 									Integer.parseInt(a[2]),
 									Integer.parseInt(a[3])));
-						} else {
-							
-						}
 					}
 				}
 			}
@@ -80,9 +78,9 @@ public class Map extends Object {
 		}
 	}
 	
-    protected boolean setTileSubType(int x, int y) {
-    	this.mapTiles[x][y].animationPosition = new int[] {0,0};
-    	//Sea
+	protected boolean setTileSubType(int x, int y) {
+		this.mapTiles[x][y].animationPosition = new int[] {0,0};
+		//Sea
 		if(this.mapTiles[x][y].getTerrainType()==EnumTerrainType.Sea) {
 			String surroundingClose = "";
 			String surroundingDistant = "";
@@ -169,7 +167,7 @@ public class Map extends Object {
 			this.mapTiles[x][y].animationPosition=EnumTerrainType.getSeaSubType(surroundingClose, surroundingDistant);
 			return true;
 		}
-    	
+		
 		//Plains
 		if(this.mapTiles[x][y].getTerrainType()==EnumTerrainType.Plain) {
 			if(x-1 >= 0) {
@@ -376,7 +374,7 @@ public class Map extends Object {
 		default:
 			return EnumTerrainType.Plain;
 		}
-    }
+	}
 
 	/**
 	 * @param String path - The output folder's name
@@ -403,12 +401,13 @@ public class Map extends Object {
 			File f = new File("datas/maps/"+path+"/"+mapName+".awm");
 			if(f.exists() && !f.isDirectory()) {
 				//TODO: ask to replace the file
-				System.out.println("ERROR: A file named "+mapName+".awm already exist!");
+				Gdx.app.error(Utils.getFormatedTime(), "Error: A file named "+mapName+".awm already exist!");
 				return false;
 			} else {
 				PrintWriter out = new PrintWriter("datas/maps/"+path+"/"+mapName+".awm");
 				out.println(mapContent);
 				out.close();
+				Gdx.app.log(Utils.getFormatedTime(), "Exported map as "+mapName+".awm");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
