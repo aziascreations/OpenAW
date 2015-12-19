@@ -2,6 +2,7 @@ package com.azias.advancewarsbootleg.gui;
 
 import com.azias.advancewarsbootleg.Assets;
 import com.azias.advancewarsbootleg.Datas;
+import com.azias.advancewarsbootleg.Utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,8 +25,8 @@ public class GuiOptionsMenu extends Gui {
 		this.buttonList.add(new GuiButton(-1, "volume.effects.plus", this.size[0]/4-60/2+80, this.size[1]/2+30+60*2, 60, 60, "+"));
 		this.buttonList.add(new GuiButton(-1, "volume.effects.minus", this.size[0]/4-60/2-80, this.size[1]/2+30+60*2, 60, 60, "-"));
 		
-		this.buttonList.add(new GuiButton(-1, "save", this.size[0]/4-200/2, this.position[1]+60, 200, 60, "Save"));
-		this.buttonList.add(new GuiButton(-1, "exit", this.size[0]/4*3-200/2, this.position[1]+60, 200, 60, "Exit"));
+		this.buttonList.add(new GuiButton(-1, "save", this.size[0]/4-200/2, this.position[1]+60, 200, 60, Utils.getTextFromLang("gui.save")));
+		this.buttonList.add(new GuiButton(-1, "exit", this.size[0]/4*3-200/2, this.position[1]+60, 200, 60, Utils.getTextFromLang("gui.exit")));
 	}
 
 	@Override

@@ -15,7 +15,7 @@ public class ClientThread extends Thread {
 		open();
 		start();
 	}
-
+	
 	public void open() {
 		try {
 			streamIn = new DataInputStream(socket.getInputStream());
@@ -24,7 +24,7 @@ public class ClientThread extends Thread {
 			client.stop();
 		}
 	}
-
+	
 	public void close() {
 		try {
 			if (streamIn != null)
@@ -33,7 +33,7 @@ public class ClientThread extends Thread {
 			System.out.println("Error closing input stream: " + ioe);
 		}
 	}
-
+	
 	public void run() {
 		while (true) {
 			try {

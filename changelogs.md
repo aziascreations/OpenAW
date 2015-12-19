@@ -1,5 +1,9 @@
 #Changelogs
 
+##Indev 5
+- Added a basic working client/server system.
+- Added text fields.
+
 ##Indev 4.1
 - Added some launch arguments.
 - Revamped the readme file.

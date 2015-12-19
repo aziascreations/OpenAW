@@ -1,0 +1,34 @@
+Here is a basic list of the commands that will be used for the server and client.
+They are not formatted like regular commands (/command arg1 arg2...) and probably won't be until the net code is finished.
+
+Example: *user.login.12345 or /game.lobby.launch
+
+- - -
+
+User Commands:
+debug:
+  !getname
+
+user:
+  !setname.[username]
+  !who
+  !help
+  !serverinfo ?
+
+admin:
+  !login.[password]
+  !shutdown
+
+- - -
+
+Game Commands:
+Used to send/receive data - It might be one of the worst idea I could have, but I din't know better for the moment.
+
+/lobby.setco.[co's id]
+/lobby.ready.[0-1]
+/lobby.launch
+
+/map.endturn
+/map.move.[x].[y].[new x].[new y]
+
+- - -

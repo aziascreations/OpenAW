@@ -15,7 +15,9 @@ public class AdvanceWarsBootleg extends Game {
 		Assets.load();
 		Gdx.app.log(Utils.getFormatedTime(), "Loading Configs...");
 		Datas.loadConfigFile();
-
+		Gdx.app.log(Utils.getFormatedTime(), "Loading Lang file...");
+		Datas.loadLangFile("english");
+		
 		Gdx.app.log(Utils.getFormatedTime(), "Session Key: "+Datas.sessionKey);
 		
 		setScreen(new ScreenMainMenu(this));

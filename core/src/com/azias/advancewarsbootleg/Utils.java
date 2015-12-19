@@ -24,4 +24,13 @@ public class Utils {
 	public static String nextSessionId() {
 		return new BigInteger(130, random).toString(32);
 	}
+	
+	public static String getTextFromLang(String key) {
+		String text = Datas.lang.get(key);
+		if(text!=null) {
+			return text;
+		} else {
+			return key;
+		}
+	}
 }

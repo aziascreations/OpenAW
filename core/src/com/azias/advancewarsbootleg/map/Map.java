@@ -47,7 +47,6 @@ public class Map extends Object {
 			if(mapContent[3].equals("null")) {
 				for(int y = 0; y < this.mapSize[1]; y++) {
 					for(int x = 0; x < this.mapSize[0]; x++) {
-						//System.out.println(x+"/"+y);
 						this.setTileSubType(x,y);
 					}
 				}

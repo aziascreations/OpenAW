@@ -7,12 +7,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Gui extends Object {
 	protected int id;
-	//protected int childsIDs; //Used when closing the GUI so the childs are closed too.
 	protected int[] position = new int[2];
 	protected int[] size = new int[2];
 	protected ArrayList<GuiButton> buttonList = new ArrayList<GuiButton>();
+	protected ArrayList<GuiTextField> textFieldList = new ArrayList<GuiTextField>();
 	protected boolean isLockingMouseClick = false;
-	protected boolean isNeedingKeyboardInput = false;
+	protected boolean isGrabbingKeyboardInput = false;
 	protected boolean isEnabled = true;
 
 	/**
@@ -66,6 +66,15 @@ public class Gui extends Object {
 	}
 	
 	/**
+	 * @param character - the letter, symbol or other, to add to the selected text field.
+	 */
+	public void processKeyboardInput(char character) {
+		for(int i=0; i<this.textFieldList.size(); i++) {
+			this.textFieldList.get(i).processKeyboardInput(character);
+		}
+	}
+	
+	/**
 	 * Execute registered action(s) based on the given parameter.
 	 * @param buttonId - Button's ID
 	 * @return <b>True</b> if an action was executed<br><b>False</b> if no action was executed<br>Note that even if an action was executed you can get a <b>False</b> so a second action can be done later.
@@ -76,11 +85,18 @@ public class Gui extends Object {
 	
 	public void render(SpriteBatch batch) {
 		this.renderButtons(batch);
+		this.renderTextFields(batch);
 	}
 	
 	protected void renderButtons(SpriteBatch batch) {
 		for(int i=0; i<this.buttonList.size(); i++) {
 			this.buttonList.get(i).render(batch);
+		}
+	}
+	
+	protected void renderTextFields(SpriteBatch batch) {
+		for(int i=0; i<this.textFieldList.size(); i++) {
+			this.textFieldList.get(i).render(batch);
 		}
 	}
 	
@@ -100,11 +116,20 @@ public class Gui extends Object {
 		return this.size;
 	}
 	
+	public boolean getIsLockingMouseClick() {
+		return this.isLockingMouseClick;
+	}
+	
 	public void changeID(int id) {
 		this.id = id;
 	}
 	
-	public boolean getIsLockingMouseClick() {
-		return this.isLockingMouseClick;
+	public String getTextFieldInput(int idTextField) {
+		for(int i=0; i<this.textFieldList.size(); i++) {
+			if(this.textFieldList.get(i).id == idTextField) {
+				return this.textFieldList.get(i).getText();
+			}
+		}
+		return null;
 	}
 }

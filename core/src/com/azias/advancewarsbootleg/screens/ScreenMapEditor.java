@@ -223,6 +223,24 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 		}
 		return false;
 	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		/*if(!Datas.coGui.isMouseClickLocked()) {
+			int diffX = screenX-0;
+			int diffY = screenY-0;
+			if(diffX>=0 && diffY>=0) {
+				int x = (int)Math.floor(diffX/Assets.tileRenderSize[Assets.tileRenderSizeIndex]);
+				int y = (int)Math.floor(diffY/Assets.tileRenderSize[Assets.tileRenderSizeIndex]);
+				if(Datas.coMap.getMapSize()[0]-1>=x && Datas.coMap.getMapSize()[1]-1>=y) {
+					this.pointerPosition[0] = x;
+					this.pointerPosition[1] = y;
+				}
+			}
+			
+		}/**/
+		return false;
+	}
 	
 	private boolean actionPerformed(String actionID) {
 		if(actionID.contains("tile")) {
@@ -306,11 +324,6 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
 		return false;
 	}
 

@@ -7,6 +7,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import com.azias.advancewarsbootleg.Utils;
+
 public class ServerThread extends Thread {
 	private Server server = null;
 	private Socket socket = null;
@@ -25,8 +27,10 @@ public class ServerThread extends Thread {
 		try {
 			streamOut.writeUTF(msg);
 			streamOut.flush();
-		} catch (IOException ioe) {
-			System.out.println(ID + " ERROR sending: " + ioe.getMessage());
+		} catch (IOException e) {
+			System.err.println(Utils.getFormatedTime()+": An error occured while sending a message: "+msg+" at: "+ID+".");
+			System.err.println(Utils.getFormatedTime()+": This connection will be closed.");
+			e.printStackTrace();
 			server.remove(ID);
 			stop();
 		}

@@ -116,4 +116,21 @@ public class GuiController extends Object {
 		}
 		return false;
 	}
+	
+	public boolean processKeyboardInput(char character) {
+		for(int i=0; i<this.openedGUIs.size(); i++) {
+			this.openedGUIs.get(i).processKeyboardInput(character);
+		}
+		return true;
+	}
+	
+	public String getTextFieldInput(int idTextField) {
+		for(int i=0; i<this.openedGUIs.size(); i++) {
+			String text = this.openedGUIs.get(i).getTextFieldInput(idTextField);
+			if(text!=null) {
+				return text;
+			}
+		}
+		return null;
+	}
 }

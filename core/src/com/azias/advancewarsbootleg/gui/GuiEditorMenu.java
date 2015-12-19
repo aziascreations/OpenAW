@@ -1,6 +1,7 @@
 package com.azias.advancewarsbootleg.gui;
 
 import com.azias.advancewarsbootleg.Assets;
+import com.azias.advancewarsbootleg.Utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -14,10 +15,10 @@ public class GuiEditorMenu extends Gui {
 	}
 
 	private void addButtons() {
-		this.buttonList.add(new GuiButton(-1, "menu.open", -1, Gdx.graphics.getHeight()/2-60/2+120, 200, 60, "Open Map"));
-		this.buttonList.add(new GuiButton(-1, "menu.save", -1, Gdx.graphics.getHeight()/2-60/2+40, 200, 60, "Save Map"));
-		this.buttonList.add(new GuiButton(-1, "menu.options", -1, Gdx.graphics.getHeight()/2-60/2-40, 200, 60, "Options"));
-		this.buttonList.add(new GuiButton(-1, "menu.exit", -1, Gdx.graphics.getHeight()/2-60/2-120, 200, 60, "Exit"));
+		this.buttonList.add(new GuiButton(-1, "menu.open", -1, Gdx.graphics.getHeight()/2-60/2+120, 200, 60, Utils.getTextFromLang("gui.openmap")));
+		this.buttonList.add(new GuiButton(-1, "menu.save", -1, Gdx.graphics.getHeight()/2-60/2+40, 200, 60, Utils.getTextFromLang("gui.savemap")));
+		this.buttonList.add(new GuiButton(-1, "menu.options", -1, Gdx.graphics.getHeight()/2-60/2-40, 200, 60, Utils.getTextFromLang("gui.options")));
+		this.buttonList.add(new GuiButton(-1, "menu.exit", -1, Gdx.graphics.getHeight()/2-60/2-120, 200, 60, Utils.getTextFromLang("gui.exit")));
 	}
 
 	@Override
