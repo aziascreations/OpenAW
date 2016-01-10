@@ -5,9 +5,13 @@ import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.swing.JOptionPane;
 
 public class Utils {
 	private static SecureRandom random = new SecureRandom();
@@ -32,5 +36,24 @@ public class Utils {
 		} else {
 			return key;
 		}
+	}
+	
+	public String getStringMD5(String par1) {
+		try {
+			MessageDigest mdEnc = MessageDigest.getInstance("MD5");
+			mdEnc.update(par1.getBytes(), 0, par1.length());
+			return new BigInteger(1, mdEnc.digest()).toString(16);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/*public boolean isValidMD5(String md5) {
+	    return md5.matches("[a-fA-F0-9]{32}");
+	}*/
+	
+	public static void showErrorMessageBox(String text) {
+		JOptionPane.showMessageDialog(null, text, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 }

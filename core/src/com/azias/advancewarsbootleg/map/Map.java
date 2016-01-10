@@ -24,6 +24,47 @@ public class Map extends Object {
 		
 	}
 	
+	public boolean loadBasicMap(String path, String mapName) {
+		Gdx.app.log(Utils.getFormatedTime(), "Loading "+path+"/"+mapName+".awm ...");
+		try {
+			String mapFile = Utils.readFile("datas/maps/"+path+"/"+mapName+".awm", StandardCharsets.UTF_8);
+			mapFile = mapFile.replace("\n", "").replace("\r", "");
+			String mapContent[] = mapFile.split("#_#");
+			
+			String mapTiles[] = mapContent[2].split(";");
+			this.mapSize[0] = mapTiles[0].length();
+			this.mapSize[1] = mapTiles.length;
+			
+			this.mapTiles = new Tile[this.mapSize[0]][this.mapSize[1]];
+			for(int y = 0; y < this.mapSize[1]; y++) {
+				for(int x = 0; x < this.mapSize[0]; x++) {
+					this.mapTiles[x][y]=new Tile(this.getTerrainType(mapTiles[y].charAt(x)), x, y);
+				}
+			}
+			
+			buildings = new ArrayList<Building>();
+			if(!mapContent[4].equals("null")) {
+				String[] buildingsInfos = mapContent[4].split(";");
+				for(int i = 0; i<buildingsInfos.length; i++) {
+					if(!(buildingsInfos[i].indexOf('#')==0)) {
+						//buildingType, x, y, teamId
+						String[] a = buildingsInfos[i].split("§");
+						this.buildings.add(new BuildingGeneric(
+									Integer.parseInt(a[0]),
+									Integer.parseInt(a[1]),
+									Integer.parseInt(a[2]),
+									Integer.parseInt(a[3])));
+					}
+				}
+			}
+			
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public boolean loadMap(String path, String mapName) {
 		Gdx.app.log(Utils.getFormatedTime(), "Loading "+path+"/"+mapName+".awm ...");
 		try {

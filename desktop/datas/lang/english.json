@@ -3,6 +3,7 @@
 	"gui.editor": "Editor",
 	"gui.options": "Options",
 	"gui.exit": "Exit",
+	"gui.newmap": "New Map",
 	"gui.openmap": "Open Map",
 	"gui.savemap": "Save Map",
 	"gui.quit": "Quit",

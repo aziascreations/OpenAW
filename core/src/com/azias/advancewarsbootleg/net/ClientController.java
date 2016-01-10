@@ -1,5 +1,7 @@
 package com.azias.advancewarsbootleg.net;
 
+import java.util.ArrayList;
+
 public class ClientController extends Object{
 	private Client client;
 	
@@ -17,5 +19,9 @@ public class ClientController extends Object{
 	
 	public void stop(String input) {
 		this.client.stop();
+	}
+	
+	public ArrayList<String> getCommandsList() {
+		return this.client.getCommandsList();
 	}
 }

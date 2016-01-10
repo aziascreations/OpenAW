@@ -14,6 +14,7 @@ public class Server implements Runnable {
 	private ServerSocket server = null;
 	private Thread thread = null;
 	private int clientCount = 0;
+	private Player[] players = new Player[4];
 	
 	//Game Datas
 	private static String adminPassword;
@@ -73,9 +74,9 @@ public class Server implements Runnable {
 	
 	public synchronized void handle(int id, String input) {
 		System.out.println(Utils.getFormatedTime()+": "+id+" - "+input);
-		if(input.charAt(0)=='!') {
+		if(input.charAt(0)=='/') {
 			System.out.println("Command detected.");
-			String[] command = input.substring(1).split("\\.");
+			String[] command = input.substring(1).split("#_#");
 			try {
 				if(command[0].equals("login")) {
 					if(command[1].equals(adminPassword)) {
@@ -115,24 +116,108 @@ public class Server implements Runnable {
 			} catch(ArrayIndexOutOfBoundsException e) {
 				e.printStackTrace();
 			}
-		} else if(input.charAt(0)=='/') {
+		} else if(input.charAt(0)=='!') {
 			System.out.println("Internal command detected.");
-			
+			String[] command = input.substring(1).split("#_#");
+			try {
+				if(command[0].equals("getlobbyinfo")) {
+					//Returns the lobby's infos to the user.
+					int a = findClient(id);
+					if(a != -1) {
+						String[] names = {"Not Connected","Not Connected","Not Connected","Not Connected"};
+						for(int i=0; i<clientCount; i++) {
+							names[i] = players[i].getUsername();
+						}
+						clients[a].send("!lobby#_#names#_#"+names[0]+"#_#"+names[1]+"#_#"+names[2]+"#_#"+names[3]);
+						//Args: lobby.map.[map's folder].[map's file name] - Use "null" if not map is chosen yet.
+						//clients[a].send("!lobby#_#map#_#null#_#null");
+						
+						String[] cosList = {"null", "null", "null", "null"};
+						for(int i=0; i<clientCount; i++) {
+							if(players[i].co!=null) {
+								cosList[i]=players[i].co.getAssetsName();
+							}
+						}
+						clients[a].send("!lobby#_#cos#_#"+cosList[0]+"#_#"+cosList[1]+"#_#"+cosList[2]+"#_#"+cosList[3]);
+						
+						char[] readyList = {'2','2','2','2'};
+						for(int i=0; i<clientCount; i++) {
+							if(players[i].isReady) {
+								readyList[i]='1';
+							} else {
+								readyList[i]='0';
+							}
+						}
+						clients[a].send("!lobby#_#ready#_#"+String.valueOf(readyList));
+						
+						clients[a].send("!chat#_#add#_#You got the lobby infos.");
+					}
+				} else if(command[0].equals("set")) {
+					//Setters
+					if(command[1].equals("name")) {
+						int a = findClient(id);
+						if(a != -1) {
+							players[a].setUsername(command[2]);
+						}
+					} else if(command[1].equals("sk")) {
+						int a = findClient(id);
+						if(a != -1) {
+							players[a].setSessionKey(command[2]);
+						}
+					} else if(command[1].equals("co")) {
+						
+					} else if(command[1].equals("ready")) {
+						int a = findClient(id);
+						if(a != -1) {
+							boolean hasChanged = false;
+							if(players[a].isReady) {
+								players[a].isReady = false;
+								hasChanged = true;
+							} else {
+								if(players[a].co!=null && !players[a].username.equals("null")) {
+									players[a].isReady = true;
+									hasChanged = true;
+								} else {
+									clients[a].send("!chat#_#add#_#You can't get ready now.");
+								}
+							}
+							if(hasChanged) {
+								char[] readyList = {'2','2','2','2'};
+								for(int i=0; i<clientCount; i++) {
+									if(players[i].isReady) {
+										readyList[i]='1';
+									} else {
+										readyList[i]='0';
+									}
+								}
+								for(int i=0; i<clientCount; i++) {
+									clients[i].send("!lobby#_#ready#_#"+String.valueOf(readyList));
+								}
+							}
+						}
+					}
+				}
+			} catch(ArrayIndexOutOfBoundsException e) {
+				e.printStackTrace();
+			}
 		} else {
 			for(int i=0; i<clientCount; i++) {
 				clients[i].send(id+": "+input);
 			}
-		}	
+		}
 	}
 	
 	public synchronized void remove(int ID) {
 		int pos = findClient(ID);
 		if (pos >= 0) {
 			ServerThread toTerminate = clients[pos];
+			
 			System.out.println("Removing client thread " + ID + " at " + pos);
 			if (pos < clientCount - 1)
-				for (int i = pos + 1; i < clientCount; i++)
-					clients[i - 1] = clients[i];
+				for (int i = pos + 1; i < clientCount; i++) {
+					clients[i-1] = clients[i];
+					players[i-1] = players[i];
+				}
 			clientCount--;
 			try {
 				toTerminate.close();
@@ -147,24 +232,21 @@ public class Server implements Runnable {
 		if (clientCount < clients.length) {
 			System.out.println("Client accepted: " + socket);
 			clients[clientCount] = new ServerThread(this, socket);
+			players[clientCount] = new Player(clients[clientCount].getID());
 			try {
 				clients[clientCount].open();
 				clients[clientCount].start();
 				clientCount++;
+				for(int i=0; i<clientCount; i++) {
+					clients[i].send("/server#_#connected#_#"+clients[clientCount-1].getID());
+				}
 			} catch (IOException ioe) {
 				System.out.println("Error opening thread: " + ioe);
 			}
-		} else
+		} else {
 			System.out.println("Client refused: maximum " + clients.length + " reached.");
+		}
 	}
-
-	/*public static void main(String args[]) {
-		Server server = null;
-		if (args.length != 1)
-			System.out.println("Usage: java ChatServer port");
-		else
-			server = new Server(Integer.parseInt(args[0]));
-	}*/
 
 	public static void startServer(int port, int maxPlayers, String password) {
 		adminPassword = password;

@@ -39,16 +39,6 @@ public class Gui extends Object {
 	}
 	
 	/**
-	 * Create a centered GUI with given size.
-	 * @param sizeX = Width
-	 * @param sizeY = Height
-	 */
-	@Deprecated //Until the nextID() function is working
-	public Gui(int sizeX, int sizeY) {
-		this(-1,-1,sizeX,sizeY);
-	}
-	
-	/**
 	 * Check if any button can be pressed at the given coordinates
 	 * @param posX - Click's position on the X axis
 	 * @param posY - Click's position on the Y axis
@@ -131,5 +121,9 @@ public class Gui extends Object {
 			}
 		}
 		return null;
+	}
+
+	public boolean transmitInfo(String info) {
+		return false;
 	}
 }

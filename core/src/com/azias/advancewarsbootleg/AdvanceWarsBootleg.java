@@ -11,13 +11,17 @@ public class AdvanceWarsBootleg extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		Datas.side = "client";
 		Gdx.app.log(Utils.getFormatedTime(), "Loading Assets...");
-		Assets.load();
+		Assets.loadAssets();
 		Gdx.app.log(Utils.getFormatedTime(), "Loading Configs...");
 		Datas.loadConfigFile();
 		Gdx.app.log(Utils.getFormatedTime(), "Loading Lang file...");
 		Datas.loadLangFile("english");
-		
+		Gdx.app.log(Utils.getFormatedTime(), "Starting JavaScript engine...");
+		Datas.startJSEngine();
+		Gdx.app.log(Utils.getFormatedTime(), "Loading JavaScript scripts...");
+		Datas.loadJSScripts();
 		Gdx.app.log(Utils.getFormatedTime(), "Session Key: "+Datas.sessionKey);
 		
 		setScreen(new ScreenMainMenu(this));

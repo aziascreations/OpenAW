@@ -16,9 +16,11 @@ public class ScreenMainMenu extends ScreenAdapter implements ApplicationListener
 
 	public ScreenMainMenu(AdvanceWarsBootleg game) {
 		this.game = game;
-		this.logo = Assets.loadTexture("gfx/gui/mainmenu/logo_2.png");
+		this.logo = Assets.loadTexture("logo");
 		Datas.coGui.createGui(1, new GuiMainMenu(1));
 		Gdx.input.setInputProcessor(this);
+		Datas.coMusic.changeMusic("musicThemeGrit");
+		//Datas.coMusic.startMusic();
 	}
 
 	public void update () {
@@ -52,12 +54,12 @@ public class ScreenMainMenu extends ScreenAdapter implements ApplicationListener
 		game.batcher.draw(Assets.logo, 160 - 274 / 2, 480 - 10 - 142, 274, 142);
 		game.batcher.draw(Assets.mainMenu, 10, 200 - 110 / 2, 300, 110);
 		game.batcher.draw(Settings.soundEnabled ? Assets.soundOn : Assets.soundOff, 0, 0, 64, 64);
-		game.batcher.end();	*/
+		game.batcher.end();*/
 		game.batch.begin();
 		game.batch.draw(Assets.background,Gdx.graphics.getWidth()/2-Assets.background.getWidth()/2,Gdx.graphics.getHeight()/2-Assets.background.getHeight()/2);
 		
 		game.batch.draw(this.logo,Gdx.graphics.getWidth()/2-this.logo.getWidth()*3/2,(float)(Gdx.graphics.getHeight()-this.logo.getHeight()*3),this.logo.getWidth()*3,this.logo.getHeight()*3);
-		Assets.font48.draw(game.batch, "Indev 5", 10, 40);
+		Assets.font48.draw(game.batch, "Indev 6", 10, 40);
 		
 		Datas.coGui.render(game.batch);
 		game.batch.end();

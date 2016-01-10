@@ -4,7 +4,7 @@ Done:
   -Connect with ipv4
   -Basic server commands
   -Save and send data - Server
+  -Use received data - Client - static Objects might not be the same between threads.
 
 Todo:
   -Connect with ipv6
-  -Use received data - Client - static Objects might not be the same between threads.

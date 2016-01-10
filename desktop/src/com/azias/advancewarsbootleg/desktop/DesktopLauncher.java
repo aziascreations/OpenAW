@@ -16,24 +16,31 @@ public class DesktopLauncher {
 	private static boolean disableIcons = false;
 	private static boolean disableMotd = false;
 	private static String serverPassword = Utils.nextSessionId();
-	private static int serverPort = 27069;
+	private static int serverPort = 27030;
 	private static int maxPlayers = 4;
 	
 	public static void main(String[] args) {
 		System.out.println(Utils.getFormatedTime()+": Java version: "+System.getProperty("java.version"));
 		System.out.println(Utils.getFormatedTime()+": Operating System: "+System.getProperty("os.name")+" - "+System.getProperty("os.arch"));
 		
-		boolean isClient = true;
-		try {
-			if(args[0].equals("-server")) {
-				isClient = false;
-			}
-		} catch(ArrayIndexOutOfBoundsException e) {
-			System.err.println(Utils.getFormatedTime()+": Error: You haven't defined any arguments, client-side will be launched.");
-			System.err.println(Utils.getFormatedTime()+": You should consider adding \"-client\" or \"-server\" as the first argument.");
+		int side = 0;
+		
+		if(Integer.parseInt(System.getProperty("java.version").split("\\.")[1])<8) {
+			side = -1;
 		}
 		
-		if(isClient) {
+		if(side>=0) {
+			try {
+				if(args[0].equals("-server")) {
+					side = 1;
+				}
+			} catch(ArrayIndexOutOfBoundsException e) {
+				System.err.println(Utils.getFormatedTime()+": Error: You haven't defined any arguments, client-side will be launched.");
+				System.err.println(Utils.getFormatedTime()+": You should consider adding \"-client\" or \"-server\" as the first argument.");
+			}
+		}
+		
+		if(side==0) {
 			//Client
 			LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 			config.width = 1280;
@@ -46,6 +53,12 @@ public class DesktopLauncher {
 						config.width = Integer.parseInt(args[i+1]);
 					} else if(args[i].equals("-h")) {
 						config.height = Integer.parseInt(args[i+1]);
+					} else if(args[i].equals("-fullscreen")) {
+						config.fullscreen = true;
+						System.setProperty("org.lwjgl.opengl.Window.undecorated", "false");
+					} else if(args[i].equals("-borderless")) {
+						config.fullscreen = false;
+						System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 					} else if(args[i].equals("-nomotd")) {
 						disableMotd = true;
 					} else if(args[i].equals("-noicon")) {
@@ -79,7 +92,7 @@ public class DesktopLauncher {
 			System.out.println(Utils.getFormatedTime()+": Launching Advance Wars Bootleg Edition...");
 			System.out.println(Utils.getFormatedTime()+": - - - - - - - - - - - - - - - - - - - - - -");
 			new LwjglApplication(new AdvanceWarsBootleg(), config);
-		} else {
+		} else if(side==1) {
 			//Server
 			try {
 				for(int i=0; i<args.length; i++) {
@@ -99,6 +112,8 @@ public class DesktopLauncher {
 			System.out.println(Utils.getFormatedTime()+": Launching Advance Wars Bootleg Edition Server...");
 			System.out.println(Utils.getFormatedTime()+": - - - - - - - - - - - - - - - - - - - - - -");
 			Server.startServer(serverPort, maxPlayers, serverPassword);
+		} else if(side==-1) {
+			Utils.showErrorMessageBox("Java "+Integer.parseInt(System.getProperty("java.version").split("\\.")[1])+" is not supported.\nPlease use Java 8.");
 		}
 	}
 }

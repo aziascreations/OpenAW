@@ -9,7 +9,10 @@ public class GuiTextField extends Gui {
 	protected String text;
 	protected GlyphLayout glyphLayout;
 	protected boolean isSelected = false;
-
+	
+	//Temporary workaround for the special characters showing up when they shouldn't(Shift/Up/...)
+	protected final String allowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuwxyz1234567890/! .:-+*";
+	
 	@Deprecated
 	private GuiTextField(int posX, int posY, int sizeX, int sizeY) {
 		super(posX, posY, sizeX, sizeY);
@@ -59,7 +62,7 @@ public class GuiTextField extends Gui {
 				}
 			} else if((int)character == 13) {
 				this.isSelected=false;
-			} else {
+			} else if(this.allowedCharacters.contains(String.valueOf(character))){
 				this.text += character;
 			}
 			/*if((int)character != 8 || (int)character != 13) {

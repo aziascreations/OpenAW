@@ -22,11 +22,10 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 
 	public ScreenMapEditor(AdvanceWarsBootleg game) {
 		this(game, "custom", "iskander");
-		//this(game, "custom", "develop03");
-		//this(game, "error", "fy");
+		Datas.coMusic.changeMusic("musicEditor");
 	}
 	
-	public ScreenMapEditor(AdvanceWarsBootleg game, String mapPath, String mapName) {
+	private ScreenMapEditor(AdvanceWarsBootleg game, String mapPath, String mapName) {
 		this.game = game;
 		this.pointerPosition = new int[] {0,0};
 		this.terrain = EnumTerrainType.Plain;
@@ -154,8 +153,12 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 				Assets.renderOffset = new int[] {0,0};
 			}
 			return true;
+		case Keys.T:
+			//Gdx.app.log(Utils.getFormatedTime(), Datas.coMap.toString());
+			return true;
 		}
 		return false;
+
 	}
 
 	@Override

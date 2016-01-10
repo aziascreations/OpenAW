@@ -2,6 +2,9 @@
 Advance Wars Bootleg Edition is a game based on the Advance wars serie and Custom Wars by JakeSamiRulz.
 The project's main goals are: having a working game with a map editor, multiplayer and staying as close as possible to the original game.
 
+##Requirements
+- Java 8
+
 
 ##Credits
 - [JakeSamiRulz](https://github.com/ctomni231) - COs and GUI parts

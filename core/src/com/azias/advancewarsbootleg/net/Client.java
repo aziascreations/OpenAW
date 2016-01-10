@@ -62,21 +62,28 @@ public class Client implements Runnable {
 		}
 	}
 	
-	public String getAction() {
-		if(commandsList.size()>0) {
+	public ArrayList<String> getCommandsList() {
+		//Might also cause some info loss, but it's good enough for the moment.
+		ArrayList<String> a = commandsList;
+		commandsList = new ArrayList<String>();
+		return a;
+		/*if(commandsList.size()>0) {
 			String a = commandsList.get(0);
 			//commandsList.remove(0);
 			return a;
 		} else {
 			return null;
-		}
+		}*/
+	}
+	
+	@Deprecated
+	public void resetCommandList() {
+		//Will cause some info loss.
+		//Don't use this.
+		commandsList = new ArrayList<String>();
 	}
 
 	public void handle(String msg) {
-		/*if(msg.equals(".bye")) {
-			System.out.println("Good bye. Press RETURN to exit ...");
-			stop();
-		}*/
 		if(msg.charAt(0)=='/') {
 			if(msg.equals("/bye")) {
 				System.out.println("Server shutdown.");
@@ -86,6 +93,7 @@ public class Client implements Runnable {
 			}
 		} else {
 			System.out.println(msg);
+			commandsList.add(msg.substring(1));
 		}
 		
 	}

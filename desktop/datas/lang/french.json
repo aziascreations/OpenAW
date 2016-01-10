@@ -1,8 +1,9 @@
 {
-	"gui.newgame": "Nouvelle Partie",
+	"gui.newgame": "Jouer En Ligne",
 	"gui.editor": "Editeur",
 	"gui.options": "Options",
 	"gui.exit": "Quitter",
+	"gui.newmap": "Nouvelle",
 	"gui.openmap": "Ouvrir",
 	"gui.savemap": "Sauvegarder",
 	"gui.quit": "Quitter",

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GuiController extends Object {
-	//protected boolean isMouseClickLocked = false;
-	
 	protected ArrayList<Gui> openedGUIs = null;
 	
 	public GuiController() {
@@ -90,11 +88,20 @@ public class GuiController extends Object {
 	}
 	
 	public String processMouseClick(int posX, int posY) {
+		//Going trough all opened GUIs to see if a button has been clicked.
 		for(int i=0; i<this.openedGUIs.size(); i++) {
 			if(this.openedGUIs.get(i).isEnabled) {
 				String returnedID = this.openedGUIs.get(i).processMouseClick(posX, posY);
 				if(returnedID != null) {
 					return returnedID;
+				}
+			}
+		}
+		//Going trough all opened GUIs to see if any instance of GuiButton is clicked.
+		for(int i=0; i<this.openedGUIs.size(); i++) {
+			if(this.openedGUIs.get(i) instanceof GuiButton) {
+				if(((GuiButton)this.openedGUIs.get(i)).isClicked(posX, posY)) {
+					return ((GuiButton)this.openedGUIs.get(i)).actionId;
 				}
 			}
 		}
@@ -129,6 +136,30 @@ public class GuiController extends Object {
 			String text = this.openedGUIs.get(i).getTextFieldInput(idTextField);
 			if(text!=null) {
 				return text;
+			}
+		}
+		return null;
+	}
+	
+	@Deprecated
+	public boolean transmitInfo(String info) {
+		for(int i=0; i<this.openedGUIs.size(); i++) {
+			if(this.openedGUIs.get(i).transmitInfo(info)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Deprecated
+	public boolean transmitInfo(int id, String info) {
+		return this.openedGUIs.get(id).transmitInfo(info);
+	}
+	
+	public Gui getGui(int id) {
+		for(int i=0; i<this.openedGUIs.size(); i++) {
+			if(this.openedGUIs.get(i).id==id) {
+				return this.openedGUIs.get(i);
 			}
 		}
 		return null;

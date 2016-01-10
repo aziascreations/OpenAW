@@ -26,10 +26,10 @@ public class GuiEditorSelector extends Gui {
 	
 	protected void addButtons(int par1) {
 		this.buttonList = new ArrayList<GuiButton>();
-		this.buttonList.add(new GuiButton(-1, "tabs.terrain", 16, this.size[1], 32*2, 32*2, new TextureRegion(Assets.guiEditorSelectTileTabs,0,0,32,32)));
-		this.buttonList.add(new GuiButton(-1, "tabs.buildings", 16*2+32*2, this.size[1], 32*2, 32*2, new TextureRegion(Assets.guiEditorSelectTileTabs,0,32,32,32)));
-		this.buttonList.add(new GuiButton(-1, "tabs.units", 16*3+32*4, this.size[1], 32*2, 32*2, new TextureRegion(Assets.guiEditorSelectTileTabs,0,64,32,32)));
-		this.buttonList.add(new GuiButton(-1, "tabs.special", 16*4+32*6, this.size[1], 32*2, 32*2, new TextureRegion(Assets.guiEditorSelectTileTabs,0,96,32,32)));
+		this.buttonList.add(new GuiButton(-1, "tabs.terrain", 16, this.size[1], 32*2, 32*2, new TextureRegion(Assets.guiEditorSelectorTabs,0,0,32,32)));
+		this.buttonList.add(new GuiButton(-1, "tabs.buildings", 16*2+32*2, this.size[1], 32*2, 32*2, new TextureRegion(Assets.guiEditorSelectorTabs,0,32,32,32)));
+		this.buttonList.add(new GuiButton(-1, "tabs.units", 16*3+32*4, this.size[1], 32*2, 32*2, new TextureRegion(Assets.guiEditorSelectorTabs,0,64,32,32)));
+		this.buttonList.add(new GuiButton(-1, "tabs.special", 16*4+32*6, this.size[1], 32*2, 32*2, new TextureRegion(Assets.guiEditorSelectorTabs,0,96,32,32)));
 		if(par1==0) {
 			int b = 64;
 			int a = (this.size[0]-11*b)/12;
@@ -38,12 +38,12 @@ public class GuiEditorSelector extends Gui {
 			}
 		} else if(par1==1) {
 			int c = (this.size[1]-(3*32))/5;
-			this.buttonList.add(new GuiButton(-1, "team.os", c, 3*c+2*32, 32, 32, Assets.guiIcons[0][0]));
-			this.buttonList.add(new GuiButton(-1, "team.bm", c, 2*c+32, 32, 32, Assets.guiIcons[1][0]));
-			this.buttonList.add(new GuiButton(-1, "team.yc", c, c, 32, 32, Assets.guiIcons[2][0]));
-			this.buttonList.add(new GuiButton(-1, "team.gh", 2*c+32, 3*c+2*32, 32, 32, Assets.guiIcons[3][0]));
-			this.buttonList.add(new GuiButton(-1, "team.bh", 2*c+32, 2*c+32, 32, 32, Assets.guiIcons[4][0]));
-			this.buttonList.add(new GuiButton(-1, "team.nl", 2*c+32, c, 32, 32, Assets.guiIcons[5][0]));
+			this.buttonList.add(new GuiButton(-1, "team.os", c, 3*c+2*32, 32, 32, Assets.guiIcons16[0][0]));
+			this.buttonList.add(new GuiButton(-1, "team.bm", c, 2*c+32, 32, 32, Assets.guiIcons16[1][0]));
+			this.buttonList.add(new GuiButton(-1, "team.yc", c, c, 32, 32, Assets.guiIcons16[2][0]));
+			this.buttonList.add(new GuiButton(-1, "team.gh", 2*c+32, 3*c+2*32, 32, 32, Assets.guiIcons16[3][0]));
+			this.buttonList.add(new GuiButton(-1, "team.bh", 2*c+32, 2*c+32, 32, 32, Assets.guiIcons16[4][0]));
+			this.buttonList.add(new GuiButton(-1, "team.nl", 2*c+32, c, 32, 32, Assets.guiIcons16[5][0]));
 			
 			int b = 64;
 			int a = ((this.size[0]-3*c-2*32)-6*b)/7;
@@ -52,12 +52,12 @@ public class GuiEditorSelector extends Gui {
 			}
 		} else if(par1==2) {
 			int c = (this.size[1]-(3*32))/5;
-			this.buttonList.add(new GuiButton(-1, "team.os", c, 3*c+2*32, 32, 32, Assets.guiIcons[0][0]));
-			this.buttonList.add(new GuiButton(-1, "team.bm", c, 2*c+32, 32, 32, Assets.guiIcons[1][0]));
-			this.buttonList.add(new GuiButton(-1, "team.yc", c, c, 32, 32, Assets.guiIcons[2][0]));
-			this.buttonList.add(new GuiButton(-1, "team.gh", 2*c+32, 3*c+2*32, 32, 32, Assets.guiIcons[3][0]));
-			this.buttonList.add(new GuiButton(-1, "team.bh", 2*c+32, 2*c+32, 32, 32, Assets.guiIcons[4][0]));
-			this.buttonList.add(new GuiButton(-1, "team.nl", 2*c+32, c, 32, 32, Assets.guiIcons[5][0]));
+			this.buttonList.add(new GuiButton(-1, "team.os", c, 3*c+2*32, 32, 32, Assets.guiIcons16[0][0]));
+			this.buttonList.add(new GuiButton(-1, "team.bm", c, 2*c+32, 32, 32, Assets.guiIcons16[1][0]));
+			this.buttonList.add(new GuiButton(-1, "team.yc", c, c, 32, 32, Assets.guiIcons16[2][0]));
+			this.buttonList.add(new GuiButton(-1, "team.gh", 2*c+32, 3*c+2*32, 32, 32, Assets.guiIcons16[3][0]));
+			this.buttonList.add(new GuiButton(-1, "team.bh", 2*c+32, 2*c+32, 32, 32, Assets.guiIcons16[4][0]));
+			this.buttonList.add(new GuiButton(-1, "team.nl", 2*c+32, c, 32, 32, Assets.guiIcons16[5][0]));
 			//Units
 		} else {
 			//Special

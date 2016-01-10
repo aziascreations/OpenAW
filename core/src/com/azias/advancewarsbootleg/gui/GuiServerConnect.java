@@ -27,6 +27,7 @@ public class GuiServerConnect extends Gui {
 			this.buttonList.add(new GuiButton(-1, "connect.cancel", this.size[0]/4-200/2, this.position[1]+60, 200, 60, Utils.getTextFromLang("gui.exit")));
 			this.buttonList.add(new GuiButton(-1, "connect.msgtest", this.size[0]/2-200/2, this.position[1]+60, 200, 60, Utils.getTextFromLang("gui.msgtest")));
 			this.buttonList.add(new GuiButton(-1, "connect.go", this.size[0]/4*3-200/2, this.position[1]+60, 200, 60, Utils.getTextFromLang("gui.connect")));
+			this.buttonList.add(new GuiButton(-1, "connect.bypass", this.size[0]/4*3-200/2, this.position[1]+120+30, 200, 60, Utils.getTextFromLang("gui.bypass")));
 			this.textFieldList.add(new GuiTextField(0, Gdx.graphics.getWidth()/2-300/2, Gdx.graphics.getHeight()/2-40/2+60, 300, 40));
 			this.textFieldList.add(new GuiTextField(1, Gdx.graphics.getWidth()/2-300/2, Gdx.graphics.getHeight()/2-40/2-60, 300, 40));
 		}
