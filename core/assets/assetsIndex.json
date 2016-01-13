@@ -67,6 +67,8 @@
 	
 	"style_buttonBasic": "gfx/gui/styles/styleButtonBasic.json",
 	"styleButtonBasic": "gfx/gui/styles/button_basic.png",
+	"style_buttonRetro": "gfx/gui/styles/styleButtonRetro.json",
+	"styleButtonRetro": "gfx/gui/styles/button_retro.png",
 	"style_guiBasic": "gfx/gui/styles/styleGuiBasic.json",
 	"styleGuiBasic": "gfx/gui/styles/gui_basic.png"
 }
