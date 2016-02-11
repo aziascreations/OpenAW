@@ -1,26 +1,56 @@
 package com.azias.advancewarsbootleg.map;
 
+import java.io.File;
+import java.io.IOException;
+
+import com.azias.advancewarsbootleg.Utils;
 //import com.azias.advancewarsbootleg.Datas;
 import com.azias.advancewarsbootleg.enums.EnumTerrainType;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.google.gson.Gson;
 
 public class MapController extends Object {
-	protected Map map;
+	protected Map map = null;
 	
 	public MapController() {
-		this.map = new Map();
+		this.map = null;
 	}
 	
 	public boolean loadMap(String path, String mapName) {
+		this.map = new Map();
+		if(new File("./datas/maps/"+path+"/"+mapName+".cawm").exists()) {
+			Gdx.app.log(Utils.getFormatedTime(), "Loading "+path+"/"+mapName+".cawm...");
+			Gson gson = new Gson();
+			try {
+				String mapContent = new String(Utils.uncompressByteArray(Utils.fileToByteArray("./datas/maps/"+path+"/"+mapName+".cawm")));
+				this.map = gson.fromJson(mapContent, Map.class);
+				return true;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		//this.map = null;
+		//TODO: Remove this after implementing the new file format.
+		this.map = new Map();
 		return this.map.loadMap(path, mapName);
+		//return false;
 	}
 	
-	public boolean exportMap(String path, String mapName, String name, String author) {
-		return this.map.exportMap(path, mapName, name, author);
+	public boolean exportMap(String path, String fileName) {
+		return this.map.exportMap(path, fileName);
 	}
 	
 	public void render(SpriteBatch batch) {
-		this.map.render(batch);
+		if(this.isMapLoaded()) {
+			this.map.render(batch);
+		}
+	}
+	
+	public void renderPreview(SpriteBatch batch, int posX, int posY) {
+		if(this.isMapLoaded()) {
+			this.map.renderPreview(batch, posX, posY);
+		}
 	}
 	
 	public int[] getMapSize() {
@@ -28,15 +58,15 @@ public class MapController extends Object {
 	}
 	
 	public EnumTerrainType getTileTerrainType(int x, int y) {
-		return this.map.mapTiles[x][y].terrainType;
+		return this.map.tiles[x][y].terrainType;
 	}
 	
 	public boolean setTileTerrainType(int x, int y, EnumTerrainType par3, Building par4) {
-		if(this.map.mapTiles[x][y].getTerrainType() == EnumTerrainType.Property || this.map.mapTiles[x][y].getTerrainType() == EnumTerrainType.Port) {
+		if(this.map.tiles[x][y].getTerrainType() == EnumTerrainType.Property || this.map.tiles[x][y].getTerrainType() == EnumTerrainType.Port) {
 			this.map.removeBuiding(x, y);
 		}
 		
-		this.map.mapTiles[x][y].setTerrainType(par3);
+		this.map.tiles[x][y].setTerrainType(par3);
 		
 		if(par4 != null) {
 			this.map.setBuilding(x, y, par4);
@@ -98,5 +128,13 @@ public class MapController extends Object {
 			}
 		}
 		return null;
+	}
+	
+	public boolean isMapLoaded() {
+		if(this.map == null) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }

@@ -113,9 +113,9 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 			Datas.coMap.setTileTerrainType(this.pointerPosition[0], this.pointerPosition[1], this.terrain, this.building);
 			return true;
 			
-		case Keys.E:
-			Datas.coMap.exportMap("export", "test01", "Test 1", "Azias");
-			return true;
+		/*case Keys.E:
+			Datas.coMap.exportMap("export", "test01");
+			return true;*/
 		
 		case Keys.ESCAPE:
 			if(Datas.coGui.doesGuiExists(3)) {
@@ -284,6 +284,8 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 			
 			if(actionSubID==0) {
 				//HQ
+				this.terrain = EnumTerrainType.Property;
+				this.building = new BuildingGeneric(5, -1, -1, teamID);
 				return true;
 			} else if(actionSubID==1) {
 				//Town
@@ -309,7 +311,7 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 		}
 		
 		if(actionID.equals("menu.save")) {
-			Datas.coMap.exportMap("export", "test01", "Test 1", "Azias");
+			Datas.coMap.exportMap("export", "test01");
 			return true;
 		}
 		if(actionID.equals("menu.exit")) {

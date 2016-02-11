@@ -24,6 +24,12 @@
 	"terrainProperty": "gfx/terrain/plain_building.png",
 	"terrainPort": "gfx/terrain/plain_building.png",
 	
+	"buildinghq0": "gfx/buildings/hq_0.png",
+	"buildinghq1": "gfx/buildings/hq_1.png",
+	"buildinghq2": "gfx/buildings/hq_2.png",
+	"buildinghq3": "gfx/buildings/hq_3.png",
+	"buildinghq4": "gfx/buildings/hq_4.png",
+	"buildinghq5": "gfx/buildings/hq_5.png",
 	"buildingtown0": "gfx/buildings/town_0.png",
 	"buildingtown1": "gfx/buildings/town_1.png",
 	"buildingtown2": "gfx/buildings/town_2.png",
@@ -67,8 +73,6 @@
 	
 	"style_buttonBasic": "gfx/gui/styles/styleButtonBasic.json",
 	"styleButtonBasic": "gfx/gui/styles/button_basic.png",
-	"style_buttonRetro": "gfx/gui/styles/styleButtonRetro.json",
-	"styleButtonRetro": "gfx/gui/styles/button_retro.png",
 	"style_guiBasic": "gfx/gui/styles/styleGuiBasic.json",
 	"styleGuiBasic": "gfx/gui/styles/gui_basic.png"
 }

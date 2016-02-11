@@ -1,0 +1,10 @@
+{
+  "downloadUrl": "hi",
+  "index": {
+    "bin\\com\\azias\\utils\\ContentIndexer.class": "bb2e17760504c6a035adc7b238472e92",
+    ".project": "3ff480887df99bd9a1bb51b224831ebe",
+    "src\\com\\azias\\utils\\ContentIndexer.java": "205dec8e0ad81158f1bf32359560287b",
+    ".classpath": "0d6f8b75b484b312ee7e3b5c8caa8bfe",
+    "bin\\com\\azias\\utils\\RessourceIndex.class": "6694a193246137effd57123778a0fcc0"
+  }
+}

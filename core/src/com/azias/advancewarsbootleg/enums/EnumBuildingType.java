@@ -5,8 +5,8 @@ public enum EnumBuildingType {
 	Factory(1,"factory","Factory"),
 	Airport(2,"airport","Airport"),
 	Antena(3,"antena","Antena"),
-	Port(4,"","Port"),
-	HQ(5,"","HQ");
+	Port(4,"port","Port"),
+	HQ(5,"hq","HQ");
 	
 	private final int id;
 	private final String fileName;

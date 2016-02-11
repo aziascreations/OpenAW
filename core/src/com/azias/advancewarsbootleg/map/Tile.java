@@ -7,21 +7,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Tile extends Object {
 	protected EnumTerrainType terrainType;
-	protected int[] position;
+	//protected int[] position;
 	protected int[] animationPosition;
-	protected boolean isAnimationCustom;
+	//protected boolean isAnimationCustom;
 	
 	public Tile(EnumTerrainType terrainType, int positionX, int positionY) {
 		this.terrainType = terrainType;
-		this.position = new int[] {positionX, positionY};
+		//this.position = new int[] {positionX, positionY};
 		this.animationPosition = new int[] {0,0};
-		this.isAnimationCustom = false;
+		//this.isAnimationCustom = false;
 	}
-
-	/**
-	 * @param par1 - <i>"animationPosition"</i> - Array Position (0-x / 1-y)
-	 * @param par2 - Value
-	 */
+	
 	public void setAnimationPosition(int par1, int par2) {
 		this.animationPosition[par1] = par2;
 	}
@@ -41,9 +37,14 @@ public class Tile extends Object {
 	public EnumTerrainType getTerrainType() {
 		return this.terrainType;
 	}
-
+	
 	public void setTerrainType(EnumTerrainType par1) {
 		this.terrainType = par1;
 		this.animationPosition = new int[] {0,0};
+	}
+	
+	@Override
+	public String toString() {
+	   return "DataObject [terrainType="+this.terrainType+",animationPosition="+this.animationPosition+"]";
 	}
 }

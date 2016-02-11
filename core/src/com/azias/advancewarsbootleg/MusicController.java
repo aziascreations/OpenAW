@@ -22,6 +22,10 @@ public class MusicController extends Object {
 		}
 	}
 	
+	/**
+	 * Change the music to the given one if found.
+	 * @param key
+	 */
 	public void changeMusic(String key) {
 		if(!key.equals(this.currentMusicKey)) {
 			if(this.music!=null) {

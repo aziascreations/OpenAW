@@ -1,5 +1,14 @@
 #Changelogs
 
+##Indev 7
+* Added the content indexer.
+* Added HQ to the map editor.
+* Added a <i>"--help"</i> launch parameter.
+* Added a basic bash script to run the compiled game.
+* Changed the map format, now using Gson and Snappy.
+* Changed the [LICENSE](https://github.com/AziasYur/Advance-Wars-Bootleg-Edition/blob/master/LICENSE) to GNU GPLv3.
+* Fixed an error when loading external files on Linux operating systems.
+
 ##Indev 6
 * Switched to Java 8.
 * Added a basic JavaScript engine support.

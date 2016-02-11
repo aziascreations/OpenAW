@@ -122,6 +122,14 @@ public class Gui extends Object {
 		}
 		return null;
 	}
+	
+	public void setTextFieldInput(int idTextField, String text) {
+		for(int i=0; i<this.textFieldList.size(); i++) {
+			if(this.textFieldList.get(i).id == idTextField) {
+				this.textFieldList.get(i).setText(text);
+			}
+		}
+	}
 
 	public boolean transmitInfo(String info) {
 		return false;

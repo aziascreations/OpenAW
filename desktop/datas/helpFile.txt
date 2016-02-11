@@ -1,0 +1,22 @@
+Usage:
+  game.jar -c -b -w <width> -h <height>
+  game.jar -c -w <width> -h <height> -x <position> -y <position>
+  game.jar -s -p <port>
+
+Options:
+  -c --client  Starts the client side (Used by default if -s or -h aren't used).
+  -s --server  Starts the server side
+  -h --help    Prints the help file in the command prompt/shell.
+
+  -w --width <size>   Sets the window's width to the given size (default: 1280).
+  -h --height <size>  Sets the window's height to the given size (default: 720).
+  -f --fullscreen     Sets the window in fullscreen mode.
+  -b --borderless     Sets the window in borderless mode.
+  -x <position>       Sets the window's X position (-1 for centered).
+  -y <position>       Sets the window's Y position (-1 for centered).
+  -n --name <name>    Sets your name.
+  -e --editor         Starts the game on the map editor screen.
+  --nomotd    Removes the window's title motd.
+  --noicon    Removes the window's icon.
+
+  -p --port <number>  Sets the server's port to the given number (default: 27030).

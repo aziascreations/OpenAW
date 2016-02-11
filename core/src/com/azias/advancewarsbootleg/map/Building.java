@@ -31,12 +31,21 @@ public class Building extends Object {
 		if(Assets.tileGraphicsBooleans[this.buildingType.getId()]) {
 			//Animation
 		} else {
-			batch.draw(
+			if(this.buildingType.getId()!=5) {
+				batch.draw(
 					((TextureRegion[])Assets.buildingsGraphics[this.buildingType.getId()])[this.faction.getId()],
 					x,
 					y,
 					Assets.tileRenderSize[Assets.tileRenderSizeIndex],
 					Assets.tileRenderSize[Assets.tileRenderSizeIndex]*2);
+			} else {
+				batch.draw(
+					Assets.hqGraphics[this.faction.getId()],
+					x,
+					y,
+					Assets.tileRenderSize[Assets.tileRenderSizeIndex],
+					Assets.tileRenderSize[Assets.tileRenderSizeIndex]*2);
+			}
 		}
 	}
 	

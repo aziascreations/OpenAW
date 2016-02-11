@@ -11,7 +11,7 @@ public class GuiTextField extends Gui {
 	protected boolean isSelected = false;
 	
 	//Temporary workaround for the special characters showing up when they shouldn't(Shift/Up/...)
-	protected final String allowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuwxyz1234567890/! .:-+*";
+	protected final String allowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890/! .:-+*#_";
 	
 	@Deprecated
 	private GuiTextField(int posX, int posY, int sizeX, int sizeY) {
@@ -72,7 +72,7 @@ public class GuiTextField extends Gui {
 			} else if((int)character == 13) {
 				this.isSelected=false;
 			}*/
-			this.glyphLayout.setText(Assets.font36,text);
+			this.glyphLayout.setText(Assets.font36,this.text);
 		}
 	}
 	
@@ -82,5 +82,10 @@ public class GuiTextField extends Gui {
 		} else {
 			return null;
 		}
+	}
+	
+	protected void setText(String par1) {
+		this.text = par1;
+		this.glyphLayout.setText(Assets.font36,this.text);
 	}
 }

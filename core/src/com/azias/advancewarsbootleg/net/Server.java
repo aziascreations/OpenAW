@@ -202,7 +202,8 @@ public class Server implements Runnable {
 			}
 		} else {
 			for(int i=0; i<clientCount; i++) {
-				clients[i].send(id+": "+input);
+				//clients[i].send(id+": "+input);
+				clients[i].send("!chat#_#add#_#"+input);
 			}
 		}
 	}

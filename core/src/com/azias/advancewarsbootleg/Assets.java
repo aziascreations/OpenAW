@@ -41,6 +41,7 @@ public class Assets {
 	
 	//Buildings
 	public static Object[] buildingsGraphics;
+	public static TextureRegion[] hqGraphics;
 	//public static boolean[] buildingsGraphicsBooleans;
 	
 	//Cos
@@ -341,6 +342,13 @@ public class Assets {
 			b[i] = new TextureRegion(tempTexture,0,0,16,32);
 		}
 		buildingsGraphics[3] = b;
+		
+		hqGraphics = new TextureRegion[6];
+		b = new TextureRegion[6];
+		for(int i = 0;i<hqGraphics.length ; i++) {
+			tempTexture = loadTexture("building"+EnumBuildingType.HQ.getFileName()+i);
+			hqGraphics[i] = new TextureRegion(tempTexture,0,0,16,32);
+		}
 		
 		//b = new TextureRegion[6];
 		//buildingsGraphicsBooleans = new boolean[2];

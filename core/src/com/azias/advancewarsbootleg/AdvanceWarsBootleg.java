@@ -1,6 +1,7 @@
 package com.azias.advancewarsbootleg;
 
 import com.azias.advancewarsbootleg.screens.ScreenMainMenu;
+import com.azias.advancewarsbootleg.screens.ScreenMapEditor;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,7 +25,11 @@ public class AdvanceWarsBootleg extends Game {
 		Datas.loadJSScripts();
 		Gdx.app.log(Utils.getFormatedTime(), "Session Key: "+Datas.sessionKey);
 		
-		setScreen(new ScreenMainMenu(this));
+		if(System.getProperty("awbe.onlyeditor").equals("1")) {
+			setScreen(new ScreenMapEditor(this));
+		} else {
+			setScreen(new ScreenMainMenu(this));
+		}
 	}
 
 	@Override

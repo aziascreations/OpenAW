@@ -41,6 +41,8 @@ public class Datas {
 	
 	//JavaScript Engine Test.
 	public static ScriptEngine javaScriptEngine;
+
+	public static String name = "none";
 	
 	public static void startJSEngine() {
 		if(Integer.parseInt(System.getProperty("java.version").split("\\.")[1])>=8) {
@@ -56,7 +58,7 @@ public class Datas {
 	
 	public static void loadJSScript(String scriptName) {
 		try {
-			javaScriptEngine.eval(new FileReader("scripts/"+scriptName+".js"));
+			javaScriptEngine.eval(new FileReader("./scripts/"+scriptName+".js"));
 		} catch (FileNotFoundException | ScriptException e) {
 			e.printStackTrace();
 		}
@@ -82,7 +84,7 @@ public class Datas {
 	}
 	
 	public static boolean loadConfigFile() {
-		if(Gdx.files.internal("config.json").file().exists()) {
+		if(Gdx.files.internal("./config.json").file().exists()) {
 			
 		} else {
 			
@@ -94,7 +96,7 @@ public class Datas {
 		try {
 			lang = new Hashtable<String, String>();
 			JsonParser parser = new JsonParser();
-			JsonObject jObj = (JsonObject)parser.parse(Utils.readFile("datas/lang/"+language+".json", StandardCharsets.UTF_8));
+			JsonObject jObj = (JsonObject)parser.parse(Utils.fileToString("./datas/lang/"+language+".json", StandardCharsets.UTF_8));
 			for (Entry<String, JsonElement> e : jObj.entrySet()) {
 				lang.put(e.getKey(), e.getValue().getAsString());
 			}
