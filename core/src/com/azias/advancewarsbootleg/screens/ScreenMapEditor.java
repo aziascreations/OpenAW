@@ -5,6 +5,7 @@ import com.azias.advancewarsbootleg.Assets;
 import com.azias.advancewarsbootleg.Datas;
 import com.azias.advancewarsbootleg.enums.EnumTerrainType;
 import com.azias.advancewarsbootleg.gui.GuiEditorMenu;
+import com.azias.advancewarsbootleg.gui.GuiEditorNew;
 import com.azias.advancewarsbootleg.gui.GuiEditorSelector;
 import com.azias.advancewarsbootleg.map.Building;
 import com.azias.advancewarsbootleg.map.BuildingGeneric;
@@ -282,27 +283,28 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 			//System.out.println("actionSubID: "+actionSubID);
 			//System.out.println("teamID: "+teamID);
 			
-			if(actionSubID==0) {
+			switch(actionSubID) {
+			case 0:
 				//HQ
 				this.terrain = EnumTerrainType.Property;
 				this.building = new BuildingGeneric(5, -1, -1, teamID);
 				return true;
-			} else if(actionSubID==1) {
+			case 1:
 				//Town
 				this.terrain = EnumTerrainType.Property;
 				this.building = new BuildingGeneric(0, -1, -1, teamID);
 				return true;
-			} else if(actionSubID==2) {
+			case 2:
 				//Factory
 				this.terrain = EnumTerrainType.Property;
 				this.building = new BuildingGeneric(1, -1, -1, teamID);
 				return true;
-			} else if(actionSubID==3) {
+			case 3:
 				//Airport
 				this.terrain = EnumTerrainType.Property;
 				this.building = new BuildingGeneric(2, -1, -1, teamID);
 				return true;
-			} else if(actionSubID==5) {
+			case 5:
 				//Antenna
 				this.terrain = EnumTerrainType.Property;
 				this.building = new BuildingGeneric(3, -1, -1, teamID);
@@ -310,14 +312,22 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 			}
 		}
 		
+		if(actionID.equals("menu.new")) {
+			Datas.coGui.killGui(3);
+			Datas.coGui.createGui(4, new GuiEditorNew(4, -1, -1));
+		}
 		if(actionID.equals("menu.save")) {
 			Datas.coMap.exportMap("export", "test01");
 			return true;
 		}
 		if(actionID.equals("menu.exit")) {
-			Datas.coGui.killAll();
-			this.game.setScreen(new ScreenMainMenu(this.game));
-			return true;
+			if(System.getProperty("awbe.onlyeditor").equals("1")) {
+				System.exit(0);
+			} else {
+				Datas.coGui.killAll();
+				this.game.setScreen(new ScreenMainMenu(this.game));
+				return true;
+			}
 		}
 		return false;
 	}

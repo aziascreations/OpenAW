@@ -2,6 +2,8 @@ package com.azias.advancewarsbootleg.gui;
 
 import java.util.ArrayList;
 
+import com.azias.advancewarsbootleg.Utils;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GuiController extends Object {
@@ -22,6 +24,7 @@ public class GuiController extends Object {
 			this.openedGUIs.add(gui);
 			return true;
 		} else {
+			Gdx.app.log(Utils.getFormatedTime(), "Error: Unable to create GUI n°"+id);
 			return false;
 		}
 	}
@@ -51,6 +54,7 @@ public class GuiController extends Object {
 				return true;
 			}
 		}
+		Gdx.app.log(Utils.getFormatedTime(), "Error: Unable to kill GUI n°"+id);
 		return false;
 	}
 	

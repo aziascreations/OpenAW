@@ -71,8 +71,26 @@
 	"musicEditor": "datas/musics/21-map-editor.ogg",
 	
 	
-	"style_buttonBasic": "gfx/gui/styles/styleButtonBasic.json",
+	"style.buttonBasic": "gfx/gui/styles/styleButtonBasic.json",
 	"styleButtonBasic": "gfx/gui/styles/button_basic.png",
-	"style_guiBasic": "gfx/gui/styles/styleGuiBasic.json",
-	"styleGuiBasic": "gfx/gui/styles/gui_basic.png"
+	"style.guiBasic": "gfx/gui/styles/styleGuiBasic.json",
+	"styleGuiBasic": "gfx/gui/styles/gui_basic.png",
+	
+	
+	"anim.doomEye": "gfx/animations/doomEye.json",
+	"anim.explosion_land": "gfx/animations/explosion_land.json",
+	
+	"draw.doomEye_1": "gfx/animations/parts/doomEye_1.png",
+	"draw.doomEye_2": "gfx/animations/parts/doomEye_2.png",
+	"draw.doomEye_3": "gfx/animations/parts/doomEye_3.png",
+	"draw.doomEye_4": "gfx/animations/parts/doomEye_4.png",
+	"draw.explosion_land_0": "gfx/animations/parts/explosion_land_0.png",
+	"draw.explosion_land_1": "gfx/animations/parts/explosion_land_1.png",
+	"draw.explosion_land_2": "gfx/animations/parts/explosion_land_2.png",
+	"draw.explosion_land_3": "gfx/animations/parts/explosion_land_3.png",
+	"draw.explosion_land_4": "gfx/animations/parts/explosion_land_4.png",
+	"draw.explosion_land_5": "gfx/animations/parts/explosion_land_5.png",
+	"draw.explosion_land_6": "gfx/animations/parts/explosion_land_6.png",
+	"draw.explosion_land_7": "gfx/animations/parts/explosion_land_7.png",
+	"draw.explosion_land_8": "gfx/animations/parts/explosion_land_8.png"
 }

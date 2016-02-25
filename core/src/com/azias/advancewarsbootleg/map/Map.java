@@ -370,7 +370,7 @@ public class Map extends Object {
 			Gson gson = new GsonBuilder().create();
 			String json = gson.toJson(this);
 			//Note: the ".cawm" extension stands for "Compressed Advance Wars Map", it might change later.
-			if(Utils.saveByteArray("./datas/maps/"+path+"/"+fileName+".cawm", Utils.compressString(json), true)) {
+			if(Utils.saveByteArray("./datas/maps/"+path+"/"+fileName+".cawm", json.getBytes("UTF-8")/*Utils.compressString(json)/**/, true)) {
 				Gdx.app.log(Utils.getFormatedTime(), "Your map as been saved as: "+fileName+".cawm");
 				Gdx.app.log(Utils.getFormatedTime(), "File's size: "+json.getBytes("UTF-8").length+" -> "+Utils.compressString(json).length);
 				return true;

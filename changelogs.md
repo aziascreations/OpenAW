@@ -1,5 +1,9 @@
 #Changelogs
 
+##Indev 8
+* Created a custom animation system.
+* And more...
+
 ##Indev 7
 * Added the content indexer.
 * Added HQ to the map editor.
