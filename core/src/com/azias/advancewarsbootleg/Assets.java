@@ -28,6 +28,10 @@ public class Assets {
 	
 	public static Map<String, GuiStyle> guiStylesIndex;
 	
+	//This is a temporary way to keep the json files content.
+	public static Map<String, String> animationFiles;	
+	public static Map<String, TextureRegion> animationParts;
+	
 	//Fonts
 	public static BitmapFont font24, font36, font48, font72;
 	
@@ -135,22 +139,38 @@ public class Assets {
 			}
 			//TODO: Load external assets.
 			
-			//Loading internal styles.
-			guiStylesIndex = new Hashtable<String, GuiStyle>();
+			
 			Set<String> keys = internalAssetsIndex.keySet();
-			for(String key: keys){
-				if(key.contains("style_")) {
+			
+			//Loading internal styles, animations and drawables textures.
+			guiStylesIndex = new Hashtable<String, GuiStyle>();
+			animationFiles = new Hashtable<String, String>();
+			animationParts = new Hashtable<String, TextureRegion>();
+			for(String key: keys) {
+				//Gdx.app.log(Utils.getFormatedTime(), key+" links to: "+internalAssetsIndex.get(key));
+				if(key.matches("^(?:style\\.)(?:[^\\ ]*)")) {
+					//Gdx.app.log(Utils.getFormatedTime(), "Detected "+key+" as a GuiStyle.");
 					Gson gson = new Gson();
 					String jsonContent = new String(Gdx.files.internal(internalAssetsIndex.get(key)).readBytes());
 					GuiStyle style = gson.fromJson(jsonContent, GuiStyle.class);
 					guiStylesIndex.put(style.getStyleKey(), style);
-					//Gdx.app.log(Utils.getFormatedTime(), "Detected "+key+" as a GuiStyle.");
+				} else if(key.matches("^(?:anim\\.)(?:[^\\ ]*)")) {
+					//Gdx.app.log(Utils.getFormatedTime(), "Detected "+key+" as an Animation.");
+					animationFiles.put(key.substring(5), new String(Gdx.files.internal(internalAssetsIndex.get(key)).readBytes()));
+				} else if(key.matches("^(?:draw\\.)(?:[^\\ ]*)")) {
+					//Gdx.app.log(Utils.getFormatedTime(), "Detected "+key+" as a Drawable's texture.");
+					animationParts.put(key.substring(5), new TextureRegion(loadTexture(key)));
 				}
-				//Gdx.app.log(Utils.getFormatedTime(), key+" links to: "+internalAssetsIndex.get(key));
         	}
-			//TODO: Load external styles.
+			//TODO: Load external styles, animations and drawables textures.
 			
-			//Loading styles textures.
+			//Listing every entry in the '???' Hashtable.
+			/*Set<String> keysDrawable = animationFiles.keySet();
+			for(String key: keysDrawable) {
+				Gdx.app.log(Utils.getFormatedTime(), key);
+			}*/
+			
+			//Loading GUI styles textures.
 			keys = guiStylesIndex.keySet();
 			for(String key: keys){
 				GuiStyle style = guiStylesIndex.get(key);

@@ -2,6 +2,7 @@ package com.azias.advancewarsbootleg;
 
 import com.azias.advancewarsbootleg.screens.ScreenMainMenu;
 import com.azias.advancewarsbootleg.screens.ScreenMapEditor;
+import com.azias.advancewarsbootleg.tests.ScreenAnimSlowdownTest;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -28,7 +29,8 @@ public class AdvanceWarsBootleg extends Game {
 		if(System.getProperty("awbe.onlyeditor").equals("1")) {
 			setScreen(new ScreenMapEditor(this));
 		} else {
-			setScreen(new ScreenMainMenu(this));
+			//setScreen(new ScreenMainMenu(this));
+			setScreen(new ScreenAnimSlowdownTest(this)); //Used to test the animations
 		}
 	}
 

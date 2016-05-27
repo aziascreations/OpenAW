@@ -12,6 +12,7 @@ import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 
+import com.azias.advancewarsbootleg.animation.AnimationController;
 import com.azias.advancewarsbootleg.gui.GuiController;
 import com.azias.advancewarsbootleg.map.MapController;
 import com.azias.advancewarsbootleg.net.ClientController;
@@ -32,12 +33,13 @@ public class Datas {
 	public static MapController coMap = new MapController();
 	public static GuiController coGui = new GuiController();
 	public static MusicController coMusic = new MusicController();
+	public static AnimationController coAnim = new AnimationController();
 	
 	public static ClientController coClient = null;
 
 	//Bug: They play sounds at 1.0F when set at 0.0F.
 	public static float volumeEffects = 1.0F;
-	public static float volumeMusic = 1.0F;
+	public static float volumeMusic = 0.2F;
 	
 	//JavaScript Engine Test.
 	public static ScriptEngine javaScriptEngine;
