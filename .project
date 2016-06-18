@@ -6,31 +6,18 @@
 	</projects>
 	<buildSpec>
 		<buildCommand>
-			<name>org.jetbrains.kotlin.ui.kotlinBuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>edu.umd.cs.findbugs.plugin.eclipse.findbugsBuilder</name>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>edu.umd.cs.findbugs.plugin.eclipse.findbugsNature</nature>
-		<nature>org.jetbrains.kotlin.core.kotlinNature</nature>
+		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>kotlin_bin</name>
-			<type>2</type>
-			<locationURI>org.jetbrains.kotlin.core.filesystem:/LibGDX%20-%20Advance%20Wars%20Bootleg%20Edition/kotlin_bin</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

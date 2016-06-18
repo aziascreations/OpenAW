@@ -91,4 +91,8 @@ public class Utils {
 	public static String fileToString(String path) throws IOException  {
 		return fileToString(path, StandardCharsets.UTF_8);
 	}
+
+	public static String fileToString2(String path) throws IOException  {
+		return new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+	}
 }

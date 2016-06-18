@@ -1,15 +1,8 @@
-package com.azias.awbe.modding;
+package com.azias.awbe.mod;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.azias.awbe.Utils;
-import com.azias.awbe.enums.EnumModType;
-import com.google.gson.Gson;
-
-public class Mod {
+public class ModInfo {
 	/* Non-static Stuff */
 	protected String id;
 	protected String name, description;
@@ -18,10 +11,19 @@ public class Mod {
 	protected String version;
 	protected String versionUrl, projectUrl, updateUrl;
 	protected HashMap<String, String> dependencies;
-	protected EnumModType[] tmpModType;
+	protected EnumModType[] modTypes;
 	
-	@Deprecated
-	public Mod() {
+	public enum EnumModType {
+		CODE, TEXTURE, AUDIO,
+		UNIT, TERRAIN, CO,
+		MAP, ALL;
+	}
+	
+	public ModInfo() {
+		
+	}
+	
+	public void setDevelopInfo() {
 		this.id = "awbe";
 		this.name = "Advance Wars Bootleg Edition - Base Components";
 		this.description = "...";
@@ -33,11 +35,20 @@ public class Mod {
 		this.projectUrl = "http://localhost/php/awbe/";
 		this.updateUrl = "http://localhost/php/awbe/mod.zip";
 		this.dependencies = new HashMap<String, String>();
-		this.tmpModType = new EnumModType[]{EnumModType.TERRAIN, EnumModType.SCRIPT};
+		this.modTypes = new EnumModType[]{EnumModType.TERRAIN, EnumModType.CODE};
 	}
 	
+	public String getId() {
+		return this.id;
+	}
+	
+	public EnumModType[] getModTypes() {
+		return this.modTypes;
+	}
+	
+	
 	/* Static Stuff */
-	public static ArrayList<Mod> loadModsList() {
+	/*public static ArrayList<Mod> loadModsList() {
 		ArrayList<Mod> mods = new ArrayList<Mod>();
 		ArrayList<File> folders = Utils.listFolders("./assets");
 		
@@ -63,5 +74,10 @@ public class Mod {
 	public static boolean checkModDependencies() {
 		return false;
 	}
+	
+	public static boolean loadMods() {
+		
+		return false;
+	}*/
 	
 }
