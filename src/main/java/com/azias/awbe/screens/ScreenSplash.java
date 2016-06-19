@@ -19,7 +19,7 @@ public class ScreenSplash extends ScreenAdapter implements ApplicationListener, 
 		Gdx.input.setInputProcessor(this);
 		this.shapeRenderer = new ShapeRenderer();
 		
-		Assets.init();
+		//Assets.init();
 	}
 
 	@Override
@@ -28,11 +28,7 @@ public class ScreenSplash extends ScreenAdapter implements ApplicationListener, 
 	}
 
 	public void update () {
-		if(Assets.assetsManager.update()) {
-			
-		} else {
-			
-		}
+		
 	}
 
 	public void draw () {

@@ -41,8 +41,20 @@ tmp/
 local.properties
 .settings/
 .loadpath
+.recommenders
+.project
 .externalToolBuilders/
 *.launch
+*.pydevproject
+.cproject
+.classpath
+.factorypath
+.buildpath
+.target
+.tern-project
+.texlipse
+.springBeans
+.recommenders/
 
 ## NetBeans
 nbproject/private/
@@ -74,7 +86,11 @@ buildNumber.properties
 *.ogg
 .*.bat
 .*.sh
+logs
 
-## These two should never stay in the workspace.
-temp.txt
-src_list.txt
+##Can't get the natives with Maven
+src/main/ressources/*.dll
+src/main/ressources/*.so
+src/main/ressources/*.dylib
+
+

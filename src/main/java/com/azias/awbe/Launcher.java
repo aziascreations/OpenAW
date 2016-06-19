@@ -3,36 +3,39 @@ package com.azias.awbe;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.JOptionPane;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Launcher {
-	
+	private final static Logger logger = LoggerFactory.getLogger(Launcher.class);
 	private static Options launchOptions = new Options();
 	private static CommandLine launchArgs;
 	
 	public static void main(String[] args) throws ParseException {
 		loadLaunchArguments(args);
 		
-		if(launchArgs.hasOption("h")) {
+		if(launchArgs.hasOption("h") && !launchArgs.hasOption("f")) {
 			HelpFormatter formater = new HelpFormatter();
-			formater.printHelp("Here is some text...", launchOptions);
+			formater.printHelp("Arguments List", launchOptions);
 			System.exit(0);
 		}
 		
-		System.out.println(Utils.getFormatedTime()+": Java version: "+System.getProperty("java.version"));
-		System.out.println(Utils.getFormatedTime()+": Operating System: "+System.getProperty("os.name")+" - "+System.getProperty("os.arch"));
+		if(!launchArgs.hasOption("m") && !launchArgs.hasOption("f")) {
+			logger.error("The mod argument isn't set.");
+			System.exit(3);
+		}
 		
-		if(Integer.parseInt(System.getProperty("java.version").split("\\.")[1])<7) {
-			JOptionPane.showMessageDialog(null, "Java "+Integer.parseInt(System.getProperty("java.version").split("\\.")[1])+" is not supported.\nPlease use Java 7 at least.", "Error", JOptionPane.ERROR_MESSAGE);
+		logger.info("Java version: "+System.getProperty("java.version"));
+		logger.info("Operating System: "+System.getProperty("os.name")+" - "+System.getProperty("os.arch"));
+		
+		if(Integer.parseInt(System.getProperty("java.version").split("\\.")[1])<7 && !launchArgs.hasOption("f")) {
+			logger.error("Java {} is not supported.", Integer.parseInt(System.getProperty("java.version").split("\\.")[1]));
+			logger.error("Please use Java 7 at least.");
 			System.exit(2);
 		}
 		
@@ -45,10 +48,13 @@ public class Launcher {
 		if(launchArgs.hasOption("w")) {
 			config.width = Integer.parseInt(launchArgs.getOptionValue("w"));
 		}
+		if(launchArgs.hasOption("b")) {
+			System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
+		}
 		
-		System.out.println(Utils.getFormatedTime()+": Window Size: "+config.width+" x "+config.height);
-		System.out.println(Utils.getFormatedTime()+": Launching Advance Wars Bootleg Edition...");
-		System.out.println(Utils.getFormatedTime()+": - - - - - - - - - - - - - - - - - - - - - -");
+		logger.info("Window Size: "+config.width+" x "+config.height);
+		logger.info("Launching Advance Wars Bootleg Edition...");
+		logger.info("- - - - - - - - - - - - - - - - - - - - - -");
 		new LwjglApplication(new AdvanceWarsBootleg(), config);
 	}
 	
@@ -61,11 +67,13 @@ public class Launcher {
 		launchOptions.addOption("b", "borderless", false, "Enable borderless mode.");
 		launchOptions.addOption("x", true, "Sets the window's X position. (-1 for centered)");
 		launchOptions.addOption("y", true, "Sets the window's Y position. (-1 for centered)");
+		launchOptions.addOption("m", "mods", true, "[MODS] ex: mod1;mod2;...");
+		launchOptions.addOption("f", "force", false, "Bypass some launch securities.");
 		
 		try {
 			launchArgs = new DefaultParser().parse(launchOptions, args);
 		} catch (ParseException e) {
-			System.err.println("Failed to parse command line properties" + e);
+			logger.error("Failed to parse command line properties " + e);
 			System.exit(1);
 		}
 	}

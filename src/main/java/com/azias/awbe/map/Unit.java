@@ -1,5 +1,7 @@
 package com.azias.awbe.map;
 
+import java.util.HashMap;
+
 import com.azias.awbe.enums.EnumUnitClass;
 import com.azias.awbe.enums.EnumUnitMouvementClass;
 
@@ -16,5 +18,16 @@ public class Unit extends Object {
 	
 	public Unit() {
 		
+	}
+	
+	public boolean onDeath(/*World and stuff*/) {
+		return false;
+	}
+	
+	//Static stuff
+	public static HashMap<String, Unit> units = new HashMap<String, Unit>();
+	
+	public static void registerUnit(String id, Unit unit) {
+		units.put(id, unit);
 	}
 }

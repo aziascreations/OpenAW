@@ -1,5 +1,6 @@
 {
-  "id": "Advance Wars Bootleg Edition - Base Components",
+  "id": "awbe",
+  "name": "Advance Wars Bootleg Edition - Base Components",
   "description": "...",
   "authors": ["Azias"],
   "credits": ["none"],
@@ -8,7 +9,6 @@
   "versionUrl": "http://localhost/php/awbe/version.txt",
   "projectUrl": "http://localhost/php/awbe/",
   "updateUrl": "http://localhost/php/awbe/mod.zip",
-  "folderName": "awbe",
   "dependencies": {},
   "modTypes": [
     "ALL"
