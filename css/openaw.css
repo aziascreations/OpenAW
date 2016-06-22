@@ -1,0 +1,32 @@
+body {
+	min-height: 100%;
+}
+
+header {
+    background-color: #71abed;
+	height: 140px;
+}
+footer {
+    background-color: #71abed;
+	height: 140px;
+    text-align: center;
+    margin: 25px 0 0 0;
+}
+
+.container {
+    width: calc(100% - 20px);
+    max-width: 936px;
+    margin: 0 auto;
+}
+
+.fleft {
+    float: left;
+}
+.fright {
+    float: right;
+}
+.fclear:after {
+    content: "";
+    display: table;
+    clear: both;
+}
