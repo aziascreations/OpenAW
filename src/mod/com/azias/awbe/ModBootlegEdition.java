@@ -1,7 +1,7 @@
 package com.azias.awbe;
 
-import com.azias.awbe.mod.Mod;
-import com.azias.awbe.mod.Mod.EventHandler;
+import com.azias.openaw.mod.Mod;
+import com.azias.openaw.mod.Mod.EventHandler;
 import com.azias.awbe.units.Units;
 
 @Mod(id="awbe")

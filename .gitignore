@@ -92,5 +92,5 @@ logs
 src/main/ressources/*.dll
 src/main/ressources/*.so
 src/main/ressources/*.dylib
-
+test/
 

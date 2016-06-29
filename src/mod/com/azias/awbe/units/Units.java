@@ -1,6 +1,6 @@
 package com.azias.awbe.units;
 
-import com.azias.awbe.map.Unit;
+import com.azias.openaw.map.Unit;
 
 public class Units {
 	public static void registerUnits() {

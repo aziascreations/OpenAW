@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane prefHeight="50.0" prefWidth="800.0" style="-fx-background-color: #D14841;">
+         <children>
+            <Pane layoutX="762.0" layoutY="12.0" prefHeight="24.0" prefWidth="24.0" />
+            <Pane layoutX="744.0" layoutY="12.0" prefHeight="24.0" prefWidth="24.0" />
+            <Pane layoutY="48.0" prefHeight="2.0" prefWidth="800.0" style="-fx-background-color: #AA3A36;" />
+         </children>
+      </Pane>
+      <Pane layoutY="50.0" prefHeight="550.0" prefWidth="200.0" />
+   </children>
+</Pane>

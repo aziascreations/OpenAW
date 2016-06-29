@@ -1,8 +1,8 @@
 package com.azias.awbe.units;
 
-import com.azias.awbe.enums.EnumUnitClass;
-import com.azias.awbe.enums.EnumUnitMouvementClass;
-import com.azias.awbe.map.Unit;
+import com.azias.openaw.enums.EnumUnitClass;
+import com.azias.openaw.enums.EnumUnitMouvementClass;
+import com.azias.openaw.map.Unit;
 
 public class Infantry extends Unit {
 	public String unlocalizedName = "unit.infantry";

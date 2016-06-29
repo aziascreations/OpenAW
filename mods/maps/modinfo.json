@@ -1,0 +1,16 @@
+{
+  "id": "maps",
+  "name": "Maps",
+  "description": "...",
+  "authors": ["none"],
+  "credits": ["none"],
+  "isCoreMod": false,
+  "version": "1.0.0",
+  "versionUrl": "",
+  "projectUrl": "",
+  "updateUrl": "",
+  "dependencies": {},
+  "modTypes": [
+    "MAP"
+  ]
+}

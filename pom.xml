@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.azias.awbe</groupId>
-	<artifactId>awbe</artifactId>
+	<groupId>com.azias.openaw</groupId>
+	<artifactId>openaw</artifactId>
 	<packaging>jar</packaging>
 	<version>0.0.1</version>
-	<name>awbe</name>
+	<name>openaw</name>
 	<url>http://maven.apache.org</url>
 	
 	<properties>
@@ -173,10 +173,10 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${basedir}/target/assets</outputDirectory>
+							<outputDirectory>${basedir}/target/mods</outputDirectory>
 							<resources>
 								<resource>
-										<directory>assets</directory>
+										<directory>mods</directory>
 										<filtering>true</filtering>
 								</resource>
 							</resources>
@@ -234,10 +234,10 @@
 							<Class-Path>libs/</Class-Path>
 						</manifestEntries>
 					</archive>
-					<finalName>awbe-core-${game.version}</finalName>
+					<finalName>openaw-core-${game.version}</finalName>
 				</configuration>
 			</plugin>
-
+			
 		</plugins>
 	</build>
 </project>

@@ -1,0 +1,16 @@
+{
+  "id": "awbe",
+  "name": "OpenAW - awbe mod",
+  "description": "...",
+  "authors": ["Azias"],
+  "credits": ["none"],
+  "isCoreMod": true,
+  "version": "0.0.1",
+  "versionUrl": "http://localhost/php/awbe/version.txt",
+  "projectUrl": "http://localhost/php/awbe/",
+  "updateUrl": "http://localhost/php/awbe/mod.zip",
+  "dependencies": {},
+  "modTypes": [
+    "TEXTURE", "LANG"
+  ]
+}
