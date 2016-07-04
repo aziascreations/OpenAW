@@ -20,4 +20,8 @@
 210 - Json syntax error the sfx index file for a specific mod
 
 211 - [Unable to find the mod class]
+212 - Error while calling preLoad function for a specific mod
+213 - Error while calling postLoad function for a specific mod
 
+214 - Json syntax error in the english lang file for a specific mod
+215 - IOException thrown while loading the english lang file for a specific mod

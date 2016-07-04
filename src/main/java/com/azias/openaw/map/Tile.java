@@ -8,9 +8,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 //http://www.warscentral.com/aw2/terrain.shtml
 public class Tile extends Object {
 	protected EnumUnitMouvementClass[] allowedUnits = new EnumUnitMouvementClass[]{
-		EnumUnitMouvementClass.INFTRY,
+		EnumUnitMouvementClass.FOOT,
 		EnumUnitMouvementClass.MECH
 	};
+	protected String id = "default";
 	protected String unlocalizedName = "tile.default";
 	
 	protected int defenseRating = 0;
@@ -36,12 +37,16 @@ public class Tile extends Object {
 	public void render(SpriteBatch batch) {
 		
 	}
+
+	public String getId() {
+		return this.id;
+	}
 	
 	//public static Tile[] tiles = new Tile[64];
 	public static HashMap<String, Tile> tiles = new HashMap<String, Tile>();
-	
-	public static boolean loadTiles() {
+
+	public static void registerTile(String id, Tile tile) {
+		tiles.put(id, tile);
 		
-		return false;
 	}
 }

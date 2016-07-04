@@ -21,7 +21,7 @@ public class Launcher {
 		
 		if(launchArgs.hasOption("h") && !launchArgs.hasOption("f")) {
 			HelpFormatter formater = new HelpFormatter();
-			formater.printHelp("Arguments List", launchOptions);
+			formater.printHelp("Arguments List:", launchOptions);
 			System.exit(0);
 		}
 		
@@ -41,8 +41,10 @@ public class Launcher {
 		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		System.setProperty("org.lwjgl.opengl.Window.undecorated", "false");
-		config.width = 1280;
-		config.height = 720;
+		//config.width = 1280;
+		//config.height = 720;
+		config.width = 800;
+		config.height = 600;
 		config.resizable = false;
 		
 		if(launchArgs.hasOption("w")) {
@@ -53,9 +55,9 @@ public class Launcher {
 		}
 		
 		logger.info("Window Size: {} x {}", config.width, config.height);
-		logger.info("Launching Advance Wars Bootleg Edition...");
+		logger.info("Launching OpenAW...");
 		logger.info("- - - - - - - - - - - - - - - - - - - - - -");
-		new LwjglApplication(new AdvanceWarsBootleg(launchArgs), config);
+		new LwjglApplication(new OpenAW(launchArgs), config);
 	}
 	
 	private static void loadLaunchArguments(String[] args) {

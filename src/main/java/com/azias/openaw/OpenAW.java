@@ -9,12 +9,12 @@ import com.azias.openaw.screens.ScreenLoading;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class AdvanceWarsBootleg extends Game {
-	private final static Logger logger = LoggerFactory.getLogger(AdvanceWarsBootleg.class);
+public class OpenAW extends Game {
+	private final static Logger logger = LoggerFactory.getLogger(OpenAW.class);
 	public SpriteBatch batch;
 	public ModLoader modLoader;
 	
-	public AdvanceWarsBootleg(CommandLine launchArgs) {
+	public OpenAW(CommandLine launchArgs) {
 		this.modLoader = new ModLoader(launchArgs.getOptionValue("m"));
 		this.modLoader.preload();
 	}

@@ -1,52 +1,37 @@
 package com.azias.openaw.screens;
 
 import com.azias.openaw.OpenAW;
-import com.azias.openaw.Assets;
+import com.azias.openaw.tests.*;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
-public class ScreenLoading extends ScreenAdapter implements ApplicationListener, InputProcessor {
+public class ScreenMainMenu extends ScreenAdapter implements ApplicationListener, InputProcessor {
 	OpenAW game;
-	private ShapeRenderer shapeRenderer;
 
-	public ScreenLoading(OpenAW game) {
+	public ScreenMainMenu(OpenAW game) {
 		this.game = game;
 		Gdx.input.setInputProcessor(this);
-		this.shapeRenderer = new ShapeRenderer();
 	}
 
 	@Override
 	public void create() {
-		
+		MapExportTest.test();
 	}
 
 	public void update () {
-		if(this.game.modLoader.update()) {
-			//this.game.setScreen(new ScreenMainMenu(this.game));
-			//this.game.setScreen(new ScreenControls(this.game));
-			this.game.setScreen(new ScreenMapEditor(this.game));
-		}
+		
 	}
 
 	public void draw () {
-		Gdx.gl.glClearColor(1.0F, 1.0F, 1.0F, 1.0F);
+		Gdx.gl.glClearColor(0.8F, 0.8F, 0.8F, 1.0F);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		game.batch.begin();
 		
 		game.batch.end();
-		
-		if(this.shapeRenderer != null) {
-			this.shapeRenderer.begin(ShapeType.Filled);
-			this.shapeRenderer.setColor(1.0F-Assets.assetsManager.getProgress(), 0.0F+this.game.modLoader.getProgress(), 0.0F, 1.0F);
-			this.shapeRenderer.rect(0, 0, Gdx.graphics.getWidth()*this.game.modLoader.getProgress(), 5);
-			this.shapeRenderer.end();
-		}
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package com.azias.openaw.enums;
 
 public enum EnumUnitMouvementClass {
-	INFTRY,
+	FOOT,
 	MECH,//bazookas
 	TIRES,
 	TREAD,

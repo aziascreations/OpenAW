@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -18,6 +20,7 @@ import com.azias.openaw.Assets;
 import com.azias.openaw.Utils;
 import com.azias.openaw.mod.ModInfo.EnumModType;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -29,14 +32,23 @@ public class ModLoader extends Object {
 	private final static Logger logger = LoggerFactory.getLogger(ModLoader.class);
 	private Set<Class<?>> modClasses; 
 	private ModInfo[] mods;
+	private String language;
 	
+	/** 0-PreAssetsLoad / 1-Assets / 2-PostAssetsLoad */
 	private int mainProgess = 0;
-	private float subProgress = -1;
+	private int subProgress = 0;
 	
+	@Deprecated
 	public ModLoader(String mods) {
+		this(mods, "english");
+		logger.warn("A deprecated constructor was used for ModLoader!");
+	}
+	
+	public ModLoader(String mods, String language) {
 		logger.debug("Initializing ModLoader with \"{}\" as argument", mods);
-		//I was to lazy to find good variables names.
+		this.language = language;
 		
+		//I was to lazy to find good variables names.
 		String[] a = mods.split(";");
 		ModInfo[] b = new ModInfo[a.length];
 		
@@ -78,18 +90,19 @@ public class ModLoader extends Object {
 	 * Loads the assets index files for later.
 	 */
 	public void preload() {
-		logger.info("Preloading ModLoader");
+		logger.info("Preloading ModLoader with {} mod(s)", this.mods.length);
 		
 		logger.debug("Indexing mod classes");
 		this.modClasses = new Reflections("").getTypesAnnotatedWith(Mod.class);
 		
-		logger.debug("Initializing AssetManager");
+		logger.debug("Initializing AssetManager and other stuff");
 		Assets.assetsManager = new AssetManager();
 		Assets.assetsIndex = new Hashtable<String, String>();
+		Assets.lang = new Hashtable<String, String>();
 		
 		JsonParser parser = new JsonParser();
 		for(ModInfo mod : this.mods) {
-			logger.debug("Preloading {}", mod.name);
+			logger.debug("Preloading {} assets.", mod.name);
 			List<EnumModType> modTypes = Arrays.asList(mod.getModTypes());
 
 			if(modTypes.contains(ModInfo.EnumModType.ALL) || modTypes.contains(ModInfo.EnumModType.TEXTURE)) {
@@ -98,7 +111,7 @@ public class ModLoader extends Object {
 					try {
 						JsonObject jObj = (JsonObject)parser.parse(Utils.fileToString(indexFile.getAbsolutePath()));
 						for(Entry<String, JsonElement> e : jObj.entrySet()) {
-							Assets.assetsIndex.put("gfx."+e.getKey(), "./mods/"+mod.id+"/"+e.getValue().getAsString());
+							Assets.assetsIndex.put("gfx."+e.getKey(), "./mods/"+mod.id+"/gfx/"+e.getValue().getAsString());
 						}
 					} catch (JsonSyntaxException e) {
 						logger.error("Syntax error in the \"gfx/{}\" file for \"{}\"", indexFile.getName(), mod.name);
@@ -120,7 +133,7 @@ public class ModLoader extends Object {
 					try {
 						JsonObject jObj = (JsonObject)parser.parse(Utils.fileToString(indexFile.getAbsolutePath()));
 						for(Entry<String, JsonElement> e : jObj.entrySet()) {
-							Assets.assetsIndex.put("sfx."+e.getKey(), "./mods/"+mod.id+"/"+e.getValue().getAsString());
+							Assets.assetsIndex.put("sfx."+e.getKey(), "./mods/"+mod.id+"/sfx/"+e.getValue().getAsString());
 						}
 					} catch (JsonSyntaxException e) {
 						logger.error("Syntax error in the \"sfx/{}\" file for \"{}\"", indexFile.getName(), mod.name);
@@ -137,10 +150,29 @@ public class ModLoader extends Object {
 				}
 			}
 			if(modTypes.contains(ModInfo.EnumModType.ALL) || modTypes.contains(ModInfo.EnumModType.LANG)) {
-				//Will be used later
+				File englishFile = new File("./mods/"+mod.id+"/lang/english.json");
+				if(englishFile.exists()) {
+					try {
+						JsonObject jObj = (JsonObject)parser.parse(Utils.fileToString(englishFile.getAbsolutePath()));
+						for(Entry<String, JsonElement> e : jObj.entrySet()) {
+							Assets.lang.put(e.getKey(), e.getValue().getAsString());
+						}
+					} catch (JsonSyntaxException e) {
+						logger.error("Syntax error in the \"lang/{}\" file for \"{}\"", englishFile.getName(), mod.name);
+						e.printStackTrace();
+						System.exit(214);
+					} catch (IOException e) {
+						logger.error("IO error while loading \"lang/{}\" from \"{}\"", englishFile.getName(), mod.name);
+						e.printStackTrace();
+						System.exit(215);
+					}
+				} else {
+					logger.warn("Unable to find the english lang file for {} !", mod.name);
+				}
+				//TODO: Add other languages support
 			}
 			if(modTypes.contains(ModInfo.EnumModType.ALL) || modTypes.contains(ModInfo.EnumModType.MAP)) {
-				//Will also be used later
+				//Will be used later
 			}
 			if(modTypes.contains(ModInfo.EnumModType.ALL) || modTypes.contains(ModInfo.EnumModType.CODE)) {
 				if(this.getModClass(mod.id)==null) {
@@ -149,13 +181,77 @@ public class ModLoader extends Object {
 				}
 			}
 		}
-	}	
+		
+		//TODO: Improve logging here.
+		logger.debug("Processing assets entries");
+		logger.debug("Index pre-size: {}", Assets.assetsIndex.size());
+		Iterator<Entry<String, String>> it = Assets.assetsIndex.entrySet().iterator();
+	    while(it.hasNext()) {
+	        HashMap.Entry entry = (HashMap.Entry)it.next();
+	        if(entry.getKey().toString().startsWith("gfx.")) {
+	        	Assets.assetsManager.load(entry.getValue().toString(), Texture.class);
+	        } else if(entry.getKey().toString().startsWith("sfx.")) {
+	        	
+	        } else {
+	        	logger.warn("Unable to process this entry: {}", entry.getKey().toString());
+	        }
+	        //it.remove(); Fucks up the original map
+	    };
+	    logger.debug("Index post-size: {}", Assets.assetsIndex.size());
+	}
 	
 	public boolean update() {
 		switch(this.mainProgess) {
 		case 0:
-			
-			
+			List<EnumModType> modTypes = Arrays.asList(this.mods[this.subProgress].getModTypes());
+			if(!modTypes.contains(ModInfo.EnumModType.CODE) && !modTypes.contains(ModInfo.EnumModType.ALL)) {
+				logger.debug("Skipping \"preLoad()\" for {} - {}", this.mods[this.subProgress].id, this.mods[this.subProgress].name);
+				if(this.subProgress+1 >= this.mods.length){
+					this.subProgress = 0;
+					this.mainProgess++;
+				} else {
+					this.subProgress++;
+				}
+				break;
+			}
+			Class<?> modClass = this.getModClass(this.mods[this.subProgress].id);
+			if(modClass!=null) {
+				logger.debug("Calling preLoad for {} - {}", this.mods[this.subProgress].id, this.mods[this.subProgress].name);
+				boolean hasExecutedfunction = false;
+				for(Method m : modClass.getMethods()) {
+					if(m.getName().equals("preLoad")) {
+						try {
+							m.invoke(modClass.newInstance());
+							hasExecutedfunction = true;
+						} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
+							logger.error("An error occured while executing the \"preLoad\" function for \"{}\"", this.mods[this.subProgress].name);
+							e.printStackTrace();
+							System.exit(212);
+						}
+					}
+				}
+				if(!hasExecutedfunction) {
+					logger.warn("The preLoad function for {} wasn't executed", this.mods[this.subProgress].name);
+				}
+				if(this.subProgress+1 >= this.mods.length){
+					this.subProgress = 0;
+					this.mainProgess++;
+				} else {
+					this.subProgress++;
+				}
+			} else {
+				logger.error("Unable to find the main Class for \"{}\"", this.mods[this.subProgress].name);
+				System.exit(211);
+			}
+			break;
+		case 1:
+			if(Assets.assetsManager.update()) {
+				this.mainProgess++;
+			}
+			break;
+		case 2:
+			return true;
+			//break;
 		}
 		return false;
 	}
@@ -170,6 +266,34 @@ public class ModLoader extends Object {
 			}
 		}
 		return null;
+	}
+	
+	public String getVerbalStep() {
+		if(this.mainProgess==0) {
+			return "";
+		}
+		return null;
+	}
+	
+	//Doesn't do shit
+	public float getProgress() {
+		if(this.mainProgess==0) {
+			return (1/3)*(this.subProgress/this.modClasses.size());
+		} else if(this.mainProgess==1) {
+			return (1/3)+(1/3)*Assets.assetsManager.getProgress();
+		} else {
+			return this.mainProgess*(1/3)+(1/3)*(this.subProgress/this.modClasses.size());
+		}
+	}
+	
+	public boolean loadEverything(boolean doPreload) {
+		if(doPreload) {
+			this.preload();
+		}
+		while(!this.update()) {
+			
+		}
+		return true;
 	}
 	
 	@Deprecated
