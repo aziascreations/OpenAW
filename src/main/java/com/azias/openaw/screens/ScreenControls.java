@@ -20,11 +20,11 @@ import com.badlogic.gdx.math.Vector3;
 
 public class ScreenControls extends ScreenAdapter implements ApplicationListener, InputProcessor, ControllerListener {
 	private final static Logger logger = LoggerFactory.getLogger(ModLoader.class);
-	OpenAW game;
+	private OpenAW game;
 
 	public ScreenControls(OpenAW game) {
 		this.game = game;
-		//Controllers.addListener(this);
+		Controllers.addListener(this);
 		Gdx.input.setInputProcessor(this);
 		this.create();
 	}
@@ -33,10 +33,9 @@ public class ScreenControls extends ScreenAdapter implements ApplicationListener
 	@Override
 	public void create() {
 		logger.info("- - - - - - - - - - - - - - - - - - - - - -");
-		MapExportTest.test();
-		/*for (Controller controller : Controllers.getControllers()) {
+		for (Controller controller : Controllers.getControllers()) {
 			logger.info("Controller detected: {}", controller.getName());
-		}*/
+		}/**/
 	}
 
 	public void update () {
@@ -87,6 +86,7 @@ public class ScreenControls extends ScreenAdapter implements ApplicationListener
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		logger.info("touchDown: {}", button);
 		return false;
 	}
 
@@ -109,7 +109,8 @@ public class ScreenControls extends ScreenAdapter implements ApplicationListener
 	public boolean scrolled(int amount) {
 		return false;
 	}
-
+	
+	/* Controller Inputs */
 	@Override
 	public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
 		// TODO Auto-generated method stub
@@ -118,13 +119,14 @@ public class ScreenControls extends ScreenAdapter implements ApplicationListener
 
 	@Override
 	public boolean axisMoved(Controller controller, int axisCode, float value) {
-		// TODO Auto-generated method stub
+		//Puts too much data in the logs
+		//logger.info("axisMoved: {} - {} - {}", controller.getName(), axisCode, value);
 		return false;
 	}
 
 	@Override
 	public boolean buttonDown(Controller controller, int buttonCode) {
-		// TODO Auto-generated method stub
+		logger.info("buttonDown: {} - {}", controller.getName(), buttonCode);
 		return false;
 	}
 

@@ -1,3 +1,20 @@
 {
-	"test": "test.png"
+	"test": "test.png",
+	
+	"gui-editor-tabTerrain":  "gui/editor/tab_terrain.png",
+	"gui-editor-tabBuilding": "gui/editor/tab_building.png",
+	"gui-editor-tabUnits":    "gui/editor/tab_unit.png",
+	"gui-editor-tabSpecial":  "gui/editor/tab_special.png",
+	
+	"gui-editor-preview-plains":   "gui/editor/terrain_preview_plains.png",
+	"gui-editor-preview-forest":   "gui/editor/terrain_preview_forest.png",
+	"gui-editor-preview-mountain": "gui/editor/terrain_preview_mountain.png",
+	"gui-editor-preview-beach":    "gui/editor/terrain_preview_beach.png",
+	"gui-editor-preview-road":     "gui/editor/terrain_preview_road.png",
+	"gui-editor-preview-bridge":   "gui/editor/terrain_preview_bridge.png",
+	"gui-editor-preview-sea":      "gui/editor/terrain_preview_sea.png",
+	"gui-editor-preview-reef":     "gui/editor/terrain_preview_reef.png",
+	"gui-editor-preview-river":    "gui/editor/terrain_preview_river.png",
+	"gui-editor-preview-pipe1":    "gui/editor/terrain_preview_pipe.png",
+	"gui-editor-preview-pipe2":    "gui/editor/terrain_preview_pipeConnector.png"
 }

@@ -1,6 +1,10 @@
 package com.azias.openaw.screens;
 
 import com.azias.openaw.OpenAW;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.azias.openaw.Assets;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -11,7 +15,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 public class ScreenLoading extends ScreenAdapter implements ApplicationListener, InputProcessor {
-	OpenAW game;
+	private final static Logger logger = LoggerFactory.getLogger(ScreenLoading.class);
+	private OpenAW game;
 	private ShapeRenderer shapeRenderer;
 
 	public ScreenLoading(OpenAW game) {
@@ -27,9 +32,10 @@ public class ScreenLoading extends ScreenAdapter implements ApplicationListener,
 
 	public void update () {
 		if(this.game.modLoader.update()) {
-			//this.game.setScreen(new ScreenMainMenu(this.game));
-			//this.game.setScreen(new ScreenControls(this.game));
-			this.game.setScreen(new ScreenMapEditor(this.game));
+			logger.info("ModLoader has finished loading.");
+			logger.info("- - - - - - - - - - - - - - - - - - - - - -");
+			this.game.setScreen(new ScreenControls(this.game));
+			//this.game.setScreen(new ScreenMapEditor(this.game));
 		}
 	}
 
