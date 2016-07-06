@@ -19,6 +19,7 @@ header .fleft h1 {
     line-height: 80px;
     font-size: 24pt;
     color: white;
+	font-weight: 500;
 }
 header img {
 	width: 64px;
@@ -27,7 +28,8 @@ header img {
 }
 
 footer {
-    background-color: #eb6b56;
+    /*background-color: #eb6b56;*/
+    background-color: #d14841;
 	height: 140px;
     text-align: center;
     margin: 25px 0 0 0;
@@ -60,11 +62,25 @@ footer a:hover {
 h2, h3 {
 	margin: 5px 0 10px 0;
 	padding: 10px;
-	background-color: #e14938;
+	/*background-color: #e14938;*/
+	background-color: #d14841;
 	width: 100%;
+	color: white;
+	font-weight: 500;
 }
 
 h3 {
 	margin-top: 15px;
 	background-color: #efefef;
+	color: #303030;
+}
+
+.links > li {
+    margin-left: 20px;
+    list-style-type: disc;
+	margin-top: 9px;
+}
+.links a {
+	color: dodgerblue;
+	text-decoration: underline;
 }
