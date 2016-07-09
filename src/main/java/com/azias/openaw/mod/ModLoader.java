@@ -38,14 +38,8 @@ public class ModLoader extends Object {
 	private int mainProgess = 0;
 	private int subProgress = 0;
 	
-	@Deprecated
-	public ModLoader(String mods) {
-		this(mods, "english");
-		logger.warn("A deprecated constructor was used for ModLoader!");
-	}
-	
 	public ModLoader(String mods, String language) {
-		logger.debug("Initializing ModLoader with \"{}\" as argument", mods);
+		logger.debug("Initializing ModLoader with \"{}\" and \"{}\" as arguments", mods, language);
 		this.language = language;
 		
 		//I was to lazy to find good variables names.
@@ -86,9 +80,20 @@ public class ModLoader extends Object {
 		this.mods = b;
 	}
 	
-	/**
-	 * Loads the assets index files for later.
-	 */
+	//            |\___/|   Beware all ye
+	//           /(,\  /,)   who enter
+	//          /  \     \    for here be 
+	//         /   \(@_^_@)    dragons
+	//        /     \_W\\W
+	//       /        | (\\)
+	//     /  (   \ _|_ (\ \)
+	//   .-^~)  \_ _ _,\' (\ \\)
+	// .‘    _        }-, (( \\ ))
+	// |      \      /\'  (( \\\ ))
+	//  {       }   .‘     ((\\\ ))
+	//   '-/   /.-~----.    (( \))
+	//    /   >..----.\\\
+	//    {_ _  _ _.-\\\
 	public void preload() {
 		logger.info("Preloading ModLoader with {} mod(s)", this.mods.length);
 		
@@ -182,9 +187,9 @@ public class ModLoader extends Object {
 			}
 		}
 		
-		//TODO: Improve logging here.
+		//TODO: Improve logging here. - It's good enough
 		logger.debug("Processing assets entries");
-		logger.debug("Index pre-size: {}", Assets.assetsIndex.size());
+		logger.debug("Assets index size: {}", Assets.assetsIndex.size());
 		Iterator<Entry<String, String>> it = Assets.assetsIndex.entrySet().iterator();
 	    while(it.hasNext()) {
 	        HashMap.Entry entry = (HashMap.Entry)it.next();
@@ -197,7 +202,7 @@ public class ModLoader extends Object {
 	        }
 	        //it.remove(); Fucks up the original map
 	    };
-	    logger.debug("Index post-size: {}", Assets.assetsIndex.size());
+	    //logger.debug("Index post-size: {}", Assets.assetsIndex.size());
 	}
 	
 	public boolean update() {
@@ -250,8 +255,51 @@ public class ModLoader extends Object {
 			}
 			break;
 		case 2:
+			
+			List<EnumModType> modTypes1 = Arrays.asList(this.mods[this.subProgress].getModTypes());
+			if(!modTypes1.contains(ModInfo.EnumModType.CODE) && !modTypes1.contains(ModInfo.EnumModType.ALL)) {
+				logger.debug("Skipping \"postLoad()\" for {} - {}", this.mods[this.subProgress].id, this.mods[this.subProgress].name);
+				if(this.subProgress+1 >= this.mods.length){
+					this.subProgress = 0;
+					this.mainProgess++;
+				} else {
+					this.subProgress++;
+				}
+				break;
+			}
+			Class<?> modClass1 = this.getModClass(this.mods[this.subProgress].id);
+			if(modClass1!=null) {
+				logger.debug("Calling postLoad for {} - {}", this.mods[this.subProgress].id, this.mods[this.subProgress].name);
+				boolean hasExecutedfunction = false;
+				for(Method m : modClass1.getMethods()) {
+					if(m.getName().equals("postLoad")) {
+						try {
+							m.invoke(modClass1.newInstance());
+							hasExecutedfunction = true;
+						} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException e) {
+							logger.error("An error occured while executing the \"postLoad\" function for \"{}\"", this.mods[this.subProgress].name);
+							e.printStackTrace();
+							System.exit(213);
+						}
+					}
+				}
+				if(!hasExecutedfunction) {
+					logger.warn("The postLoad function for {} wasn't executed", this.mods[this.subProgress].name);
+				}
+				if(this.subProgress+1 >= this.mods.length){
+					this.subProgress = 0;
+					this.mainProgess++;
+				} else {
+					this.subProgress++;
+				}
+			} else {
+				logger.error("Unable to find the main Class for \"{}\"", this.mods[this.subProgress].name);
+				System.exit(211);
+			}
+			
+			break;
+		default:
 			return true;
-			//break;
 		}
 		return false;
 	}

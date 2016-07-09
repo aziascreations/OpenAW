@@ -2,7 +2,8 @@
 100 - Failed to parse the launch arguments
 101 - Wrong Java version installed (<7)
 102 - Mod argument not set
-
+103 - [ARGUMENT NOT INTEGER]
+104 - [ARGUMENT NOT INTEGER]
 
 # ModLoader Errors (200-249)
 200 - ModLoader intialized with and empty mod list - This shouldn't happen... - Except if you use "-f"

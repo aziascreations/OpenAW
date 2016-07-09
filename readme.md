@@ -7,9 +7,10 @@ The project's goals are as follow:
  * Fixing some of the issues on the original games
 
 ##Requirements
-* Java 7 or Java 8_u40 for some classes
-* ~128 Mo RAM
+* Java 7 or Java 8u40 for some classes
+* ~128 Mo of RAM
 * ~50 Mo of disk space
+* A GPU supporting OpenGL 3/2
 
 ##License
 **OpenAW** is licensed under the [GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0.en.html).

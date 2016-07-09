@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.6.2</version>
+			<version>2.7</version>
 			<scope>compile</scope>
 		</dependency>
 		
@@ -66,7 +66,7 @@
 		
 		<dependency>
 			<groupId>com.badlogicgames.gdx</groupId>
-			<artifactId>gdx-backend-lwjgl</artifactId>
+			<artifactId>gdx-backend-lwjgl3</artifactId>
 			<version>${libgdx.version}</version>
 			<scope>compile</scope>
 		</dependency>

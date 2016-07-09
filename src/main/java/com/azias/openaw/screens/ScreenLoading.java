@@ -10,7 +10,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
@@ -34,18 +34,18 @@ public class ScreenLoading extends ScreenAdapter implements ApplicationListener,
 		if(this.game.modLoader.update()) {
 			logger.info("ModLoader has finished loading.");
 			logger.info("- - - - - - - - - - - - - - - - - - - - - -");
-			this.game.setScreen(new ScreenControls(this.game));
-			//this.game.setScreen(new ScreenMapEditor(this.game));
+			//this.game.setScreen(new ScreenControls(this.game));
+			this.game.setScreen(new ScreenMapEditor(this.game));
 		}
 	}
 
 	public void draw () {
-		Gdx.gl.glClearColor(1.0F, 1.0F, 1.0F, 1.0F);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		Gdx.gl30.glClearColor(1.0F, 1.0F, 1.0F, 1.0F);
+		Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		
-		game.batch.begin();
+		/*this.game.batch.begin();
 		
-		game.batch.end();
+		this.game.batch.end();*/
 		
 		if(this.shapeRenderer != null) {
 			this.shapeRenderer.begin(ShapeType.Filled);

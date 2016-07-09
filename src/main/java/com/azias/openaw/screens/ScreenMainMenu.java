@@ -6,7 +6,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
 
 public class ScreenMainMenu extends ScreenAdapter implements ApplicationListener, InputProcessor {
 	OpenAW game;
@@ -26,12 +26,12 @@ public class ScreenMainMenu extends ScreenAdapter implements ApplicationListener
 	}
 
 	public void draw () {
-		Gdx.gl.glClearColor(0.8F, 0.8F, 0.8F, 1.0F);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		Gdx.gl30.glClearColor(1.0F, 1.0F, 1.0F, 1.0F);
+		Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		
-		game.batch.begin();
+		this.game.batch.begin();
 		
-		game.batch.end();
+		this.game.batch.end();
 	}
 
 	@Override

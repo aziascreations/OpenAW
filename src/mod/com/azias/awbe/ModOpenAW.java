@@ -16,12 +16,11 @@ public class ModOpenAW {
 	public static void preLoad() {
 		logger.info("Registering Units...");
 		Units.registerUnits();
-		logger.info("Registering Terrains...");
-		Terrain.registerUnits();
 	}
 	
 	@EventHandler
 	public static void postLoad() {
-		//System.out.println("Hello world! - postLoad");
+		logger.info("Registering Terrains...");
+		Terrain.registerUnits();
 	}
 }

@@ -15,7 +15,7 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.math.Vector3;
 
 public class ScreenControls extends ScreenAdapter implements ApplicationListener, InputProcessor, ControllerListener {
@@ -43,12 +43,12 @@ public class ScreenControls extends ScreenAdapter implements ApplicationListener
 	}
 
 	public void draw () {
-		Gdx.gl.glClearColor(1.0F, 1.0F, 0.0F, 1.0F);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		Gdx.gl30.glClearColor(1.0F, 1.0F, 1.0F, 1.0F);
+		Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		
-		game.batch.begin();
+		this.game.batch.begin();
 		
-		game.batch.end();
+		this.game.batch.end();
 	}
 
 	@Override

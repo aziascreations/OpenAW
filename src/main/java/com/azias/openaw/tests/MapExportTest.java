@@ -7,7 +7,7 @@ public class MapExportTest {
 
 	public static void test() {
 		Map map = new Map();
-		map.test();
+		map.test2();
 		map.prepareExport();
 		Gson gson = new Gson();
 		String a = gson.toJson(map);

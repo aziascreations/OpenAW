@@ -6,27 +6,23 @@ import org.slf4j.LoggerFactory;
 import com.azias.openaw.OpenAW;
 import com.azias.openaw.map.Map;
 import com.azias.openaw.mod.ModLoader;
-
+import com.azias.openaw.tests.MapExportTest;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.ControllerListener;
-import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.controllers.PovDirection;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.graphics.GL30;
 
-public class ScreenMapEditor extends ScreenAdapter implements ApplicationListener, InputProcessor, ControllerListener {
+public class ScreenMapEditor extends ScreenAdapter implements ApplicationListener, InputProcessor {
 	private final static Logger logger = LoggerFactory.getLogger(ModLoader.class);
 	private OpenAW game;
 	
 	private Map map;
 	
+	private int[] offset = {0, 0};
+	
 	public ScreenMapEditor(OpenAW game) {
 		this.game = game;
-		//Controllers.addListener(this);
 		Gdx.input.setInputProcessor(this);
 		this.create();
 	}
@@ -34,12 +30,11 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 	//Why isn't it called by default...
 	@Override
 	public void create() {
-		logger.info("- - - - - - - - - - - - - - - - - - - - - -");
-		/*for (Controller controller : Controllers.getControllers()) {
-			logger.info("Controller detected: {}", controller.getName());
-		}*/
+		//logger.info("- - - - - - - - - - - - - - - - - - - - - -");
 		//TODO: Add menu on startup (new/load).
 		this.map = new Map(10,15);
+		this.map.test2();
+		MapExportTest.test();
 	}
 
 	public void update () {
@@ -47,12 +42,13 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 	}
 
 	public void draw () {
-		Gdx.gl.glClearColor(1.0F, 1.0F, 1.0F, 1.0F);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		Gdx.gl30.glClearColor(1.0F, 1.0F, 1.0F, 1.0F);
+		Gdx.gl30.glClear(GL30.GL_COLOR_BUFFER_BIT);
 		
-		game.batch.begin();
-		
-		game.batch.end();
+		this.game.batch.begin();
+		this.map.render(this.game.batch, offset[0], offset[1], 1);
+		this.game.renderGuis(this.game.batch);
+		this.game.batch.end();
 	}
 
 	@Override
@@ -91,6 +87,8 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		logger.info("touchDown: {}", button);
+		//Clicking out of the window when it's focused seems to trigger it.
+		//System.exit(0);
 		return false;
 	}
 
@@ -111,60 +109,6 @@ public class ScreenMapEditor extends ScreenAdapter implements ApplicationListene
 
 	@Override
 	public boolean scrolled(int amount) {
-		return false;
-	}
-
-	@Override
-	public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean axisMoved(Controller controller, int axisCode, float value) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean buttonDown(Controller controller, int buttonCode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean buttonUp(Controller controller, int buttonCode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void connected(Controller controller) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void disconnected(Controller controller) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean povMoved(Controller controller, int povCode, PovDirection value) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }
