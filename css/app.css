@@ -1,0 +1,75 @@
+html, body{
+	width: 100%;
+	height: 100%;
+	background-color: #EEEEEE;
+}
+
+#mainTopBar {
+	width: 100%;
+	height: calc(100% - 64px);
+	background-color: #151515;
+}
+#mainBottomBar {
+	width: 100%;
+	height: 64px;
+	background: linear-gradient(to top, rgba(45,45,45,1) 0%, rgba(68,68,68,1) 95%, rgba(75,75,75,1) 100%);
+}
+
+#windowShadow {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.7);
+	
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100;
+}
+
+/* Mods Window */
+#windowMods {
+	width: 600px;
+	height: 450px;
+	background-color: #EEEEEE;
+	
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 200;
+	
+	margin-left: -300px;
+	margin-top: -225px;
+	
+	border-radius: 5px 5px 5px 5px;
+	border: 0px solid #000000;
+	
+	padding: 10px;
+}
+#windowModsList {
+	height: calc(100% - 40px);
+	width: calc(50% - 5px);
+	background-color: darkkhaki;
+	
+	display: inline-block;
+	float: left;
+	
+	margin-right: 5px;
+}
+#windowModsInfoBox {
+	height: calc(100% - 40px);
+	width: calc(50% - 5px);
+	background-color: darksalmon;
+	
+	display: inline-block;
+	float: right;
+	
+	margin-left: 5px;
+}
+#windowModsBottomBar {
+	height: 40px;
+	width: 100%;
+	background-color: crimson;
+	
+	display: block;
+	clear: left;
+}

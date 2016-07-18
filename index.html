@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Hello World!</title>
+		<link rel="stylesheet" href="./css/reset.css" />
+		<link rel="stylesheet" href="./css/app.css" />
+	</head>
+
+	<body>
+		<!--<h1>Hello World!</h1>We are using node
+		<script>
+			document.write(process.versions.node)
+		</script>, Chromium
+		<script>
+			document.write(process.versions.chrome)
+		</script>, and Electron
+		<script>
+			document.write(process.versions.electron)
+		</script>.-->
+		<!--<ul id="simpleList" class="list-group">
+			<li class="list-group-item" value="error">ERROR</li>
+		</ul>-->
+		<script>
+			function test1() {
+				console.log("aa");
+				var list = document.getElementById('simpleList');
+				//list.getElementsByTagName("LI")[0].innerHTML = "Milk";
+				for(var i=0; i<list.getElementsByTagName("li").length; i++) {
+					console.log(list.getElementsByTagName("li")[i].getAttribute("value"));
+				}
+				
+				var mods = [{id:"awbe", name:"Advance Wars Bootleg Edition", isEnabled:false}, {id:"openaw", name:"OpenAW", isEnabled:true}];
+				console.info(JSON.stringify(mods));
+			}
+		</script>
+		
+		<div id="mainTopBar">
+			
+		</div>
+		<div id="mainBottomBar">
+			<button onclick="test1()">Test</button>
+			<button onclick="toggleModsWindow()">Mods</button>
+		</div>
+		<div id="windowShadow"></div>
+		<div id="windowMods">
+			<!--This div might have a small margin on the left, I'm not sure, I measured it with a ramen sauce plastic -->
+			<ul id="windowModsList">
+				<li class="list-group-item" value="error">Loading mods...</li>
+			</ul>
+			<div id="windowModsInfoBox">
+				b
+			</div>
+			<div id="windowModsBottomBar">
+				<button onclick="toggleModsWindow()">Save and Close</button>
+			</div>
+		</div>
+	</body>
+
+	<script>
+		var fs = require('fs');
+		var http = require('http');
+		window.$ = window.Sortable = require('./js/sortable.min.js');
+		window.$ = window.jQuery = require('./js/jquery-3.0.0.min.js');
+		require('./js/jquery-ui.js');
+		var fileExists = require('file-exists');
+		
+		//TODO: Add/move this later in the execution timeline
+		//Sortable.create(simpleList, { /* options */ });
+		
+		$("#windowShadow").hide();
+		$("#windowMods").hide();
+		function toggleModsWindow() {
+			$("#windowShadow").toggle("fade", {}, 500);
+			$("#windowMods").toggle("drop", {}, 500);
+		}
+		
+		//Check if given JSON is valid
+		function isJson(str) {
+			try {
+				JSON.parse(str);
+			} catch (e) {
+				return false;
+			}
+			return true;
+		}
+		
+		//Loading the news
+		var request = http.request({host: 'localhost', path: '/pp/news.json'}, function (res) {
+			var data = '';
+			res.on('data', function (chunk) {
+				data += chunk;
+			});
+			res.on('end', function () {
+				//console.log(data);
+				if(isJson(data)) {
+					var news = JSON.parse(data);
+					//console.log(news);
+				} else {
+					var news = JSON.parse('{"abc": "123"}');
+					//console.log(news);
+				} 
+			});
+		});
+		request.on('error', function (e) {
+			console.error("An error occured while loading the news");
+			console.error(e.message);
+			var news = JSON.parse('{"abc": "123"}');
+			//console.log(news);
+		});
+		request.end();
+		
+		var modsInfo = {};
+		var modsFolders = [];
+		
+		$(document).ready(function() {
+			//Loading the mods in the mods folder
+			//var modsInfo = {};
+			//var modsFolders = [];
+			_modsFolders = fs.readdirSync("./mods/");
+			for(var i=0; i<_modsFolders.length; i++) {
+				//console.log(_modsFolders[i]);
+				if(fs.lstatSync("./mods/"+_modsFolders[i]).isDirectory()) {
+					//console.log("./mods/"+_modsFolders[i]+" is a directory");
+					try {
+						fs.accessSync("./mods/"+_modsFolders[i]+"/modinfo.json", fs.F_OK);
+						modsFolders.push(_modsFolders[i]);
+						modsInfo[_modsFolders[i]] = JSON.parse(fs.readFile("./mods/"+_modsFolders[i]+"/modinfo.json", 'utf8'));
+					} catch (e) {
+						//console.error("An error occured while loading a mod file");
+						//Isn't a mod folder
+					}
+				} else {
+					//console.log("./mods/"+_modsFolders[i]+" is not a directory");
+				}
+			}
+			delete _modsFolders
+			
+			/*for(var i=0; i<modsFolders.length; i++) {
+				console.log(modsFolders[i]);
+			}*/
+			
+			//Loading the mod list
+			if(fileExists('./launcher_modlist.json')) {
+				console.log("Found the modlist file !");
+			} else {
+				console.log("Can't find the modlist file !");
+			}
+			
+			//Preparing the mod list
+			$("#windowModsList").empty();
+			$("#windowModsList").append('<li class="list-group-item" value="mod1">Loaded !</li>');
+		});
+		
+	</script>
+</html>
