@@ -12,13 +12,17 @@
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="http://aziasyur.github.io/Advance-Wars-Bootleg-Edition/" />
 		<meta property="og:image" content="http://aziasyur.github.io/OpenAW/img/placeholder.png" />
+		<meta property="og:image:type" content="image/png" />
+		<meta property="og:image:width" content="500" />
+		<meta property="og:image:height" content="350" />
 		<meta property="og:description" content="Description Here" />
+		<!-- Will be done later
 		<meta name="twitter:card" content="summary">
 		<meta name="twitter:url" content="http://aziasyur.github.io/OpenAW/">
 		<meta name="twitter:title" content="OpenAW project">
 		<meta name="twitter:description" content="Description Here">
 		<meta name="twitter:image" content="OpenAW project">
-		<meta name="twitter:site" content="@AziasCreations">
+		<meta name="twitter:site" content="@AziasCreations">-->
 		
 		<link rel="shortcut icon" href="favicon.ico">
 		
@@ -33,36 +37,45 @@
 		<header>
 			<div class="container fclear">
 				<div class="fleft">
-					<a href="#logo">
+					<a href="./">
 						<img src="./img/logo.png" alt="logo">
 						<h1>OpenAW</h1>
 					</a>
 				</div>
-				<div class="fright">
-					<p>NavBar</p>
-				</div>
+				
+				<nav id="topNavBar" class="fright">
+					<a href="./">Home</a>
+					<a href="./play.html">Play</a>
+					<a href="./changelog.html">Changelog</a>
+					<a href="./" class="disabled">???</a>
+				</nav>
 			</div>
 		</header>
 		
-		<div class="container">
+		<div id="body" class="container">
 			<div class="crow no-gutter up">
 				<div class="w-70">
 					<h2>The project</h2>
-					<p>Hello World!</p>
-					<p>Hello World!</p>
-					<p>Hello World!</p>
-					<p>Hello World!</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent hendrerit magna id lectus dapibus, eget elementum purus condimentum. Ut maximus, nisi sed sollicitudin hendrerit, dolor odio porttitor tortor, vel rutrum libero eros semper nibh. Nam viverra tristique urna. Sed porta a odio nec volutpat. Aliquam lacinia libero magna, ultricies malesuada mi vehicula ut. Maecenas nec arcu quis enim egestas auctor. Sed non pulvinar nisi, et dignissim orci.</p>
+					<p>Praesent placerat placerat leo sed mollis. Curabitur laoreet, nulla sit amet sodales accumsan, urna turpis rhoncus libero, in gravida lectus mi lacinia orci. Morbi sit amet viverra enim.</p>
 					
 					<h2>Download and Play</h2>
-					<p>Hello World!</p>
+					<p>There is currently no release of OpenAW, but you can build it from the source.<br>Here are the instructions on how to do it: <a href="#">Comming soon</a></p>
 				</div>
 				<div class="w-1"></div>
 				<div class="w-29">
 					<h2>Links</h2>
 					<ul class="links">
-						<li><a href="#repo">GitHub repository</a></li>
-						<li><a href="#issue">Issue Tracker</a></li>
+						<li><a href="https://github.com/AziasYur/OpenAW">GitHub Repository</a></li>
+						<li><a href="https://github.com/AziasYur/OpenAW/issues">Issue Tracker</a></li>
+						<li><a href="http://openaw.blogspot.be/">Development Blog</a></li>
 					</ul>
+				</div>
+			</div>
+			<div class="crow no-gutter up m-20">
+				<div class="w-100">
+					<h2>Long Presentation</h2>
+					<p>[Text]</p>
 				</div>
 			</div>
 			
@@ -73,8 +86,17 @@
 		
 		<footer>
 			<div class="container">
-				<p><a href="https://github.com/AziasYur/Advance-Wars-Bootleg-Edition">OpenAW on GitHub</a></p>
+				<p><a href="https://github.com/AziasYur/Advance-Wars-Bootleg-Edition">GitHub Repo</a></p>
 			</div>
 		</footer>
 	</body>
+	
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-81131101-1', 'auto');
+		ga('send', 'pageview');
+	</script>
 </html>
