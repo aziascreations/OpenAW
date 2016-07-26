@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Hello World!</title>
+		<link href='https://fonts.googleapis.com/css?family=Fira+Sans:400,500,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="./css/reset.css" />
+		<link rel="stylesheet" href="./css/app.css" />
+		<script src="./js/sortable.min.js"></script>
+		<script src="./js/jquery-3.0.0.min.js"></script>
+		<script src="./js/jquery-ui.js"></script>
+		<!--<script src="./js/app.js"></script>-->
+	</head>
+
+	<body>
+		<script>
+			function test1() {
+				console.log("aa");
+				var list = document.getElementById('simpleList');
+				//list.getElementsByTagName("LI")[0].innerHTML = "Milk";
+				for(var i=0; i<list.getElementsByTagName("li").length; i++) {
+					console.log(list.getElementsByTagName("li")[i].getAttribute("value"));
+				}
+				
+				var mods = [{id:"awbe", name:"Advance Wars Bootleg Edition", isEnabled:false}, {id:"openaw", name:"OpenAW", isEnabled:true}];
+				console.info(JSON.stringify(mods));
+			}
+		</script>
+		
+		<div id="mainTopBar">
+			
+		</div>
+		<div id="mainBottomBar">
+			<button onclick="openOptions()">Options</button>
+			<button onclick="toggleModsWindow()">Mods</button>
+		</div>
+		<div id="windowShadow"></div>
+		
+		<!-- Options Window START -->
+		<div id="windowOptions" class="window">
+			<h1>Options</h1>
+			<div class="windowCenter">
+				<div class="windowPanel w-30 fleft noBackground">
+					<button id="windowOptionsLauncherButton" onclick="" class="windowSideButton">Launcher</button>
+					<button id="windowOptionsGraphicsButton" onclick="" class="windowSideButton">Graphics</button>
+					<button id="windowOptionsMiscButton" onclick="" class="windowSideButton">Misc</button>
+				</div>
+				<div id="windowOptionsLauncherPanel" class="windowPanel w-70 fright">
+					a
+				</div>
+				<div id="windowOptionsGraphicsPanel" class="windowPanel w-70 fright">
+					b
+				</div>
+				<div id="windowOptionsMiscPanel" class="windowPanel w-70 fright">
+					c
+				</div>
+				<!--<div class="squaredThree">
+					<input type="checkbox" value="None" id="squaredThree" name="check" checked />
+					<label for="squaredThree"></label>
+				</div>-->
+			</div>
+			<div class="windowBottomBar">
+				<button onclick="closeOptions()" class="fleft">Cancel</button>
+				<button onclick="closeOptions()">Save and Close</button>
+			</div>
+		</div>
+		<!-- Options Window END -->
+		
+		<!-- Mods Window START-->
+		<div id="windowMods" class="window">
+			<!-- This div might have a small margin on the left, I'm not sure, I measured it with a ramen sauce plastic -->
+			<h1>Mods</h1>
+			
+			<div class="windowCenter">
+				<ul id="windowModsList" class="windowPanel fleft">
+					<li class="list-group-item" value="error">Loading mods...</li>
+				</ul>
+				<div id="windowModsInfo" class="windowPanel fright">
+					b
+				</div>
+			</div>
+			
+			<div class="windowBottomBar">
+				<button onclick="toggleModsWindow()">Save and Close</button>
+			</div>
+		</div>
+		<!-- Mods Window END-->
+	</body>
+
+	<script>
+		//Leave those on top, it's for checking the styles in Chrome.
+		$("#windowShadow").hide();
+		
+		$("#windowMods").hide();
+		
+		$("#windowOptions").hide();
+		$("#windowOptionsGraphicsPanel").hide();
+		$("#windowOptionsMiscPanel").hide();
+		//use the > selector.
+		//$('#windowOptionsLauncherPanel').hide('fade', {}, 300, function(){$('#windowOptionsTestPanel').show('fade', {}, 300);});
+		
+		var gameFolder = "./game/";
+		var fs = require('fs');
+		var http = require('http');
+		var fileExists = require('file-exists');
+		
+		//Preparing the windows' animations
+		function toggleModsWindow() {
+			$("#windowShadow").toggle("fade", {}, 500);
+			$("#windowMods").toggle("drop", {}, 500);
+		}
+		
+		function openOptions() {
+			$("#windowShadow").show("fade", {}, 500);
+			$("#windowOptions").show("drop", {}, 500);
+		}
+		function closeOptions() {
+			$("#windowShadow").hide("fade", {}, 500);
+			$("#windowOptions").hide("drop", {}, 500);
+		}
+		function saveAndCloseOptions() {
+			
+			closeOptions();
+		}
+		
+		//Checks if given JSON is valid
+		function isJson(str) {
+			try {
+				JSON.parse(str);
+			} catch (e) {
+				return false;
+			}
+			return true;
+		}
+		
+		//Loading the news
+		var request = http.request({host: 'localhost', path: '/php/news.json'}, function (res) {
+			var data = '';
+			res.on('data', function (chunk) {
+				data += chunk;
+			});
+			res.on('end', function () {
+				//console.log(data);
+				if(isJson(data)) {
+					var news = JSON.parse(data);
+					updateNews();
+				} else {
+					console.warn("The news text received isn't a JSON formatted document. (Error 404 ?)");
+					var news = JSON.parse('{"abc": "123"}');
+					updateNews();
+				} 
+			});
+		});
+		request.on('error', function (e) {
+			console.error("An error occured while loading the news");
+			console.error(e.message);
+			var news = JSON.parse('{"abc": "123"}');
+			updateNews();
+		});
+		request.end();
+		
+		function updateNews() {
+			
+		}
+		
+		var modsInfo = {};
+		var modsFolders = [];
+		
+		$(document).ready(function() {
+			//Only shows a white window - I need to find where the fuck is nw.pak.
+			//require('nw.gui').Window.get().showDevTools();
+			
+			console.info("Mods folder location: "+gameFolder+"mods/");
+			/*if(!fileExists(gameFolder+"mods/test.txt")) {
+				console.error("Unable to find the mods folder !");
+			}/**/
+			
+			//Loading the mods in the mods folder
+			//var modsInfo = {};
+			//var modsFolders = [];
+			_modsFolders = fs.readdirSync(gameFolder+"mods/");
+			for(var i=0; i<_modsFolders.length; i++) {
+				//console.log(_modsFolders[i]);
+				if(fs.lstatSync(gameFolder+"mods/"+_modsFolders[i]).isDirectory()) {
+					try {
+						fs.accessSync(gameFolder+"mods/"+_modsFolders[i]+"/modinfo.json", fs.F_OK);
+						modsFolders.push(_modsFolders[i]);
+						_modJsonInfo = JSON.parse(fs.readFileSync(gameFolder+"mods/"+_modsFolders[i]+"/modinfo.json"));
+						//modsInfo[_modsFolders[i]] = JSON.parse(fs.readFileSync(gameFolder+"mods/"+_modsFolders[i]+"/modinfo.json"));
+						modsInfo[_modsFolders[i]] = _modJsonInfo;
+						console.log("Loaded "+gameFolder+"mods/"+_modsFolders[i]+"/modinfo.json");
+						delete _modJsonInfo;
+					} catch (e) {
+						console.log("Unable to load/find: "+gameFolder+"mods/"+_modsFolders[i]+"/modinfo.json");
+						//console.error(e);
+					}
+				} else {
+					//console.log(gameFolder+"mods/"+_modsFolders[i]+" is not a directory.");
+				}
+			}
+			delete _modsFolders;
+			
+			/*for(var i=0; i<modsFolders.length; i++) {
+				console.log(modsFolders[i]);
+			}/**/
+			
+			//Loading the mod list
+			if(fileExists(gameFolder+"launcher_modlist.json")) {
+				console.log("Found the modlist file !");
+			} else {
+				console.log("Can't find the modlist file !");
+			}
+			
+			//Preparing the mod list
+			$("#windowModsList").empty();
+			$("#windowModsList").append('<li class="list-group-item" value="mod1">Loaded !</li>');
+			
+			//TODO: Add/move this later in the execution timeline
+			//Sortable.create(simpleList, { /* options */ });
+		});
+	</script>
+</html>

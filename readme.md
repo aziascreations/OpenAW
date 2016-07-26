@@ -3,13 +3,13 @@
 
 ## Requirements
 * OS:
-  * Windows: 7 or newer (x86/amd64)
-  * Linux and Mac: Check [here](http://electron.atom.io/docs/tutorial/supported-platforms/)
+  * Windows: ? or newer (x86/amd64)
+  * Linux and Mac: ?
 * 512 Mo of RAM
 * ~256 Mo of disk space
 
 ## [Title]
-* [Electron](http://electron.atom.io/)
+* [nw.js](http://nwjs.io/)
 * JavaScript
   * [jQuery](https://jquery.com/)
   * [jQuery UI](http://jqueryui.com)

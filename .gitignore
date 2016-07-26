@@ -1,2 +1,5 @@
 node_modules
 mods/
+game/*
+bak/*
+js/app.*js

@@ -4,6 +4,10 @@ html, body{
 	background-color: #EEEEEE;
 }
 
+body, * {
+	font-family: 'Fira Sans', sans-serif;/**/
+}
+
 #mainTopBar {
 	width: 100%;
 	height: calc(100% - 64px);
@@ -27,10 +31,11 @@ html, body{
 }
 
 /* Mods Window */
-#windowMods {
+.window {
 	width: 600px;
 	height: 450px;
-	background-color: #EEEEEE;
+	/*background-color: #EEEEEE;/**/
+	background-color: #111111;/**/
 	
 	position: fixed;
 	top: 50%;
@@ -40,36 +45,179 @@ html, body{
 	margin-left: -300px;
 	margin-top: -225px;
 	
-	border-radius: 5px 5px 5px 5px;
-	border: 0px solid #000000;
+	/*border-radius: 5px 5px 5px 5px;
+	border: 0px solid #000000;/**/
 	
-	padding: 10px;
+	padding: 5px;
+	
+	/*padding: 10px;/**/
+	border: 2px solid #202020;
 }
-#windowModsList {
-	height: calc(100% - 40px);
-	width: calc(50% - 5px);
+.window > h1 {
+	/* TODO: Find a way to add a margin on the left without having tochange the width */
+	width: 100%;
+	height: 32px;
+	background-color: #202020;
+	
+	/*margin: 5px;/**/
+	
+	line-height: 32px;
+	font-weight: bold;
+	font-size: 18px;
+	/*vertical-align: middle;/**/
+	color: white;
+	text-align: center;
+}
+.window .windowCenter {
+	width: 100%;
+	/* 100% - title height - .windowBottomBar height - 2*5px of margin */
+	height: calc(100% - 32px - 40px - 10px);
+	margin: 5px 0 5px 0;
+}
+.window .windowBottomBar {
+	height: 40px;
+	width: 100%;
+	background-color: crimson;
+	/*clear: left;/**/
+}
+
+/* ! Don't use the .window selector, it fucks up the others classes the element might have ! (Priority issue ?) */
+.windowPanel {
+	height: 100%;
+	width: calc(50% - 2px);
+	display: inline-block;
+	float: none;
+	background-color: darkkhaki;
+}
+
+.windowPanel.w-30 {
+	width: calc(30% - 2px);
+}
+.windowPanel.w-70 {
+	width: calc(70% - 2px);
+}
+
+.windowSideButton {
+	width: 100%;
+	height: 50px;
+	border-style: hidden;
+	background-color: #202020;
+	margin-bottom: 5px;
+	
+	font-weight: bold;
+	font-size: 16px;
+	color: white;
+}
+.windowBottomBar button {
+	display: inline-block;
+	float: right;
+	/* TODO: Find a better way to do it */
+	margin-top: calc( ( 40px - 32px ) / 2 );
+	margin-right: 4px;
+	height: 32px;
+	border-style: hidden;
+	background-color: #202020;
+	font-size: 14px;
+	color: white;
+}
+.windowBottomBar button.fleft {
+	/* Might cause some confusion later */
+	margin-right: 0px;
+	margin-left: 4px;
+	float: left;
+}
+/* Wasn't able to use a second class to set the float - found out how to do it... */
+/*.window .windowPanelLeft {
+	height: 100%;
+	width: calc(50% - 2px);
 	background-color: darkkhaki;
 	
 	display: inline-block;
 	float: left;
-	
-	margin-right: 5px;
 }
-#windowModsInfoBox {
-	height: calc(100% - 40px);
-	width: calc(50% - 5px);
+.window .windowPanelRight {
+	height: 100%;
+	width: calc(50% - 2px);
 	background-color: darksalmon;
 	
 	display: inline-block;
 	float: right;
-	
-	margin-left: 5px;
+}/**/
+
+.noBackground {
+	background-color: transparent;
 }
-#windowModsBottomBar {
-	height: 40px;
-	width: 100%;
-	background-color: crimson;
-	
-	display: block;
-	clear: left;
+
+/* Misc */
+/* source:http://callmenick.com/post/various-css-input-text-styles */
+#windowModsInfoBox input[type="text"] {
+	padding: 10px;
+	border: none;
+	border-bottom: solid 2px #c9c9c9;
+	transition: border 0.3s;
+}
+#windowModsInfoBox input[type="text"]:focus,
+#windowModsInfoBox input[type="text"].inverted {
+	border-bottom: solid 2px #969696;
+}
+#windowModsInfoBox input[type="text"].inverted:focus {
+	border-bottom: solid 2px #c9c9c9;
+}
+
+/* source:http://codepen.io/bbodine1/pen/novBm */
+.squaredThree {
+  width: 20px;
+  position: relative;
+  margin: 20px auto;
+}
+.squaredThree label {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: -webkit-linear-gradient(top, #222222 0%, #45484d 100%);
+  background: linear-gradient(to bottom, #222222 0%, #45484d 100%);
+  border-radius: 4px;
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px rgba(255, 255, 255, 0.4);
+}
+.squaredThree label:after {
+  content: '';
+  width: 9px;
+  height: 5px;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  border: 3px solid #fcfff4;
+  border-top: none;
+  border-right: none;
+  background: transparent;
+  opacity: 0;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+.squaredThree label:hover::after {
+  opacity: 0.3;
+}
+.squaredThree input[type=checkbox] {
+  visibility: hidden;
+}
+.squaredThree input[type=checkbox]:checked + label:after {
+  opacity: 1;
+}
+
+.fleft {
+    float: left;
+}
+.fright {
+    float: right;
+}
+.fclear:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.t-center {
+	text-align: center;
 }
