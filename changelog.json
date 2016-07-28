@@ -1,3 +1,67 @@
 {
-	
+	"changelog": [{
+		"title": "0.0.0-\u03B1 (05-08-2016)",
+		"author": "Anon",
+		"changes": [
+			"Added assets to the assets indexes files.",
+			"Added natives to pom.xml for libgdx.",
+			"Changed to LWJGL3 backend. *",
+			"Improved the readme file."
+		],
+		"footnotes": [
+			"Unable to find the right commit where this change happened."
+		]
+	}, {
+		"title": "0.0.0-\u03B1 (04-08-2016)",
+		"author": "Anon",
+		"changes": [
+			"Added localization.",
+			"Added some fields and functions for the map.",
+			"Added the base for a map editor.",
+			"Finished the mod loader.",
+			"Changed some classes names for the new projects name.",
+			"Fixed some fields declaration in classes extending Unit.",
+			"Testing controller inputs."
+		]
+	}, {
+		"title": "0.0.0-\u03B1 (29-07-2016)",
+		"author": "Anon",
+		"changes": [
+			"Added specifics error codes for some Exceptions.",
+			"Added a list of error codes.",
+			"Changed the project name and package to openaw.",
+			"Changed the assets folders.",
+			"Improved the readme.",
+			"Improved the mod loader.",
+			"Testing a launcher with JavaFX.",
+			"Testing an error window with JavaFX."
+		]
+	}, {
+		"title": "0.0.0-\u03B1 (20-07-2016)",
+		"author": "Anon",
+		"changes": [
+			"Added a license file.",
+			"Added a basic readme file.",
+			"Added launch options. (-m and -f).",
+			"Added slf4j for logging.",
+			"Improved the mod loader.",
+			"Cleaned up pom.xml."
+		]
+	}, {
+		"title": "0.0.0-\u03B1 (18-07-2016)",
+		"author": "Anon",
+		"changes": [
+			"Added Maven.",
+			"Added the base for mods.",
+			"Removed the old batch files for building the project.",
+			"Removed the libraries and added them to Maven."
+		]
+	}, {
+		"title": "0.0.0-\u03B1 (14-07-2016)",
+		"author": "Anon",
+		"changes": [
+			"Restarted everything.",
+			"Added basic things."
+		]
+	}]
 }
