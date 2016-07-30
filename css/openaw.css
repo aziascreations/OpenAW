@@ -56,7 +56,7 @@ header img {
 
 /* Body */
 #body {
-	padding-bottom: 80px; /* Height of the footer*/
+	padding-bottom: 60px; /* Height of the footer + ?? to make it look better */
 }
 #body p {
 	line-height: 18px;
@@ -95,10 +95,10 @@ h3 {
 /*http://matthewjamestaylor.com/blog/keeping-footers-at-the-bottom-of-the-page*/
 footer {
     /*background-color: #eb6b56;*/
-	position:absolute;
+	position:fixed;
 	bottom:0;
     background-color: #d14841;
-	height: 80px;
+	height: 40px;
 	width: 100%;
     text-align: center;
     margin: 25px 0 0 0;
@@ -106,14 +106,50 @@ footer {
 footer, footer a {
     color: #ffffff;
 }
-footer a:hover {
+/*footer a:hover {
     color: #dddddd;
+}/**/
+footer > .container p {
+	line-height: 40px;
+}
+footer .badge {
+	height: 32px;
+	width: 32px;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	border-radius: 50%;
+	background: #000;
+	line-height: 32px;
+	margin: 4px 4px 0px 4px;
+	/* #eb6b56 or e14938 */
+	background-color: #eb6b56;
+	
 }
 
 .container {
     width: calc(100% - 20px);
     max-width: 950px;
     margin: 0 auto;
+}
+
+/* Changelog Page */
+#changelogLogs p {
+	margin-left: 14px;
+}
+p + h3 {
+	margin-top: 25px;
+}
+#changelogLogs .footnote {
+	margin-left: 20px;
+	font-size: 12px;
+}
+#changelogLogs .changelogText + .footnote {
+	margin-top: 12px;
+}
+#changelogLoadingText {
+	margin-top: 25px;
+	text-align: center;
 }
 
 /* Misc */
@@ -130,4 +166,7 @@ footer a:hover {
 }
 .m-20 {
 	margin-top: 20px;
+}
+.t-center {
+	text-align: center;
 }
