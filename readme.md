@@ -1,10 +1,19 @@
-# OpenAW
-OpenAw is a project based on the Advance Wars serie.
+<a href="https://github.com/aziascreations/OpenAW/blob/develop/readme.md">
+    <img src="https://raw.githubusercontent.com/aziascreations/OpenAW/develop/flag_gb.png" alt="Aimeos logo" title="English readme" align="right" height="11" />
+</a>
+<a href="https://github.com/aziascreations/OpenAW/blob/develop/readme-fr.md">
+    <img src="https://raw.githubusercontent.com/aziascreations/OpenAW/develop/flag_fr.png" alt="Aimeos logo" title="Lisez-moi français" align="right" height="11" />
+</a>
+
+OpenAW
+======
+
+*OpenAW* is a project based on the Advance Wars serie.
 
 The project's goals are as follow:
- * Having the same features as the GBA games
- * Being able to use custom content via a mod system
- * Fixing some of the issues on the original games
+ * Having the same features as the GBA games.
+ * Being able to use custom content via a mod system.
+ * Fixing some of the issues on the original games.
 
 ##Requirements
 * Java 7 or Java 8u40 for some classes
